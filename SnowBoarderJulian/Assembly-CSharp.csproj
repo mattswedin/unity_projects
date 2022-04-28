@@ -37,6 +37,7 @@
   </PropertyGroup>
   <ItemGroup>
      <Compile Include="Assets/Scenes/FollowCamera.cs" />
+     <Compile Include="Assets/Scripts/PlayerController.cs" />
     <Reference Include="UnityEngine">
         <HintPath>/Volumes/Carl/Unity/2021.3.0f1/Unity.app/Contents/Managed/UnityEngine/UnityEngine.dll</HintPath>
     </Reference>
@@ -297,6 +298,9 @@
     </Reference>
     <Reference Include="Unity.VisualScripting.Antlr3.Runtime">
         <HintPath>/Volumes/Carl/Unity/Projects/SnowBoarderJulian/Library/PackageCache/com.unity.visualscripting@1.7.6/Runtime/VisualScripting.Flow/Dependencies/NCalc/Unity.VisualScripting.Antlr3.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="clipper_library">
+        <HintPath>/Volumes/Carl/Unity/Projects/SnowBoarderJulian/Library/PackageCache/com.unity.cinemachine@2.8.4/Runtime/ThirdParty/clipper_library.dll</HintPath>
     </Reference>
     <Reference Include="netstandard">
         <HintPath>/Volumes/Carl/Unity/2021.3.0f1/Unity.app/Contents/NetStandard/ref/2.1.0/netstandard.dll</HintPath>
@@ -786,6 +790,12 @@
     </Reference>
     <Reference Include="Unity.VisualScripting.State">
         <HintPath>/Volumes/Carl/Unity/Projects/SnowBoarderJulian/Library/ScriptAssemblies/Unity.VisualScripting.State.dll</HintPath>
+    </Reference>
+    <Reference Include="com.unity.cinemachine.editor">
+        <HintPath>/Volumes/Carl/Unity/Projects/SnowBoarderJulian/Library/ScriptAssemblies/com.unity.cinemachine.editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Cinemachine">
+        <HintPath>/Volumes/Carl/Unity/Projects/SnowBoarderJulian/Library/ScriptAssemblies/Cinemachine.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
