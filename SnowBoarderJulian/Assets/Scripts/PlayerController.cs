@@ -10,6 +10,7 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         rb2d = GetComponent<Rigidbody2D>();
+
     }
 
     // Update is called once per frame
@@ -20,7 +21,10 @@ public class PlayerController : MonoBehaviour
             rb2d.AddTorque(torqueAmount);
         } else if (Input.GetKey(KeyCode.RightArrow)) 
         {
-           rb2d.AddTorque(-torqueAmount); 
+    
+           rb2d.AddTorque(-torqueAmount);
+           
+
         }
     }
 }
