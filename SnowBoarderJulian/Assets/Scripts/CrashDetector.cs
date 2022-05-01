@@ -6,13 +6,19 @@ using UnityEngine.SceneManagement;
 
 public class CrashDetector : MonoBehaviour
 {
+    [SerializeField] float dieDelay = 2f;
    void OnTriggerEnter2D(Collider2D other) 
    {
        if(other.tag == "Ground")
        {
-            Debug.Log("Ouch my head");
-            SceneManager.LoadScene(0);
+            Invoke("diedRestartLevel", dieDelay);
        }
        
+   }
+
+   void diedRestartLevel()
+   {
+        Debug.Log("Ouch my head");
+        SceneManager.LoadScene(0);
    }
 }
