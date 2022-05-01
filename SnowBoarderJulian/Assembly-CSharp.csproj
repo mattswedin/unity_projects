@@ -36,8 +36,9 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
-     <Compile Include="Assets/Scenes/FollowCamera.cs" />
      <Compile Include="Assets/Scripts/PlayerController.cs" />
+     <Compile Include="Assets/Scripts/FinishLine.cs" />
+     <Compile Include="Assets/Scripts/CrashDetector.cs" />
     <Reference Include="UnityEngine">
         <HintPath>/Volumes/Carl/Unity/2021.3.0f1/Unity.app/Contents/Managed/UnityEngine/UnityEngine.dll</HintPath>
     </Reference>
@@ -695,9 +696,6 @@
     <Reference Include="Unity.TextMeshPro.Editor">
         <HintPath>/Volumes/Carl/Unity/Projects/SnowBoarderJulian/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
     </Reference>
-    <Reference Include="Unity.VisualStudio.Editor">
-        <HintPath>/Volumes/Carl/Unity/Projects/SnowBoarderJulian/Library/ScriptAssemblies/Unity.VisualStudio.Editor.dll</HintPath>
-    </Reference>
     <Reference Include="Unity.Timeline">
         <HintPath>/Volumes/Carl/Unity/Projects/SnowBoarderJulian/Library/ScriptAssemblies/Unity.Timeline.dll</HintPath>
     </Reference>
@@ -758,8 +756,14 @@
     <Reference Include="Unity.2D.IK.Runtime">
         <HintPath>/Volumes/Carl/Unity/Projects/SnowBoarderJulian/Library/ScriptAssemblies/Unity.2D.IK.Runtime.dll</HintPath>
     </Reference>
+    <Reference Include="Cinemachine">
+        <HintPath>/Volumes/Carl/Unity/Projects/SnowBoarderJulian/Library/ScriptAssemblies/Cinemachine.dll</HintPath>
+    </Reference>
     <Reference Include="Unity.Burst">
         <HintPath>/Volumes/Carl/Unity/Projects/SnowBoarderJulian/Library/ScriptAssemblies/Unity.Burst.dll</HintPath>
+    </Reference>
+    <Reference Include="com.unity.cinemachine.editor">
+        <HintPath>/Volumes/Carl/Unity/Projects/SnowBoarderJulian/Library/ScriptAssemblies/com.unity.cinemachine.editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.VisualScripting.Shared.Editor">
         <HintPath>/Volumes/Carl/Unity/Projects/SnowBoarderJulian/Library/ScriptAssemblies/Unity.VisualScripting.Shared.Editor.dll</HintPath>
@@ -790,12 +794,6 @@
     </Reference>
     <Reference Include="Unity.VisualScripting.State">
         <HintPath>/Volumes/Carl/Unity/Projects/SnowBoarderJulian/Library/ScriptAssemblies/Unity.VisualScripting.State.dll</HintPath>
-    </Reference>
-    <Reference Include="com.unity.cinemachine.editor">
-        <HintPath>/Volumes/Carl/Unity/Projects/SnowBoarderJulian/Library/ScriptAssemblies/com.unity.cinemachine.editor.dll</HintPath>
-    </Reference>
-    <Reference Include="Cinemachine">
-        <HintPath>/Volumes/Carl/Unity/Projects/SnowBoarderJulian/Library/ScriptAssemblies/Cinemachine.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
