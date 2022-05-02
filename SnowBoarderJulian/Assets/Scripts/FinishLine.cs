@@ -21,8 +21,10 @@ public class FinishLine : MonoBehaviour
         {
             levelSpeedComp.speed = slowMoFinish;
             finishEffect.Play();
+            GetComponent<AudioSource>().Play();
             Invoke("ReloadScene", reloadSceneDelayTime);
             GameEnd = true;
+            
         }
         
     }

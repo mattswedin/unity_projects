@@ -11,29 +11,40 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float speedSpeed = 40f;
     GameObject finishLine;
     FinishLine finishLineScript;
+
+    GameObject death;
+    CrashDetector deathscript;
     // Start is called before the first frame update
     void Start()
     {
         surfaceEffector2D = FindObjectOfType<SurfaceEffector2D>();
+        // death = GameObject.Find("Patree");
+        // deathscript = death.GetComponent<CrashDetector>();
         finishLine = GameObject.Find("FinishLine");
         finishLineScript = finishLine.GetComponent<FinishLine>();
         rb2d = GetComponent<Rigidbody2D>();
+        
 
     }
 
     // Update is called once per frame
     void Update()
     {
-        PatreeSpin();
-        RespondToBoost();
+    
+        if (!finishLineScript.GameEnd && !FindObjectOfType<CrashDetector>().dead)
+        {
+            PatreeSpin();
+            RespondToBoost();
+        }
+        
     }
 
     void RespondToBoost()
     {
-        if (Input.GetKey(KeyCode.Space) && !finishLineScript.GameEnd)
+        if (Input.GetKey(KeyCode.Space))
         {
             surfaceEffector2D.speed = speedSpeed;
-        } else if (!(Input.GetKey(KeyCode.Space)) && !finishLineScript.GameEnd)
+        } else if (!(Input.GetKey(KeyCode.Space)))
         {
             surfaceEffector2D.speed = normalSpeed;
         }

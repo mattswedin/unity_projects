@@ -9,7 +9,8 @@ public class CrashDetector : MonoBehaviour
     [SerializeField] float dieDelay = 2f;
     [SerializeField] ParticleSystem bloodEffect;
     [SerializeField] ParticleSystem dustTrail;
-    bool dead = false;
+    [SerializeField] AudioClip crashSFX;
+    public bool dead = false;
 
 
 
@@ -28,11 +29,12 @@ public class CrashDetector : MonoBehaviour
     }
    void OnTriggerEnter2D(Collider2D other) 
    {
-       if(other.tag == "Ground")
+       if(other.tag == "Ground" && !dead)
        {
            dead = true;
            dustTrail.Stop();
            bloodEffect.Play();
+           GetComponent<AudioSource>().PlayOneShot(crashSFX);
            Invoke("diedRestartLevel", dieDelay);
        }
        
