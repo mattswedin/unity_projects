@@ -7,8 +7,8 @@ public class FinishLine : MonoBehaviour
 {
     public bool GameEnd = false;
     GameObject levelSpeed;
-    SurfaceEffector2D levelSpeedComp;
-    [SerializeField] float slowMoFinish = 1f;
+    public SurfaceEffector2D levelSpeedComp;
+    [SerializeField] public float slowMoFinish = 1f;
     [SerializeField] float reloadSceneDelayTime = 2f;
     [SerializeField] ParticleSystem finishEffect;
     void Start() {

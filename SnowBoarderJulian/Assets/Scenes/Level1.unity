@@ -5219,6 +5219,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   GameEnd: 0
+  levelSpeedComp: {fileID: 0}
   slowMoFinish: 1
   reloadSceneDelayTime: 2
   finishEffect: {fileID: 232876103}
@@ -17667,7 +17668,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -240.59581, y: 142.981, z: -10}
+  m_LocalPosition: {x: -240.60173, y: 142.981, z: -10}
   m_LocalScale: {x: 1.0011396, y: 1.0011396, z: 1.0011396}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -18338,6 +18339,7 @@ MonoBehaviour:
   bloodEffect: {fileID: 61682594}
   dustTrail: {fileID: 504594276}
   crashSFX: {fileID: 8300000, guid: 0ce0ba8f0c59b402899c4f1060875401, type: 3}
+  deadSpeed: 5
   dead: 0
 --- !u!61 &666235037
 BoxCollider2D:
@@ -18843,7 +18845,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.7773585, y: 1}
+    m_SensorSize: {x: 1.7763578, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -18860,7 +18862,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 879437977}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -240.59581, y: 142.981, z: -10}
+  m_LocalPosition: {x: -240.60173, y: 142.981, z: -10}
   m_LocalScale: {x: 5.813664, y: 5.813664, z: 5.813664}
   m_ConstrainProportionsScale: 0
   m_Children:

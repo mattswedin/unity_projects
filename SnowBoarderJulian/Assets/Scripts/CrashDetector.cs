@@ -10,6 +10,7 @@ public class CrashDetector : MonoBehaviour
     [SerializeField] ParticleSystem bloodEffect;
     [SerializeField] ParticleSystem dustTrail;
     [SerializeField] AudioClip crashSFX;
+    [SerializeField] float deadSpeed = .5f;
     public bool dead = false;
 
 
@@ -32,6 +33,7 @@ public class CrashDetector : MonoBehaviour
        if(other.tag == "Ground" && !dead)
        {
            dead = true;
+           FindObjectOfType<FinishLine>().levelSpeedComp.speed = deadSpeed;
            dustTrail.Stop();
            bloodEffect.Play();
            GetComponent<AudioSource>().PlayOneShot(crashSFX);
