@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 
 public class Quiz : MonoBehaviour
@@ -22,9 +23,17 @@ public class Quiz : MonoBehaviour
             buttonText.text = question.GetAnswer(i);
         }
 
+    }
+
+    public void onAnswerSelected(int index)
+    {
+        if(index == question.GetCorrectAnswerIndex())
+        {
+            questionText.text = "Correct!";
+            Image buttonImage = answerButtons[index].GetComponent<Image>();
+            buttonImage.sprite = correctAnswerSprite;
+        }
         
-
-
     }
 
 }
