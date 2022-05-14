@@ -32,7 +32,7 @@ public class Timer : MonoBehaviour
             if(timerValue <= 0)
             {
                 isAnsweringQuestion = true;
-                timerValue = timeToCompleteQuestion;
+                timerValue = timeToCompleteQuestion; 
             }
         }
 
