@@ -1,0 +1,13 @@
+/Temp
+/ProjectSettings
+/Logs
+/Packages
+/Library
+/obj
+/UserSettings
+/Assets/Sprites
+/Assets/Scenes
+/Assets/Audio
+.fake
+/.vscode
+/Assembly-CSharp
