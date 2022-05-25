@@ -10,6 +10,8 @@
 /Assets/Audio
 /Assets/Tiles
 /Assets/Animations
+/Assets/Prefabs
+/Assets/Input System
 .fake
 /.vscode
 /Assembly-CSharp
