@@ -15,6 +15,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float climbSpeed = 5f;
     CapsuleCollider2D myBodyCollider;
     BoxCollider2D myFeetCollider;
+    bool isAlive = true;
    
     void Start()
     {
@@ -27,15 +28,18 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        
+        if (!isAlive) { return; }
 
         Run();
         FlipSprite();
         ClimbLadder();
+        Die();
     }
 
     void OnMove(InputValue value)
     {
+        if (!isAlive) { return; }
+
         moveInput = value.Get<Vector2>();
 
         //Stops Mickey from moving on Start
@@ -49,6 +53,8 @@ public class PlayerMovement : MonoBehaviour
  
     void OnJump(InputValue value)
     {
+        if (!isAlive) { return; }
+
         if (!myFeetCollider.IsTouchingLayers(LayerMask.GetMask("Ground"))){ return; }
         if (value.isPressed)
         {
@@ -103,6 +109,14 @@ public class PlayerMovement : MonoBehaviour
         myRigidbody.gravityScale = 0f;
         Vector2 climbVelocity = new Vector2(myRigidbody.velocity.x, moveInput.y * climbSpeed);
         myRigidbody.velocity = climbVelocity;        
+    }
+
+    void Die()
+    {
+        if (myBodyCollider.IsTouchingLayers(LayerMask.GetMask("Enemies")))
+        {
+            isAlive = false;
+        }
     }
 
 }
