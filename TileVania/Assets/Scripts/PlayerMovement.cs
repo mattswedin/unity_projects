@@ -13,9 +13,12 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float playerSpeed = 3f;
     [SerializeField] float jumpSpeed = 3f;
     [SerializeField] float climbSpeed = 5f;
+    [SerializeField] Vector2 deathKick = new Vector2(0f, 17f);
     CapsuleCollider2D myBodyCollider;
     BoxCollider2D myFeetCollider;
     bool isAlive = true;
+    [SerializeField] GameObject bullet;
+    [SerializeField] Transform bulletSpawn;
    
     void Start()
     {
@@ -59,6 +62,16 @@ public class PlayerMovement : MonoBehaviour
         if (value.isPressed)
         {
             myRigidbody.velocity += new Vector2(0f, jumpSpeed);
+        }
+    }
+
+    void OnFire(InputValue value)
+    {
+        if (!isAlive) { return; }
+
+        if (value.isPressed)
+        {
+            Instantiate(bullet, bulletSpawn.position, transform.rotation);
         }
     }
 
@@ -113,9 +126,11 @@ public class PlayerMovement : MonoBehaviour
 
     void Die()
     {
-        if (myBodyCollider.IsTouchingLayers(LayerMask.GetMask("Enemies")))
+        if (myBodyCollider.IsTouchingLayers(LayerMask.GetMask("Enemies", "Hazards")))
         {
+            myAnimator.SetTrigger("isDead");
             isAlive = false;
+            myRigidbody.velocity = deathKick;
         }
     }
 

@@ -39,6 +39,7 @@
      <Compile Include="Assets/Scripts/PlayerMovement.cs" />
      <Compile Include="Assets/Scripts/EnemyMovement.cs" />
      <Compile Include="Assets/Scripts/test.cs" />
+     <Compile Include="Assets/Scripts/Bullet.cs" />
     <Reference Include="UnityEngine">
         <HintPath>/Volumes/Carl/Unity/2021.3.0f1/Unity.app/Contents/Managed/UnityEngine/UnityEngine.dll</HintPath>
     </Reference>
