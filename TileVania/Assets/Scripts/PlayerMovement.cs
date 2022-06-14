@@ -68,7 +68,6 @@ public class PlayerMovement : MonoBehaviour
     void OnFire(InputValue value)
     {
         if (!isAlive) { return; }
-
         if (value.isPressed)
         {
             Instantiate(bullet, bulletSpawn.position, transform.rotation);
@@ -131,6 +130,7 @@ public class PlayerMovement : MonoBehaviour
             myAnimator.SetTrigger("isDead");
             isAlive = false;
             myRigidbody.velocity = deathKick;
+            FindObjectOfType<GameSession>().ProcessPlayerDeath();
         }
     }
 

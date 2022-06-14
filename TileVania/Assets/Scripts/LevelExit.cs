@@ -9,7 +9,11 @@ public class LevelExit : MonoBehaviour
 
    void OnTriggerEnter2D(Collider2D other) 
    {
-       StartCoroutine(loadLevel());
+       if (other.tag == "Player")
+       {
+            StartCoroutine(loadLevel());
+       }
+       
        
    }
 

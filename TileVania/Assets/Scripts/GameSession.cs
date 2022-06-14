@@ -26,7 +26,7 @@ public class GameSession : MonoBehaviour
     {
         if (playerLives > 1)
         {
-            // TakeLife();
+            TakeLife();
         }
         else
         {
@@ -38,5 +38,12 @@ public class GameSession : MonoBehaviour
     {
         SceneManager.LoadScene(0);
         Destroy(gameObject);
+    }
+
+    void TakeLife()
+    {
+        playerLives--;
+        int currentScene = SceneManager.GetActiveScene().buildIndex;
+        SceneManager.LoadScene(currentScene);
     }
 }
