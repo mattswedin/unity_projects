@@ -12,9 +12,7 @@ public class LevelExit : MonoBehaviour
        if (other.tag == "Player")
        {
             StartCoroutine(loadLevel());
-       }
-       
-       
+       }   
    }
 
    IEnumerator loadLevel()

@@ -133,5 +133,4 @@ public class PlayerMovement : MonoBehaviour
             FindObjectOfType<GameSession>().ProcessPlayerDeath();
         }
     }
-
 }
