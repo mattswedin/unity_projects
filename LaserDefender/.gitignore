@@ -1,0 +1,21 @@
+/Temp
+/ProjectSettings
+/Logs
+/Packages
+/Library
+/obj
+/UserSettings
+/Assets/Sprites
+/Assets/Scenes
+/Assets/Audio
+/Assets/Tiles
+/Assets/Animations
+/Assets/Font
+/Assets/TextMesh Pro
+/Assets/SFX
+/Assets/Prefabs
+/Assets/Input System
+/Assets/Materials
+.fake
+/.vscode
+/Assembly-CSharp
