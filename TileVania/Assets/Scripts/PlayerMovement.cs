@@ -19,6 +19,7 @@ public class PlayerMovement : MonoBehaviour
     bool isAlive = true;
     [SerializeField] GameObject bullet;
     [SerializeField] Transform bulletSpawn;
+    [SerializeField] float deathAnimationTime = .2f;
    
     void Start()
     {
@@ -130,7 +131,14 @@ public class PlayerMovement : MonoBehaviour
             myAnimator.SetTrigger("isDead");
             isAlive = false;
             myRigidbody.velocity = deathKick;
-            FindObjectOfType<GameSession>().ProcessPlayerDeath();
+            StartCoroutine(DeathCutScene());
+            
         }
+    }
+
+    IEnumerator DeathCutScene()
+    {
+         yield return new WaitForSecondsRealtime(deathAnimationTime);
+        FindObjectOfType<GameSession>().ProcessPlayerDeath();
     }
 }

@@ -25,6 +25,14 @@ public class EnemyMovement : MonoBehaviour
 
     void FLipEnemyFacing()
     {
-        transform.localScale = new Vector2(-(Mathf.Sign(myRigidbody.velocity.x)), 1f);
+        if (transform.localRotation.y == 0f)
+        {
+            transform.localRotation = new Quaternion(transform.localRotation.x, 180f, 0f, 0f);
+        }
+        else
+        {
+            transform.localRotation = new Quaternion(transform.localRotation.x, 0f, 0f, 0f);
+        }
+        
     }
 }
