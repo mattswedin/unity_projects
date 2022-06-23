@@ -10,12 +10,13 @@
 /Assets/Audio
 /Assets/Tiles
 /Assets/Animations
-/Assets/Font
+/Assets/Fonts
 /Assets/TextMesh Pro
 /Assets/SFX
 /Assets/Prefabs
 /Assets/Input System
 /Assets/Materials
+/Assets/Waves & Paths
 .fake
 /.vscode
 /Assembly-CSharp
