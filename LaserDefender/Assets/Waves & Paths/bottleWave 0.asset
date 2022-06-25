@@ -12,5 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51609c35fd58641d0940883ae143b256, type: 3}
   m_Name: bottleWave 0
   m_EditorClassIdentifier: 
+  enemyPrefabs:
+  - {fileID: 8308328594925429678, guid: 17641147843d44b54a7e04b12cc641d1, type: 3}
+  - {fileID: 8308328594925429678, guid: 17641147843d44b54a7e04b12cc641d1, type: 3}
+  - {fileID: 8308328594925429678, guid: 17641147843d44b54a7e04b12cc641d1, type: 3}
   pathPrefab: {fileID: 1603920624466417833, guid: 0a6bb20589ee14a6f9b7b8df8965474e, type: 3}
   moveSpeed: 3
+  timeBetweenEnemySpawns: 0.4
+  spawnTimeVarience: 0
+  minimumSpawnTime: 0.2
