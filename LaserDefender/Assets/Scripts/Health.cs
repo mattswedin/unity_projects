@@ -12,8 +12,18 @@ public class Health : MonoBehaviour
 
         if (damageDealer)
         {
-            //Take damage
-            //tell damage dealer that it hit something
+            TakeDamage(damageDealer.GetDamage());
+            damageDealer.Hit();
+        }
+    }
+
+    void TakeDamage(int damageTaken) 
+    {
+        health -= damageTaken;
+        
+        if (health <= 0)
+        {
+            Destroy(gameObject);
         }
     }
 }
