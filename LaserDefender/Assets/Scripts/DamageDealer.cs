@@ -5,13 +5,18 @@ using UnityEngine;
 public class DamageDealer : MonoBehaviour
 {
   [SerializeField] int damage = 10;
+  [SerializeField] bool isVacuum = false;
+
 
   public int GetDamage()
   {
-        return damage;
+    return damage;
   }
   public void Hit() 
   {
-    Destroy(gameObject);
+    if (!isVacuum)
+    {
+      Destroy(gameObject);
+    }
   }
 }

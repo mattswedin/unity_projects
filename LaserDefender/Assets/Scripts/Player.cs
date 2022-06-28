@@ -14,6 +14,7 @@ public class Player : MonoBehaviour
     [SerializeField] float paddingBottom;
     Vector2 minBounds;
     Vector2 maxBounds;
+    public bool stunned = false;
 
     Shooter shooter;
 
@@ -29,7 +30,10 @@ public class Player : MonoBehaviour
     
     void Update()
     {
-        Move();
+        if (!stunned)
+        {
+            Move();
+        }   
     }
 
     void Move()
@@ -49,9 +53,10 @@ public class Player : MonoBehaviour
 
     void OnFire(InputValue button) 
     {
-        shooter.isFiring = button.isPressed;
-        Debug.Log(shooter.isFiring);
-
+        if (!stunned)
+        {
+            shooter.isFiring = button.isPressed;
+        }
     }
 
     void InitBounds()

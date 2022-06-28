@@ -13,11 +13,6 @@ public class Shooter : MonoBehaviour
 
     public bool isFiring;
 
-    void Start()
-    {
-        
-    }
-
     void FixedUpdate()
     {
         Fire();
