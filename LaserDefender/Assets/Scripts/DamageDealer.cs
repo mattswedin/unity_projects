@@ -5,18 +5,39 @@ using UnityEngine;
 public class DamageDealer : MonoBehaviour
 {
   [SerializeField] int damage = 10;
-  [SerializeField] bool isVacuum = false;
+  [SerializeField] bool isEnemy = false;
+  [SerializeField] bool isClaws = false;
+  [SerializeField] ParticleSystem scratchspolsion;
 
 
-  public int GetDamage()
+
+    public int GetDamage()
   {
     return damage;
   }
   public void Hit() 
   {
-    if (!isVacuum)
+    if (!isEnemy)
     {
       Destroy(gameObject);
     }
+    if (isClaws && !isEnemy)
+    {
+      if (scratchspolsion != null)
+      {
+        PlayScratchExplosion();
+        Destroy(gameObject);
+      }
+    }
   }
+
+  void PlayScratchExplosion()
+  {
+      if (scratchspolsion != null)
+      {
+          ParticleSystem instance = Instantiate(scratchspolsion, transform.position, Quaternion.identity);
+          Destroy(instance.gameObject, instance.main.duration + instance.main.startLifetime.constantMax);
+      }
+  }
+
 }

@@ -36,7 +36,6 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
-     <Compile Include="Assets/Scripts/test.cs" />
      <Compile Include="Assets/Scripts/WaveConfigSO.cs" />
      <Compile Include="Assets/Scripts/EnemyShooter.cs" />
      <Compile Include="Assets/Scripts/EnemySpawner.cs" />

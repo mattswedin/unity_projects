@@ -33,11 +33,6 @@ public class Shooter : MonoBehaviour
             }
             isFiring = false;
 
-        }
-         
+        }   
     }
-   
-    
-
-    
 }

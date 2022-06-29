@@ -1,21 +1,27 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Health : MonoBehaviour
 {
+    // [SerializeField] ParticleSystem scratchspolsion;
     [SerializeField] int health = 50;
     [Header("Player Only")]
     [SerializeField] bool isPlayer = false;
     Rigidbody2D playerRB;
     [SerializeField] float suckPower = 2f;
+    [SerializeField] float suckTime = 20f;
     [SerializeField] float stunTime = 30f;
     [SerializeField] float stunMovement = .01f;
+    Player playerScript;
+    
 
     void Start() {
 
         if (isPlayer){
             playerRB = GetComponent<Rigidbody2D>();
+            playerScript = FindObjectOfType<Player>();
         }
 
     }
@@ -28,30 +34,57 @@ public class Health : MonoBehaviour
         {
             if (other.tag == "lightningBolt" && isPlayer)
             {
-                StartCoroutine(Vibrate());
+                StartCoroutine(Stunned());
                 TakeDamage(damageDealer.GetDamage());
                 damageDealer.Hit();
             }
             else if (other.tag == "dustSuck" && isPlayer)
             {
-                playerRB.velocity += new Vector2(0f, suckPower);
+                playerScript.stunned = false;
+                StartCoroutine(Sucked());
+                TakeDamage(damageDealer.GetDamage());
+                damageDealer.Hit();
+            }
+            else if (isPlayer)
+            {
                 TakeDamage(damageDealer.GetDamage());
                 damageDealer.Hit();
             }
             else
             {
+               
                 TakeDamage(damageDealer.GetDamage());
+                // PlayScratchExplosion();
                 damageDealer.Hit();
             }
         }
        
     }
 
-    IEnumerator Vibrate()
+    // void PlayScratchExplosion()
+    // {
+    //    if (scratchspolsion != null)
+    //    {
+    //     ParticleSystem instance = Instantiate(scratchspolsion, transform.position, Quaternion.identity);
+    //     Destroy(instance.gameObject, instance.main.duration + instance.main.startLifetime.constantMax);
+    //    }
+    // }
+
+    IEnumerator Sucked()
+    {
+        for (int i = 0; i < 1; i++)
+        {
+            playerRB.velocity += new Vector2(0f, suckPower);
+            yield return new WaitForSeconds(suckTime);
+        }
+        playerRB.velocity = Vector2.zero;
+    }
+
+    IEnumerator Stunned()
     {
         Vector3 ogPosition = transform.position;
 
-        Player playerScript = FindObjectOfType<Player>();
+        
         playerScript.stunned = true;
         for (int i = 0; i < stunTime; i++){
             if (transform.position.x > ogPosition.x){
@@ -69,13 +102,6 @@ public class Health : MonoBehaviour
         transform.position = ogPosition;
         playerScript.stunned = false;
 
-    }
-
-    void OnTriggerExit2D(Collider2D other) {
-        if (isPlayer)
-        {
-            playerRB.velocity = Vector2.zero;
-        }
     }
 
     void TakeDamage(int damageTaken) 
