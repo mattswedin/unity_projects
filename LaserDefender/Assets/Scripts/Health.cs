@@ -15,11 +15,19 @@ public class Health : MonoBehaviour
     [SerializeField] float stunTime = 30f;
     [SerializeField] float stunMovement = .01f;
     Player playerScript;
+
+    [SerializeField] bool applyCameraShake;
+    CameraShake cameraShake;
     
+    void Awake() 
+    {
+        cameraShake = Camera.main.GetComponent<CameraShake>();
+    }
 
     void Start() {
 
-        if (isPlayer){
+        if (isPlayer)
+        {
             playerRB = GetComponent<Rigidbody2D>();
             playerScript = FindObjectOfType<Player>();
         }
@@ -48,13 +56,13 @@ public class Health : MonoBehaviour
             else if (isPlayer)
             {
                 TakeDamage(damageDealer.GetDamage());
+                ShakeCamera();
                 damageDealer.Hit();
             }
             else
             {
                
                 TakeDamage(damageDealer.GetDamage());
-                // PlayScratchExplosion();
                 damageDealer.Hit();
             }
         }
@@ -111,6 +119,14 @@ public class Health : MonoBehaviour
         if (health <= 0)
         {
             Destroy(gameObject);
+        }
+    }
+
+    void ShakeCamera() 
+    {
+        if (cameraShake != null && applyCameraShake)
+        {
+            cameraShake.Play();
         }
     }
 }

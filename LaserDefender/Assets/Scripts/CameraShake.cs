@@ -25,11 +25,10 @@ public class CameraShake : MonoBehaviour
         float elapsedTime = 0;
         while(elapsedTime < shakeDuration)
         {
-            // transform.position = initialPosition + (Vector3)Random.insideUnitCircle * shakeMagnitude;
+            transform.position = initialPosition + (Vector3)UnityEngine.Random.insideUnitSphere * shakeMagnitude;
             elapsedTime += Time.deltaTime;
             yield return new WaitForEndOfFrame();
         }
-        transform.position = initialPosition;
-       
+        transform.position = initialPosition;  
     }
 }
