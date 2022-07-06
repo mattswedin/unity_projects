@@ -10,10 +10,16 @@ public class Shooter : MonoBehaviour
     [SerializeField] float projectileLifetime = 5f;
     // [SerializeField] float fireRate = .2f;
     Coroutine firingCoroutine;
+    AudioPlayer audioPlayer;
 
     public bool isFiring;
 
-    void FixedUpdate()
+    void Awake() 
+    {
+        audioPlayer = FindObjectOfType<AudioPlayer>();
+    }
+
+    void Update()
     {
         Fire();
     }
@@ -28,6 +34,7 @@ public class Shooter : MonoBehaviour
             Rigidbody2D rb = instance.GetComponent<Rigidbody2D>();
             if (rb != null)
             {
+                audioPlayer.PlayShootingClipPlayer();
                 rb.velocity = transform.up * projectileSpeed;
                 
             }

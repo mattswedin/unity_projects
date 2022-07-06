@@ -12,12 +12,13 @@ public class EnemyShooter : MonoBehaviour
     [SerializeField] float firingRateVarience = 0f;
     [SerializeField] float minimumFiringRate = .1f;
     Coroutine firingCoroutine;
+    AudioPlayer audioPlayer;
 
     public bool isFiring;
 
-    void Start()
+    void Awake()
     {
-        
+        audioPlayer = FindObjectOfType<AudioPlayer>();
     }
 
     void Update()
