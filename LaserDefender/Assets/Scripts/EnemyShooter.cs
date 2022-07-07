@@ -11,7 +11,9 @@ public class EnemyShooter : MonoBehaviour
     [SerializeField] float baseFiringRate = .2f;
     [SerializeField] float firingRateVarience = 0f;
     [SerializeField] float minimumFiringRate = .1f;
+    [SerializeField] string enemyType = "vacuum";
     Coroutine firingCoroutine;
+    
     AudioPlayer audioPlayer;
 
     public bool isFiring;
@@ -20,6 +22,15 @@ public class EnemyShooter : MonoBehaviour
     {
         audioPlayer = FindObjectOfType<AudioPlayer>();
     }
+
+    void Start() 
+    {
+        if (enemyType == "vacuum") 
+        {
+            audioPlayer.PlayShootingClipEnemy(enemyType);
+        }
+    }
+
 
     void Update()
     {
@@ -48,7 +59,13 @@ public class EnemyShooter : MonoBehaviour
             Rigidbody2D rb = instance.GetComponent<Rigidbody2D>();
             if (rb != null) 
             {
+                if (enemyType != "vacuum")
+                {
+                    audioPlayer.PlayShootingClipEnemy(enemyType);
+                }
+                
                 rb.velocity = -transform.up * projectileSpeed;
+                
             }
             Destroy(instance, projectileLifetime);
 

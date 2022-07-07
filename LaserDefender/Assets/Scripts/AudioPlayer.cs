@@ -9,8 +9,23 @@ public class AudioPlayer : MonoBehaviour
     [SerializeField] [Range(0f, 1f)] float shootingVolume = 1f;
 
     [Header("Enemy")]
-    [SerializeField] AudioClip vacuum;
-    [SerializeField][Range(0f, 1f)] float vacuumVolume = 1f;
+
+    [SerializeField] AudioClip thunder;
+    [SerializeField][Range(0f, 1f)] float thunderVolume = 1f;
+
+    [SerializeField] AudioClip sprayBottle;
+    [SerializeField][Range(0f, 1f)] float sprayBottleVolume = 1f;
+
+    [Header("Damage")]
+    [SerializeField] AudioClip damage;
+    [SerializeField][Range(0f, 1f)] float damageVolume = 1f;
+
+    AudioSource vacuumAudio;
+
+    void Awake() 
+    {
+        vacuumAudio = GetComponent<AudioSource>();
+    }
 
     public void PlayShootingClipPlayer() 
     {
@@ -25,13 +40,40 @@ public class AudioPlayer : MonoBehaviour
         }
     }
 
-    public void PlayVacuumClip() 
+    public void PlayShootingClipEnemy(string enemy) 
     {
-        if (vacuum != null) 
+        if (vacuumAudio != null && enemy == "vacuum") 
         {
-            AudioSource.PlayClipAtPoint(vacuum, 
-                                        Camera.main.transform.position, 
-                                        vacuumVolume);
+            vacuumAudio.Play();
         }
+
+        if (thunder != null && enemy == "thunder")
+        {
+            AudioSource.PlayClipAtPoint(thunder,
+                                        Camera.main.transform.position,
+                                        thunderVolume);
+        }
+
+        if (sprayBottle != null && enemy == "sprayBottle")
+        {
+            AudioSource.PlayClipAtPoint(sprayBottle,
+                                        Camera.main.transform.position,
+                                        sprayBottleVolume);
+        }
+    }
+
+    public void PlayDamageClip() 
+    {
+        if (damage != null)
+        {
+            AudioSource.PlayClipAtPoint(damage,
+                                        Camera.main.transform.position,
+                                        damageVolume);
+        }
+    }
+
+    public void StopAudio() 
+    {
+        vacuumAudio.Stop();
     }
 }

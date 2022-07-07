@@ -17,11 +17,14 @@ public class Health : MonoBehaviour
     Player playerScript;
 
     [SerializeField] bool applyCameraShake;
+    [SerializeField] bool isVacuum;
     CameraShake cameraShake;
+    AudioPlayer audioPlayer;
     
     void Awake() 
     {
         cameraShake = Camera.main.GetComponent<CameraShake>();
+        audioPlayer = FindObjectOfType<AudioPlayer>();
     }
 
     void Start() {
@@ -57,26 +60,17 @@ public class Health : MonoBehaviour
             {
                 TakeDamage(damageDealer.GetDamage());
                 ShakeCamera();
+                
                 damageDealer.Hit();
             }
             else
             {
-               
                 TakeDamage(damageDealer.GetDamage());
                 damageDealer.Hit();
             }
         }
        
     }
-
-    // void PlayScratchExplosion()
-    // {
-    //    if (scratchspolsion != null)
-    //    {
-    //     ParticleSystem instance = Instantiate(scratchspolsion, transform.position, Quaternion.identity);
-    //     Destroy(instance.gameObject, instance.main.duration + instance.main.startLifetime.constantMax);
-    //    }
-    // }
 
     IEnumerator Sucked()
     {
@@ -114,10 +108,16 @@ public class Health : MonoBehaviour
 
     void TakeDamage(int damageTaken) 
     {
+        
         health -= damageTaken;
         
         if (health <= 0)
         {
+            if (isVacuum) 
+            {
+                audioPlayer.StopAudio();
+            }
+            audioPlayer.PlayDamageClip();
             Destroy(gameObject);
         }
     }
