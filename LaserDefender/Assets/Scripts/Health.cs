@@ -14,15 +14,21 @@ public class Health : MonoBehaviour
     [SerializeField] float suckTime = 20f;
     [SerializeField] float stunTime = 30f;
     [SerializeField] float stunMovement = .01f;
+    [SerializeField] bool applyCameraShake;
     Player playerScript;
 
-    [SerializeField] bool applyCameraShake;
+    [Header("Enemy Only")]
+    [SerializeField] int enemyValue = 0;
+
+    
     [SerializeField] bool isVacuum;
     CameraShake cameraShake;
     AudioPlayer audioPlayer;
+    ScoreKeeper scoreKeeper;
     
     void Awake() 
     {
+        scoreKeeper = FindObjectOfType<ScoreKeeper>();
         cameraShake = Camera.main.GetComponent<CameraShake>();
         audioPlayer = FindObjectOfType<AudioPlayer>();
     }
@@ -35,6 +41,11 @@ public class Health : MonoBehaviour
             playerScript = FindObjectOfType<Player>();
         }
 
+    }
+
+    public float GetRemainingHealth() 
+    {
+        return health;
     }
 
     void OnTriggerEnter2D(Collider2D other) 
@@ -115,8 +126,14 @@ public class Health : MonoBehaviour
         {
             if (isVacuum) 
             {
-                audioPlayer.StopAudio();
+                audioPlayer.StopVacuumAudio();
             }
+
+            if (!isPlayer)
+            {
+                scoreKeeper.AddToScore(enemyValue);
+            }
+
             audioPlayer.PlayDamageClip();
             Destroy(gameObject);
         }

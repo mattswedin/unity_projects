@@ -7,6 +7,8 @@ public class AudioPlayer : MonoBehaviour
     [Header("Player")]
     [SerializeField] List<AudioClip> shootingClip;
     [SerializeField] [Range(0f, 1f)] float shootingVolume = 1f;
+    [SerializeField] List<AudioClip> slashingClip;
+    [SerializeField][Range(0f, 1f)] float slashingVolume = 1f;
 
     [Header("Enemy")]
 
@@ -29,14 +31,18 @@ public class AudioPlayer : MonoBehaviour
 
     public void PlayShootingClipPlayer() 
     {
-        System.Random random = new System.Random();
-        int randomNum = random.Next(0, shootingClip.Count);
+        
         if(shootingClip != null) 
         {
+           PlayRandomClipinList(shootingClip, shootingVolume);
+        }
+    }
 
-            AudioSource.PlayClipAtPoint(shootingClip[randomNum], 
-                                        Camera.main.transform.position, 
-                                        shootingVolume);
+    public void PlayShootingExplodeClipPlayer() 
+    {
+        if (slashingClip != null)
+        {
+            PlayRandomClipinList(slashingClip, slashingVolume);
         }
     }
 
@@ -49,16 +55,12 @@ public class AudioPlayer : MonoBehaviour
 
         if (thunder != null && enemy == "thunder")
         {
-            AudioSource.PlayClipAtPoint(thunder,
-                                        Camera.main.transform.position,
-                                        thunderVolume);
+            PlayClip(thunder, thunderVolume);
         }
 
         if (sprayBottle != null && enemy == "sprayBottle")
         {
-            AudioSource.PlayClipAtPoint(sprayBottle,
-                                        Camera.main.transform.position,
-                                        sprayBottleVolume);
+            PlayClip(sprayBottle, sprayBottleVolume);
         }
     }
 
@@ -66,13 +68,25 @@ public class AudioPlayer : MonoBehaviour
     {
         if (damage != null)
         {
-            AudioSource.PlayClipAtPoint(damage,
-                                        Camera.main.transform.position,
-                                        damageVolume);
+            PlayClip(damage, damageVolume);
         }
     }
 
-    public void StopAudio() 
+    void PlayClip(AudioClip clip, float speed) 
+    {
+        Vector3 cameraPos = Camera.main.transform.position;
+        AudioSource.PlayClipAtPoint(clip, cameraPos, speed);
+    }
+
+    void PlayRandomClipinList(List<AudioClip> clips, float clipVolume)
+    {
+        System.Random random = new System.Random();
+        int randomNum = random.Next(0, clips.Count);
+        PlayClip(clips[randomNum], clipVolume);
+
+    }
+
+    public void StopVacuumAudio() 
     {
         vacuumAudio.Stop();
     }

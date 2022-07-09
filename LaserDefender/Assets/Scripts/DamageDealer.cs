@@ -8,13 +8,19 @@ public class DamageDealer : MonoBehaviour
   [SerializeField] bool isEnemy = false;
   [SerializeField] bool isClaws = false;
   [SerializeField] ParticleSystem scratchspolsion;
+  AudioPlayer audioPlayer;
 
 
+  void Awake() 
+  {
+    audioPlayer = FindObjectOfType<AudioPlayer>();
+  }
 
-    public int GetDamage()
+  public int GetDamage()
   {
     return damage;
   }
+
   public void Hit() 
   {
     if (!isEnemy)
@@ -25,6 +31,7 @@ public class DamageDealer : MonoBehaviour
     {
       if (scratchspolsion != null)
       {
+        audioPlayer.PlayShootingExplodeClipPlayer();
         PlayScratchExplosion();
         Destroy(gameObject);
       }

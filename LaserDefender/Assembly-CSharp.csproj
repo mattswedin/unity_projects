@@ -37,6 +37,7 @@
   </PropertyGroup>
   <ItemGroup>
      <Compile Include="Assets/Scripts/SpriteScroller.cs" />
+     <Compile Include="Assets/Scripts/AudioPlayer.cs" />
      <Compile Include="Assets/Scripts/WaveConfigSO.cs" />
      <Compile Include="Assets/Scripts/EnemyShooter.cs" />
      <Compile Include="Assets/Scripts/EnemySpawner.cs" />
@@ -46,7 +47,7 @@
      <Compile Include="Assets/Scripts/DamageDealer.cs" />
      <Compile Include="Assets/Scripts/Player.cs" />
      <Compile Include="Assets/Scripts/PathFinder.cs" />
-     <Compile Include="Assets/Scripts/AudioPlayer.cs" />
+     <Compile Include="Assets/Scripts/ScoreKeeper.cs" />
      <None Include="Assets/TextMesh Pro/Shaders/TMPro.cginc" />
      <None Include="Assets/TextMesh Pro/Shaders/TMP_SDF-Mobile Overlay.shader" />
      <None Include="Assets/TextMesh Pro/Shaders/TMP_Bitmap.shader" />
