@@ -25,9 +25,11 @@ public class Health : MonoBehaviour
     CameraShake cameraShake;
     AudioPlayer audioPlayer;
     ScoreKeeper scoreKeeper;
+    UIDisplay uIDisplay;
     
     void Awake() 
     {
+        uIDisplay = FindObjectOfType<UIDisplay>();
         scoreKeeper = FindObjectOfType<ScoreKeeper>();
         cameraShake = Camera.main.GetComponent<CameraShake>();
         audioPlayer = FindObjectOfType<AudioPlayer>();
@@ -69,6 +71,7 @@ public class Health : MonoBehaviour
             }
             else if (isPlayer)
             {
+                uIDisplay.ChangeFace("takeDamage");
                 TakeDamage(damageDealer.GetDamage());
                 ShakeCamera();
                 

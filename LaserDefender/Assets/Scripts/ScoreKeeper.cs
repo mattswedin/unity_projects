@@ -4,22 +4,22 @@ using UnityEngine;
 
 public class ScoreKeeper : MonoBehaviour
 {
-    int currentScore = 0;
+    float currentScore = 000000;
 
-    public int GetCurrentScore() 
+    public float GetCurrentScore() 
     {
         return currentScore;
     }
 
-    public void AddToScore(int amount) 
+    public void AddToScore(float amount) 
     {
         currentScore += amount;
-        Mathf.Clamp(currentScore, 0, int.MaxValue);
+        Mathf.Clamp(currentScore, 000000, 999999);
         Debug.Log(currentScore);
     }
 
     public void ResetScore() 
     {
-        currentScore = 0;
+        currentScore = 000000;
     }
 }
