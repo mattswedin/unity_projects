@@ -23,10 +23,15 @@ public class UIDisplay : MonoBehaviour
 
     }
 
+    void Start() 
+    {
+        healthDisplay.maxValue = health.GetRemainingHealth();
+    }
+
     void Update() 
     {
         healthDisplay.value = health.GetRemainingHealth();
-        scoreDisplay.text = scoreKeeper.GetCurrentScore().ToString();
+        scoreDisplay.text = scoreKeeper.GetCurrentScore().ToString("000000");
     }
 
     public void ChangeFace(string action) 

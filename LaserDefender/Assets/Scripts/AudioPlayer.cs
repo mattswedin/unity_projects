@@ -9,6 +9,8 @@ public class AudioPlayer : MonoBehaviour
     [SerializeField] [Range(0f, 1f)] float shootingVolume = 1f;
     [SerializeField] List<AudioClip> slashingClip;
     [SerializeField][Range(0f, 1f)] float slashingVolume = 1f;
+    [SerializeField] AudioClip hitMeow;
+    [SerializeField] [Range(0f, 1f)] float hitMeowVolume = .5f;
 
     [Header("Enemy")]
 
@@ -29,6 +31,11 @@ public class AudioPlayer : MonoBehaviour
         vacuumAudio = GetComponent<AudioSource>();
     }
 
+    void Start() 
+    {
+        
+    }
+
     public void PlayShootingClipPlayer() 
     {
         
@@ -36,6 +43,11 @@ public class AudioPlayer : MonoBehaviour
         {
            PlayRandomClipinList(shootingClip, shootingVolume);
         }
+    }
+
+    public void PlayTakeDamage() {
+        
+        PlayClip(hitMeow, hitMeowVolume);
     }
 
     public void PlayShootingExplodeClipPlayer() 

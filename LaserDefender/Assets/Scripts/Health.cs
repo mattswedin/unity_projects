@@ -72,6 +72,7 @@ public class Health : MonoBehaviour
             else if (isPlayer)
             {
                 uIDisplay.ChangeFace("takeDamage");
+                audioPlayer.PlayTakeDamage();
                 TakeDamage(damageDealer.GetDamage());
                 ShakeCamera();
                 
@@ -124,6 +125,7 @@ public class Health : MonoBehaviour
     {
         
         health -= damageTaken;
+       
         
         if (health <= 0)
         {
