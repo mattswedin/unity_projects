@@ -5,6 +5,12 @@ using UnityEngine;
 public class ScoreKeeper : MonoBehaviour
 {
     float currentScore = 000000;
+    static ScoreKeeper instance;
+
+    void Awake() 
+    {
+        ManageSingleton();
+    }
 
     public float GetCurrentScore() 
     {
@@ -21,5 +27,19 @@ public class ScoreKeeper : MonoBehaviour
     public void ResetScore() 
     {
         currentScore = 000000;
+    }
+
+    void ManageSingleton()
+    {
+        if (instance != null)
+        {
+            gameObject.SetActive(false);
+            Destroy(gameObject);
+        }
+        else
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
     }
 }

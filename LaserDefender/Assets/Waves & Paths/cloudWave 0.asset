@@ -13,9 +13,7 @@ MonoBehaviour:
   m_Name: cloudWave 0
   m_EditorClassIdentifier: 
   enemyPrefabs:
-  - {fileID: 8843496173337205471, guid: ad8eeab281be24c94b3ef76ad5c312c2, type: 3}
-  - {fileID: 8843496173337205471, guid: ad8eeab281be24c94b3ef76ad5c312c2, type: 3}
-  - {fileID: 8843496173337205471, guid: ad8eeab281be24c94b3ef76ad5c312c2, type: 3}
+  - {fileID: 8843496173337205471, guid: c471b857746e7487cb7c56f3d7d9b6a1, type: 3}
   pathPrefab: {fileID: 2217623276474462125, guid: 5d116f68536744bf3875b1d64116c3e4, type: 3}
   moveSpeed: 1
   timeBetweenEnemySpawns: 2

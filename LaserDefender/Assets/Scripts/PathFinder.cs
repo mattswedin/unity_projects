@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PathFinder : MonoBehaviour
 {
+    [SerializeField] bool isBoss;
     EnemySpawner enemySpawner;
     WaveConfigSO waveConfig;
     List<Transform> waypoints;
@@ -24,7 +25,15 @@ public class PathFinder : MonoBehaviour
 
     void Update()
     {
-        FollowPath();
+        if(isBoss)
+        {
+            FollowBossPath();
+        }
+        else
+        {
+            FollowPath();
+        }
+        
     }
 
     void FollowPath()
@@ -45,5 +54,30 @@ public class PathFinder : MonoBehaviour
         {
             Destroy(gameObject);
         }
+    }
+
+    void FollowBossPath()
+    {
+        do
+        {
+            Vector3 targetPosition = waypoints[waypointIndex].position;
+            float delta = waveConfig.GetMoveSpeed() * Time.deltaTime;
+            transform.position = Vector2.MoveTowards(transform.position, targetPosition, delta);
+            if (transform.position == targetPosition)
+            {
+                if (waypointIndex == (waypoints.Count - 1)) 
+                {
+                    waypointIndex = 0;
+                }
+                else
+                {
+                    waypointIndex++;
+                }
+                
+            }
+
+        }
+        while(!enemySpawner.bossDefeated);
+      
     }
 }

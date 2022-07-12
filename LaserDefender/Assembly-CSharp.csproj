@@ -38,12 +38,14 @@
   <ItemGroup>
      <Compile Include="Assets/Scripts/SpriteScroller.cs" />
      <Compile Include="Assets/Scripts/AudioPlayer.cs" />
+     <Compile Include="Assets/Scripts/UIGameOver.cs" />
      <Compile Include="Assets/Scripts/WaveConfigSO.cs" />
      <Compile Include="Assets/Scripts/ScoreKeeper.cs" />
      <Compile Include="Assets/Scripts/EnemyShooter.cs" />
      <Compile Include="Assets/Scripts/EnemySpawner.cs" />
      <Compile Include="Assets/Scripts/Shooter.cs" />
      <Compile Include="Assets/Scripts/Health.cs" />
+     <Compile Include="Assets/Scripts/LevelManager.cs" />
      <Compile Include="Assets/Scripts/UIDisplay.cs" />
      <Compile Include="Assets/Scripts/CameraShake.cs" />
      <Compile Include="Assets/Scripts/DamageDealer.cs" />

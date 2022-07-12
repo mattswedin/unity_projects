@@ -15,6 +15,8 @@ public class UIDisplay : MonoBehaviour
     ScoreKeeper scoreKeeper;
     [SerializeField] Sprite normalFace;
     [SerializeField] Sprite takeDamageFace;
+    [SerializeField] Sprite shockedFace;
+    [SerializeField] Sprite suckedFace;
     
 
     void Awake() 
@@ -38,17 +40,31 @@ public class UIDisplay : MonoBehaviour
     {
         if (action == "takeDamage")
         {
-            StartCoroutine(TakeDamageFace(takeDamageFace));
+            StartCoroutine(TakeDamageFace());
         }
+        else if (action == "shocked")
+        {
+            faceDisplay.sprite = shockedFace;
+        }
+        else if (action == "sucked") 
+        {
+            faceDisplay.sprite = suckedFace;
+        }
+        
     }
 
-    IEnumerator TakeDamageFace(Sprite facePicture)
+    public void NormalFace() 
+    {
+        faceDisplay.sprite = normalFace;
+    }
+
+    IEnumerator TakeDamageFace()
     {
         for (int i = 0; i < 1; i++)
         {
             faceDisplay.sprite = takeDamageFace;
             yield return new WaitForSeconds(faceTimeBeforeNormal);
         }
-        faceDisplay.sprite = normalFace;
+        NormalFace();
     }
 }

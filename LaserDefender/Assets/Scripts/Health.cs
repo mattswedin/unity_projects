@@ -16,6 +16,9 @@ public class Health : MonoBehaviour
     [SerializeField] float stunMovement = .01f;
     [SerializeField] bool applyCameraShake;
     Player playerScript;
+    LevelManager levelManager;
+    [Header("Boss Only")]
+    [SerializeField] bool isBoss = false;
 
     [Header("Enemy Only")]
     [SerializeField] int enemyValue = 0;
@@ -25,10 +28,13 @@ public class Health : MonoBehaviour
     CameraShake cameraShake;
     AudioPlayer audioPlayer;
     ScoreKeeper scoreKeeper;
+    EnemySpawner enemySpawner;
     UIDisplay uIDisplay;
     
     void Awake() 
     {
+        enemySpawner = FindObjectOfType<EnemySpawner>();
+        levelManager = FindObjectOfType<LevelManager>();
         uIDisplay = FindObjectOfType<UIDisplay>();
         scoreKeeper = FindObjectOfType<ScoreKeeper>();
         cameraShake = Camera.main.GetComponent<CameraShake>();
@@ -58,12 +64,15 @@ public class Health : MonoBehaviour
         {
             if (other.tag == "lightningBolt" && isPlayer)
             {
+                audioPlayer.PlayTakeDamage();
+                uIDisplay.ChangeFace("shocked");
                 StartCoroutine(Stunned());
                 TakeDamage(damageDealer.GetDamage());
                 damageDealer.Hit();
             }
             else if (other.tag == "dustSuck" && isPlayer)
             {
+                uIDisplay.ChangeFace("sucked");
                 playerScript.stunned = false;
                 StartCoroutine(Sucked());
                 TakeDamage(damageDealer.GetDamage());
@@ -75,7 +84,6 @@ public class Health : MonoBehaviour
                 audioPlayer.PlayTakeDamage();
                 TakeDamage(damageDealer.GetDamage());
                 ShakeCamera();
-                
                 damageDealer.Hit();
             }
             else
@@ -89,12 +97,15 @@ public class Health : MonoBehaviour
 
     IEnumerator Sucked()
     {
+        
         for (int i = 0; i < 1; i++)
         {
             playerRB.velocity += new Vector2(0f, suckPower);
             yield return new WaitForSeconds(suckTime);
         }
+        
         playerRB.velocity = Vector2.zero;
+        uIDisplay.NormalFace();
     }
 
     IEnumerator Stunned()
@@ -116,6 +127,7 @@ public class Health : MonoBehaviour
             Debug.Log(ogPosition);
             yield return new WaitForSeconds(.01f);
         }
+        uIDisplay.NormalFace();
         transform.position = ogPosition;
         playerScript.stunned = false;
 
@@ -137,6 +149,16 @@ public class Health : MonoBehaviour
             if (!isPlayer)
             {
                 scoreKeeper.AddToScore(enemyValue);
+            }
+
+            if (isPlayer)
+            {
+                levelManager.LoadGameOver();
+            }
+
+            if (isBoss)
+            {
+                enemySpawner.bossDefeated = true;
             }
 
             audioPlayer.PlayDamageClip();

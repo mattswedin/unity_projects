@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class AudioPlayer : MonoBehaviour
 {
@@ -26,14 +27,44 @@ public class AudioPlayer : MonoBehaviour
 
     AudioSource vacuumAudio;
 
+    static AudioPlayer instance;
+
     void Awake() 
     {
+        ManageSingleton();
         vacuumAudio = GetComponent<AudioSource>();
     }
 
-    void Start() 
+    void Update() 
     {
-        
+        int currentScene = SceneManager.GetActiveScene().buildIndex;
+        Debug.Log(currentScene);
+        if (currentScene == 2)
+        {
+            Debug.Log("why then");
+            Destroy(instance);
+            gameObject.SetActive(false);
+            Destroy(gameObject);
+        }
+    }
+
+    void ManageSingleton() 
+    { 
+        if(instance != null)
+        {
+            gameObject.SetActive(false);
+            Destroy(gameObject);
+        }
+        else
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+    }
+
+    public void StopAllAudio() 
+    {
+        Destroy(gameObject);
     }
 
     public void PlayShootingClipPlayer() 
