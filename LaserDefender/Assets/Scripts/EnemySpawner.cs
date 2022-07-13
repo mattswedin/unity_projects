@@ -6,25 +6,19 @@ public class EnemySpawner : MonoBehaviour
 {
     [SerializeField] List<WaveConfigSO> waveConfigs;
     [SerializeField] float timeBetweenWaves = 0f;
-    // [SerializeField] float bossTime = 3f;
-
-    [SerializeField] bool isLooping = true;
-    bool isBossTime = false;
     public bool bossDefeated = false;
     [SerializeField] WaveConfigSO bossWave;
     WaveConfigSO currentWave;
-    ScoreKeeper scorekeeper;
-    float startingScore;
+    LevelManager levelManager;
 
     void Awake() 
     {
-        scorekeeper = FindObjectOfType<ScoreKeeper>();
+        levelManager = FindObjectOfType<LevelManager>();
     }
     
 
     void Start()
     {
-        startingScore = scorekeeper.GetCurrentScore();
         StartCoroutine(SpawnEnemyWaves());
     }
 
@@ -32,21 +26,9 @@ public class EnemySpawner : MonoBehaviour
 
         if (bossDefeated)
         {
-            Debug.Log("Beat Boss");
-            isBossTime = false;
-            bossDefeated = false;
-            startingScore = scorekeeper.GetCurrentScore();
-            StartCoroutine(SpawnEnemyWaves());
-            
+            levelManager.LoadNextLevel();
         }
 
-        if (scorekeeper.GetCurrentScore() >= (startingScore + 500f))
-        {
-            Debug.Log("BOSS TIME");
-            isBossTime = true;
-            startingScore = scorekeeper.GetCurrentScore();
-
-        }
     }
 
     public WaveConfigSO GetCurrentWave() 
@@ -56,37 +38,29 @@ public class EnemySpawner : MonoBehaviour
 
     IEnumerator SpawnEnemyWaves() 
     {
-        do {
-            foreach(WaveConfigSO wave in waveConfigs)
+        
+        foreach(WaveConfigSO wave in waveConfigs)
+        {
+            currentWave = wave;
+
+            for (int i = 0; i < currentWave.GetEnemyCount(); i++)
             {
-                currentWave = wave;
+                Instantiate(currentWave.GetEnemyPrefab(i),
+                            currentWave.GetStartingWaypoint().position,
+                            Quaternion.identity,
+                            transform);
+                yield return new WaitForSeconds(currentWave.GetRandomSpawnTime());
 
-                if(isBossTime)
-                {
-                    currentWave = bossWave;
-                    break;
-                    
-                }
-
-                for (int i = 0; i < currentWave.GetEnemyCount(); i++)
-                {
-                    Instantiate(currentWave.GetEnemyPrefab(i),
-                                currentWave.GetStartingWaypoint().position,
-                                Quaternion.identity,
-                                transform);
-                    yield return new WaitForSeconds(currentWave.GetRandomSpawnTime());
-
-                }
-                yield return new WaitForSeconds(timeBetweenWaves);
             }
+            yield return new WaitForSeconds(timeBetweenWaves);
         }
-        while (isLooping && !isBossTime);
 
+        currentWave = bossWave;
+        
         Instantiate(bossWave.GetEnemyPrefab(0),
             currentWave.GetStartingWaypoint().position,
             Quaternion.identity,
             transform);
-
        
     }
 

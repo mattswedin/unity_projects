@@ -16,10 +16,15 @@ public class Player : MonoBehaviour
     Vector2 maxBounds;
     public bool stunned = false;
 
+    static Player instance;
+
     Shooter shooter;
+
+    
 
     void Awake() 
     {
+        ManageSingleton();
         shooter = GetComponent<Shooter>();
     }
 
@@ -35,6 +40,21 @@ public class Player : MonoBehaviour
             Move();
         }   
     }
+
+    void ManageSingleton()
+    {
+        if (instance != null)
+        {
+            gameObject.SetActive(false);
+            Destroy(gameObject);
+        }
+        else
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+    }
+
 
     void Move()
     {

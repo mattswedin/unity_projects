@@ -37,9 +37,8 @@ public class AudioPlayer : MonoBehaviour
 
     void Update() 
     {
-        int currentScene = SceneManager.GetActiveScene().buildIndex;
-        Debug.Log(currentScene);
-        if (currentScene == 2)
+        Scene currentScene = SceneManager.GetActiveScene();
+        if (currentScene == SceneManager.GetSceneByName("GameOver"))
         {
             Debug.Log("why then");
             Destroy(instance);

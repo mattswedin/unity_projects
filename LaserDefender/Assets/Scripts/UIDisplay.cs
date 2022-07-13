@@ -17,10 +17,13 @@ public class UIDisplay : MonoBehaviour
     [SerializeField] Sprite takeDamageFace;
     [SerializeField] Sprite shockedFace;
     [SerializeField] Sprite suckedFace;
+    static UIDisplay instance;
+
     
 
     void Awake() 
     {
+        ManageSingleton();
         scoreKeeper = FindObjectOfType<ScoreKeeper>();
 
     }
@@ -34,6 +37,20 @@ public class UIDisplay : MonoBehaviour
     {
         healthDisplay.value = health.GetRemainingHealth();
         scoreDisplay.text = scoreKeeper.GetCurrentScore().ToString("000000");
+    }
+
+    void ManageSingleton()
+    {
+        if (instance != null)
+        {
+            gameObject.SetActive(false);
+            Destroy(gameObject);
+        }
+        else
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
     }
 
     public void ChangeFace(string action) 

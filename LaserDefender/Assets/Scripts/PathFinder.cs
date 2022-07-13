@@ -58,7 +58,9 @@ public class PathFinder : MonoBehaviour
 
     void FollowBossPath()
     {
-        do
+
+
+        if (!enemySpawner.bossDefeated)
         {
             Vector3 targetPosition = waypoints[waypointIndex].position;
             float delta = waveConfig.GetMoveSpeed() * Time.deltaTime;
@@ -77,7 +79,7 @@ public class PathFinder : MonoBehaviour
             }
 
         }
-        while(!enemySpawner.bossDefeated);
+        
       
     }
 }

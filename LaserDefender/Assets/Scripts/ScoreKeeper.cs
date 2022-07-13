@@ -12,6 +12,11 @@ public class ScoreKeeper : MonoBehaviour
         ManageSingleton();
     }
 
+    void Start() 
+    {
+
+    }
+
     public float GetCurrentScore() 
     {
         return currentScore;
