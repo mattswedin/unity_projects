@@ -51,6 +51,7 @@ public class Health : MonoBehaviour
 
     }
 
+
     public float GetRemainingHealth() 
     {
         return health;
@@ -77,6 +78,7 @@ public class Health : MonoBehaviour
                 StartCoroutine(Sucked());
                 TakeDamage(damageDealer.GetDamage());
                 damageDealer.Hit();
+                StartCoroutine(GoBacktoNormalFace());
             }
             else if (isPlayer)
             {
@@ -95,6 +97,14 @@ public class Health : MonoBehaviour
        
     }
 
+    IEnumerator GoBacktoNormalFace() 
+    {
+
+        yield return new WaitForSeconds(1f);
+        uIDisplay.NormalFace();
+
+    }
+
     IEnumerator Sucked()
     {
         
@@ -105,7 +115,6 @@ public class Health : MonoBehaviour
         }
         
         playerRB.velocity = Vector2.zero;
-        uIDisplay.NormalFace();
     }
 
     IEnumerator Stunned()

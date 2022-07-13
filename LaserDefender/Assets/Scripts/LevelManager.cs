@@ -8,11 +8,27 @@ public class LevelManager : MonoBehaviour
     [SerializeField] float gameOverDelayTime = .5f;
     [SerializeField] float nextLevelDelayTime = 2f;
     ScoreKeeper scoreKeeper;
+    static LevelManager instance;
     
 
     void Awake() 
     {
+        ManageSingleton();
         scoreKeeper = FindObjectOfType<ScoreKeeper>();
+    }
+
+    void ManageSingleton() 
+    {
+        if (instance != null) 
+        {
+            gameObject.SetActive(false);
+            Destroy(gameObject);
+        }
+        else
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
     }
 
     public void LoadGame() 
