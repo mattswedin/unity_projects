@@ -11,7 +11,6 @@ public class Health : MonoBehaviour
     [SerializeField] bool isPlayer = false;
     Rigidbody2D playerRB;
     [SerializeField] float suckPower = 2f;
-    [SerializeField] float suckTime = 20f;
     [SerializeField] float stunTime = 30f;
     [SerializeField] float stunMovement = .01f;
     [SerializeField] bool applyCameraShake;
@@ -61,7 +60,7 @@ public class Health : MonoBehaviour
     {
         DamageDealer damageDealer = other.GetComponent<DamageDealer>();
 
-        if (damageDealer)
+        if (damageDealer || other.tag == "suckRange")
         {
             if (other.tag == "lightningBolt" && isPlayer)
             {
@@ -71,14 +70,14 @@ public class Health : MonoBehaviour
                 TakeDamage(damageDealer.GetDamage());
                 damageDealer.Hit();
             }
-            else if (other.tag == "dustSuck" && isPlayer)
+            else if (other.tag == "suckRange" && isPlayer)
             {
+        
                 uIDisplay.ChangeFace("sucked");
                 playerScript.stunned = false;
-                StartCoroutine(Sucked());
-                TakeDamage(damageDealer.GetDamage());
-                damageDealer.Hit();
-                StartCoroutine(GoBacktoNormalFace());
+                playerRB.velocity = transform.up * suckPower;
+            
+                
             }
             else if (isPlayer)
             {
@@ -97,25 +96,14 @@ public class Health : MonoBehaviour
        
     }
 
-    IEnumerator GoBacktoNormalFace() 
-    {
-
-        yield return new WaitForSeconds(1f);
-        uIDisplay.NormalFace();
-
-    }
-
-    IEnumerator Sucked()
-    {
-        
-        for (int i = 0; i < 1; i++)
+    void OnTriggerExit2D(Collider2D other) {
+        if (other.tag == "suckRange")
         {
-            playerRB.velocity += new Vector2(0f, suckPower);
-            yield return new WaitForSeconds(suckTime);
+            uIDisplay.NormalFace();
+            playerRB.velocity = Vector2.zero;
         }
-        
-        playerRB.velocity = Vector2.zero;
     }
+
 
     IEnumerator Stunned()
     {
