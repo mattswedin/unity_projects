@@ -18,6 +18,7 @@ public class Health : MonoBehaviour
     LevelManager levelManager;
     [Header("Boss Only")]
     [SerializeField] bool isBoss = false;
+    [SerializeField] bool isFinalBoss = false;
     [SerializeField] ParticleSystem bossExplosion;
 
     [Header("Enemy Only")]
@@ -66,17 +67,25 @@ public class Health : MonoBehaviour
         {
             if (other.tag == "lightningBolt" && isPlayer)
             {
-                audioPlayer.PlayTakeDamage();
-                uIDisplay.ChangeFace("shocked");
-                StartCoroutine(Stunned());
-                TakeDamage(damageDealer.GetDamage());
-                damageDealer.Hit();
+                if (!playerScript.getPoweredUp())
+                {
+                    audioPlayer.PlayTakeDamage();
+                    uIDisplay.ChangeFace("shocked");
+                    StartCoroutine(Stunned());
+                    TakeDamage(damageDealer.GetDamage());
+                    damageDealer.Hit();
+                }
+                
             }
             else if (other.tag == "suckRange" && isPlayer)
             {
-                uIDisplay.ChangeFace("sucked");
-                playerScript.stunned = false;
-                playerRB.velocity = (transform.up * suckPower);
+                if (!playerScript.getPoweredUp())
+                {
+                    uIDisplay.ChangeFace("sucked");
+                    playerScript.stunned = false;
+                    playerRB.velocity = (transform.up * suckPower);
+                }
+                
             }
             else if (other.tag == "powerUp" && isPlayer)
             {
@@ -89,11 +98,15 @@ public class Health : MonoBehaviour
             }
             else if (isPlayer)
             {
-                uIDisplay.ChangeFace("takeDamage");
-                audioPlayer.PlayTakeDamage();
-                TakeDamage(damageDealer.GetDamage());
-                ShakeCamera();
-                damageDealer.Hit();
+                if (!playerScript.getPoweredUp())
+                {
+                    uIDisplay.ChangeFace("takeDamage");
+                    audioPlayer.PlayTakeDamage();
+                    TakeDamage(damageDealer.GetDamage());
+                    ShakeCamera();
+                    damageDealer.Hit();
+                }
+               
             }
             else if (other.tag != "suckRange")
             {
@@ -116,7 +129,6 @@ public class Health : MonoBehaviour
     {
         yield return new WaitForSeconds(playerScript.getPoweredUpTime());
         playerScript.setPoweredUp(false);
-        scoreKeeper.setHighScore();
         uIDisplay.NormalFace();
     }
 
@@ -176,9 +188,19 @@ public class Health : MonoBehaviour
 
             if (isBoss)
             {
+                if (!isFinalBoss)
+                {
+                    enemySpawner.bossDefeated = true;
+                }
                 PlayBossExplosion();
-                enemySpawner.bossDefeated = true;
             }
+            else if (!isBoss && isFinalBoss)
+            {
+                enemySpawner.bossDefeated = true;
+                PlayBossExplosion();
+            }
+
+
 
             audioPlayer.PlayDamageClip();
             

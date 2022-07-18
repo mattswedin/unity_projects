@@ -7,11 +7,13 @@ public class ScoreKeeper : MonoBehaviour
     [SerializeField] float currentScore = 000000;
     [SerializeField] float currentHighScore = 0f;
     [SerializeField] GameObject powerUp;
-    [SerializeField] int powerUpsLeft = 3;
+    [SerializeField] int powerUpsLeft = 2;
     static ScoreKeeper instance;
+    Player playerScript;
 
     void Awake() 
     {
+        
         ManageSingleton();
     }
 
@@ -27,9 +29,25 @@ public class ScoreKeeper : MonoBehaviour
 
     public void AddToScore(float amount) 
     {
-        currentScore += amount;
+        if (playerScript == null)
+        {
+            playerScript = FindObjectOfType<Player>();
+        }
+        
+
+        if (!playerScript.getPoweredUp())
+        {
+            currentScore += amount;
+        }
+        else
+        {
+            currentScore += amount;
+            currentHighScore = currentScore;
+        }
         Mathf.Clamp(currentScore, 000000, 999999);
-        Debug.Log(currentScore);
+        Mathf.Clamp(currentHighScore, 000000, 999999);
+
+        
     }
 
     public void ResetScore() 
@@ -53,26 +71,17 @@ public class ScoreKeeper : MonoBehaviour
 
     void PowerUpSpawn() 
     {
-        if (currentScore > currentHighScore + 500 && powerUpsLeft > 0)
+        if (currentScore >= currentHighScore + 500 && powerUpsLeft > 0)
         {
             if (powerUp != null)
             {
-                float spawnY = Random.Range
-                (Camera.main.ScreenToWorldPoint(new Vector2(0, 0)).y, Camera.main.ScreenToWorldPoint(new Vector2(0, Screen.height)).y);
-                float spawnX = Random.Range
-                    (Camera.main.ScreenToWorldPoint(new Vector2(0, 0)).x, Camera.main.ScreenToWorldPoint(new Vector2(Screen.width, 0)).x);
-                Vector3 spawnPosition = new Vector3(spawnX, spawnY);
-
-                DontDestroyOnLoad(Instantiate(powerUp, spawnPosition, Quaternion.identity));
-                currentHighScore = currentScore;
+                GameObject instance = Instantiate(powerUp, transform.position + new Vector3(0, 7, 0), Quaternion.identity);
+                DontDestroyOnLoad(instance);
+                instance.GetComponent<Rigidbody2D>().velocity = -transform.up;
             }
             powerUpsLeft -= 1;
             
         }
     }
 
-    public void setHighScore()
-    {
-        currentHighScore = currentScore;
-    }
 }
