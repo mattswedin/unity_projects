@@ -26,6 +26,7 @@ public class Player : MonoBehaviour
     [SerializeField] float poweredUpTime = 15f;
     [SerializeField] float poweredUpSpeed = 2f;
     [SerializeField] bool isPoweredUp = false;
+    [SerializeField] int recoveryAmount = 20;
 
     
 
@@ -134,6 +135,11 @@ public class Player : MonoBehaviour
     public void setPoweredUp(bool state)
     {
         isPoweredUp = state;
+    }
+
+    public int getRecoveryAmount() 
+    {
+        return recoveryAmount;
     }
 
     

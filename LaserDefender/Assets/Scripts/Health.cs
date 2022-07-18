@@ -80,7 +80,7 @@ public class Health : MonoBehaviour
             }
             else if (other.tag == "powerUp" && isPlayer)
             {
-
+                RecoverHealth(playerScript.getRecoveryAmount());
                 playerScript.setPoweredUp(true);
                 uIDisplay.ChangeFace("poweredUp");
                 Destroy(other.gameObject);
@@ -183,6 +183,11 @@ public class Health : MonoBehaviour
             audioPlayer.PlayDamageClip();
             
         }
+    }
+
+    void RecoverHealth(int recoveryAmount) 
+    {
+        health += recoveryAmount;
     }
 
     void ShakeCamera() 
