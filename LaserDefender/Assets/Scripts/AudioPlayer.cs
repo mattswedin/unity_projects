@@ -38,9 +38,9 @@ public class AudioPlayer : MonoBehaviour
     void Update() 
     {
         Scene currentScene = SceneManager.GetActiveScene();
-        if (currentScene == SceneManager.GetSceneByName("GameOver"))
+        if (currentScene == SceneManager.GetSceneByName("GameOver") ||
+            currentScene == SceneManager.GetSceneByName("YouWon"))
         {
-            Debug.Log("why then");
             Destroy(instance);
             gameObject.SetActive(false);
             Destroy(gameObject);

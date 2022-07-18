@@ -18,9 +18,11 @@ public class Health : MonoBehaviour
     LevelManager levelManager;
     [Header("Boss Only")]
     [SerializeField] bool isBoss = false;
+    [SerializeField] ParticleSystem bossExplosion;
 
     [Header("Enemy Only")]
     [SerializeField] int enemyValue = 0;
+     
 
     
     [SerializeField] bool isVacuum;
@@ -60,6 +62,10 @@ public class Health : MonoBehaviour
     {
         DamageDealer damageDealer = other.GetComponent<DamageDealer>();
 
+        // if (other.tag == "claws"){
+
+        
+        // }
         if (damageDealer || other.tag == "suckRange")
         {
             if (other.tag == "lightningBolt" && isPlayer)
@@ -72,12 +78,17 @@ public class Health : MonoBehaviour
             }
             else if (other.tag == "suckRange" && isPlayer)
             {
-        
                 uIDisplay.ChangeFace("sucked");
                 playerScript.stunned = false;
-                playerRB.velocity = transform.up * suckPower;
-            
-                
+                playerRB.velocity = (transform.up * suckPower);
+            }
+            else if (other.tag == "powerUp" && isPlayer)
+            {
+
+                playerScript.setPoweredUp(true);
+                uIDisplay.ChangeFace("poweredUp");
+                StartCoroutine(PoweredUp());
+
             }
             else if (isPlayer)
             {
@@ -87,7 +98,7 @@ public class Health : MonoBehaviour
                 ShakeCamera();
                 damageDealer.Hit();
             }
-            else
+            else if (other.tag != "suckRange")
             {
                 TakeDamage(damageDealer.GetDamage());
                 damageDealer.Hit();
@@ -102,6 +113,14 @@ public class Health : MonoBehaviour
             uIDisplay.NormalFace();
             playerRB.velocity = Vector2.zero;
         }
+    }
+
+    IEnumerator PoweredUp()
+    {
+        yield return new WaitForSeconds(playerScript.getPoweredUpTime());
+        playerScript.setPoweredUp(false);
+        uIDisplay.NormalFace();
+
     }
 
 
@@ -140,7 +159,12 @@ public class Health : MonoBehaviour
         {
             if (isVacuum) 
             {
+                Destroy(transform.parent.gameObject);
                 audioPlayer.StopVacuumAudio();
+            }
+            else
+            {
+                Destroy(gameObject);
             }
 
             if (!isPlayer)
@@ -150,16 +174,17 @@ public class Health : MonoBehaviour
 
             if (isPlayer)
             {
-                levelManager.LoadGameOver();
+                FindObjectOfType<LevelManager>().LoadGameOver();
             }
 
             if (isBoss)
             {
+                PlayBossExplosion();
                 enemySpawner.bossDefeated = true;
             }
 
             audioPlayer.PlayDamageClip();
-            Destroy(gameObject);
+            
         }
     }
 
@@ -169,5 +194,14 @@ public class Health : MonoBehaviour
         {
             cameraShake.Play();
         }
+    }
+
+    void PlayBossExplosion() 
+    {
+        if (bossExplosion != null)
+        {
+            ParticleSystem instance = Instantiate(bossExplosion, transform.position, Quaternion.identity);
+            Destroy(instance.gameObject, instance.main.duration + instance.main.startLifetime.constantMax);
+        }    
     }
 }

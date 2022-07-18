@@ -23,6 +23,7 @@ public class DamageDealer : MonoBehaviour
 
   public void Hit() 
   {
+
     if (isClaws && !isEnemy)
     {
       if (scratchspolsion != null)

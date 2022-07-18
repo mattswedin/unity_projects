@@ -13,23 +13,23 @@ public class LevelManager : MonoBehaviour
 
     void Awake() 
     {
-        ManageSingleton();
+        // ManageSingleton();
         scoreKeeper = FindObjectOfType<ScoreKeeper>();
     }
 
-    void ManageSingleton() 
-    {
-        if (instance != null) 
-        {
-            gameObject.SetActive(false);
-            Destroy(gameObject);
-        }
-        else
-        {
-            instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-    }
+    // void ManageSingleton() 
+    // {
+    //     if (instance != null) 
+    //     {
+    //         gameObject.SetActive(false);
+    //         Destroy(gameObject);
+    //     }
+    //     else
+    //     {
+    //         instance = this;
+    //         DontDestroyOnLoad(gameObject);
+    //     }
+    // }
 
     public void LoadGame() 
     {

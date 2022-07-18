@@ -5,6 +5,8 @@ using UnityEngine;
 public class PathFinder : MonoBehaviour
 {
     [SerializeField] bool isBoss;
+    [SerializeField] bool isMouseBoss;
+    [SerializeField] float rotateSpeed = 300f;
     EnemySpawner enemySpawner;
     WaveConfigSO waveConfig;
     List<Transform> waypoints;
@@ -64,7 +66,14 @@ public class PathFinder : MonoBehaviour
         {
             Vector3 targetPosition = waypoints[waypointIndex].position;
             float delta = waveConfig.GetMoveSpeed() * Time.deltaTime;
-            transform.position = Vector2.MoveTowards(transform.position, targetPosition, delta);
+            if (isMouseBoss)
+            {   
+                Quaternion targetRotation = waypoints[waypointIndex].rotation;
+                transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, rotateSpeed * Time.deltaTime);
+            }
+            transform.position = Vector3.MoveTowards(transform.position, targetPosition, delta);
+            
+            
             if (transform.position == targetPosition)
             {
                 if (waypointIndex == (waypoints.Count - 1)) 

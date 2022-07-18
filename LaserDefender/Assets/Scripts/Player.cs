@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
@@ -20,6 +21,11 @@ public class Player : MonoBehaviour
 
     Shooter shooter;
 
+    [Header("Power Up")]
+    [SerializeField] float poweredUpTime = 15f;
+    [SerializeField] float poweredUpSpeed = 2f;
+    [SerializeField] bool isPoweredUp = false;
+
     
 
     void Awake() 
@@ -35,6 +41,15 @@ public class Player : MonoBehaviour
     
     void Update()
     {
+        Scene currentScene = SceneManager.GetActiveScene();
+        if (currentScene == SceneManager.GetSceneByName("GameOver") ||
+            currentScene == SceneManager.GetSceneByName("YouWon"))
+        {
+            Destroy(instance);
+            gameObject.SetActive(false);
+            Destroy(gameObject);
+        }
+
         if (!stunned)
         {
             Move();
@@ -58,7 +73,16 @@ public class Player : MonoBehaviour
 
     void Move()
     {
-        Vector2 delta = rawInput * moveSpeed * Time.deltaTime;
+        Vector2 delta;
+        if(isPoweredUp)
+        {
+            delta = rawInput * moveSpeed * poweredUpSpeed * Time.deltaTime;
+        }
+        else
+        {
+            delta = rawInput * moveSpeed * Time.deltaTime;
+        }
+        delta = rawInput * moveSpeed * Time.deltaTime;
         Vector2 newPos = new Vector2();
         newPos.x = Mathf.Clamp(transform.position.x + delta.x, minBounds.x + paddingLeft, maxBounds.x - paddingRight);
         newPos.y = Mathf.Clamp(transform.position.y + delta.y, minBounds.y + paddingBottom, maxBounds.y - paddingTop);
@@ -85,5 +109,24 @@ public class Player : MonoBehaviour
         minBounds = mainCamera.ViewportToWorldPoint(new Vector2(0,0));
         maxBounds = mainCamera.ViewportToWorldPoint(new Vector2(1,1));
     }
+
+    //Power Up
+
+    public bool getPoweredUp() 
+    {
+        return isPoweredUp;
+    }
+
+    public float getPoweredUpTime()
+    {
+        return poweredUpTime;
+    }
+
+    public void setPoweredUp(bool state)
+    {
+        isPoweredUp = state;
+    }
+
+    
 
 }

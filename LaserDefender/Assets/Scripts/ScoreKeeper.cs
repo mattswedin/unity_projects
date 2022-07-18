@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class ScoreKeeper : MonoBehaviour
 {
-    float currentScore = 000000;
+    [SerializeField] float currentScore = 000000;
+    [SerializeField] float currentHighScore = 0f;
+    [SerializeField] GameObject powerUp;
     static ScoreKeeper instance;
 
     void Awake() 
@@ -12,7 +14,7 @@ public class ScoreKeeper : MonoBehaviour
         ManageSingleton();
     }
 
-    void Start() 
+    void Update() 
     {
 
     }
@@ -45,6 +47,24 @@ public class ScoreKeeper : MonoBehaviour
         {
             instance = this;
             DontDestroyOnLoad(gameObject);
+        }
+    }
+
+    void PowerUpSpawn() 
+    {
+        if (currentScore > currentHighScore + 500)
+        {
+            if (powerUp != null)
+            {
+                float spawnY = Random.Range
+                (Camera.main.ScreenToWorldPoint(new Vector2(0, 0)).y, Camera.main.ScreenToWorldPoint(new Vector2(0, Screen.height)).y);
+                float spawnX = Random.Range
+                    (Camera.main.ScreenToWorldPoint(new Vector2(0, 0)).x, Camera.main.ScreenToWorldPoint(new Vector2(Screen.width, 0)).x);
+                Vector3 spawnPosition = new Vector3(spawnX, spawnY);
+
+                Instantiate(powerUp, spawnPosition, Quaternion.identity);
+            }
+            
         }
     }
 }

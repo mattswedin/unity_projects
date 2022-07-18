@@ -4,6 +4,7 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 using System;
+using UnityEngine.SceneManagement;
 
 public class UIDisplay : MonoBehaviour
 {
@@ -18,6 +19,7 @@ public class UIDisplay : MonoBehaviour
     [SerializeField] Sprite shockedFace;
     [SerializeField] Sprite suckedFace;
     static UIDisplay instance;
+
 
     
 
@@ -35,6 +37,15 @@ public class UIDisplay : MonoBehaviour
 
     void Update() 
     {
+        Scene currentScene = SceneManager.GetActiveScene();
+        if (currentScene == SceneManager.GetSceneByName("GameOver") ||
+            currentScene == SceneManager.GetSceneByName("YouWon") )
+        {
+            Destroy(instance);
+            gameObject.SetActive(false);
+            Destroy(gameObject);
+        }
+
         healthDisplay.value = health.GetRemainingHealth();
         scoreDisplay.text = scoreKeeper.GetCurrentScore().ToString("000000");
     }
