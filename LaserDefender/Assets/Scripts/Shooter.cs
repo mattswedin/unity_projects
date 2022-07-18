@@ -33,11 +33,11 @@ public class Shooter : MonoBehaviour
 
         if(player.getPoweredUp())
         {
-            if (isFiring && firingCoroutine == null)
+            if (firingCoroutine == null)
             {
                 firingCoroutine = StartCoroutine(FireContinuously());
             }
-            else if (!isFiring && firingCoroutine != null)
+            else if (firingCoroutine != null)
             {
                 StopCoroutine(firingCoroutine);
                 firingCoroutine = null;
@@ -73,9 +73,11 @@ public class Shooter : MonoBehaviour
         {
             GameObject instance = Instantiate(projectilePrefab, transform.position + positionOffset, Quaternion.identity);
             Rigidbody2D rb = instance.GetComponent<Rigidbody2D>();
+            SpriteRenderer sr = instance.GetComponentInChildren<SpriteRenderer>();
             if (rb != null)
             {
-                rb.velocity = -transform.up * projectileSpeed;
+                sr.color = Random.ColorHSV(0f, 1f);
+                rb.velocity = transform.up * projectileSpeed;
             }
             Destroy(instance, projectileLifetime);
 

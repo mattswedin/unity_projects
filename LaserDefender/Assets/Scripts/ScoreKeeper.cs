@@ -7,6 +7,7 @@ public class ScoreKeeper : MonoBehaviour
     [SerializeField] float currentScore = 000000;
     [SerializeField] float currentHighScore = 0f;
     [SerializeField] GameObject powerUp;
+    [SerializeField] int powerUpsLeft = 3;
     static ScoreKeeper instance;
 
     void Awake() 
@@ -16,7 +17,7 @@ public class ScoreKeeper : MonoBehaviour
 
     void Update() 
     {
-
+        PowerUpSpawn();
     }
 
     public float GetCurrentScore() 
@@ -52,7 +53,7 @@ public class ScoreKeeper : MonoBehaviour
 
     void PowerUpSpawn() 
     {
-        if (currentScore > currentHighScore + 500)
+        if (currentScore > currentHighScore + 500 && powerUpsLeft > 0)
         {
             if (powerUp != null)
             {
@@ -62,9 +63,16 @@ public class ScoreKeeper : MonoBehaviour
                     (Camera.main.ScreenToWorldPoint(new Vector2(0, 0)).x, Camera.main.ScreenToWorldPoint(new Vector2(Screen.width, 0)).x);
                 Vector3 spawnPosition = new Vector3(spawnX, spawnY);
 
-                Instantiate(powerUp, spawnPosition, Quaternion.identity);
+                DontDestroyOnLoad(Instantiate(powerUp, spawnPosition, Quaternion.identity));
+                currentHighScore = currentScore;
             }
+            powerUpsLeft -= 1;
             
         }
+    }
+
+    public void setHighScore()
+    {
+        currentHighScore = currentScore;
     }
 }

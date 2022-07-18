@@ -22,6 +22,7 @@ public class Player : MonoBehaviour
     Shooter shooter;
 
     [Header("Power Up")]
+    [SerializeField] GameObject powerUpEffect;
     [SerializeField] float poweredUpTime = 15f;
     [SerializeField] float poweredUpSpeed = 2f;
     [SerializeField] bool isPoweredUp = false;
@@ -48,6 +49,15 @@ public class Player : MonoBehaviour
             Destroy(instance);
             gameObject.SetActive(false);
             Destroy(gameObject);
+        }
+
+        if(isPoweredUp && powerUpEffect != null)
+        {
+            powerUpEffect.SetActive(true);
+        }
+        else
+        {
+            powerUpEffect.SetActive(false);
         }
 
         if (!stunned)
@@ -82,7 +92,6 @@ public class Player : MonoBehaviour
         {
             delta = rawInput * moveSpeed * Time.deltaTime;
         }
-        delta = rawInput * moveSpeed * Time.deltaTime;
         Vector2 newPos = new Vector2();
         newPos.x = Mathf.Clamp(transform.position.x + delta.x, minBounds.x + paddingLeft, maxBounds.x - paddingRight);
         newPos.y = Mathf.Clamp(transform.position.y + delta.y, minBounds.y + paddingBottom, maxBounds.y - paddingTop);

@@ -62,11 +62,7 @@ public class Health : MonoBehaviour
     {
         DamageDealer damageDealer = other.GetComponent<DamageDealer>();
 
-        // if (other.tag == "claws"){
-
-        
-        // }
-        if (damageDealer || other.tag == "suckRange")
+        if (damageDealer || other.tag == "suckRange" || other.tag == "powerUp")
         {
             if (other.tag == "lightningBolt" && isPlayer)
             {
@@ -87,6 +83,7 @@ public class Health : MonoBehaviour
 
                 playerScript.setPoweredUp(true);
                 uIDisplay.ChangeFace("poweredUp");
+                Destroy(other.gameObject);
                 StartCoroutine(PoweredUp());
 
             }
@@ -119,8 +116,8 @@ public class Health : MonoBehaviour
     {
         yield return new WaitForSeconds(playerScript.getPoweredUpTime());
         playerScript.setPoweredUp(false);
+        scoreKeeper.setHighScore();
         uIDisplay.NormalFace();
-
     }
 
 
