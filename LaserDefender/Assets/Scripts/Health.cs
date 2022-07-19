@@ -8,6 +8,7 @@ public class Health : MonoBehaviour
     // [SerializeField] ParticleSystem scratchspolsion;
     [SerializeField] int health = 50;
     [Header("Player Only")]
+    float maxHealth;
     [SerializeField] bool isPlayer = false;
     Rigidbody2D playerRB;
     [SerializeField] float suckPower = 2f;
@@ -47,8 +48,10 @@ public class Health : MonoBehaviour
 
         if (isPlayer)
         {
+
             playerRB = GetComponent<Rigidbody2D>();
             playerScript = FindObjectOfType<Player>();
+            maxHealth = GetRemainingHealth();
         }
 
     }
@@ -91,7 +94,7 @@ public class Health : MonoBehaviour
             {
                 RecoverHealth(playerScript.getRecoveryAmount());
                 playerScript.setPoweredUp(true);
-                uIDisplay.ChangeFace("poweredUp");
+                uIDisplay.ChangeFace("powerUp");
                 Destroy(other.gameObject);
                 StartCoroutine(PoweredUp());
 
@@ -210,6 +213,7 @@ public class Health : MonoBehaviour
     void RecoverHealth(int recoveryAmount) 
     {
         health += recoveryAmount;
+        Mathf.Clamp(health, 0, maxHealth);
     }
 
     void ShakeCamera() 

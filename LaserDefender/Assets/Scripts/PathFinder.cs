@@ -14,8 +14,9 @@ public class PathFinder : MonoBehaviour
 
     void Awake() 
     {
+
         enemySpawner = FindObjectOfType<EnemySpawner>();
-        
+
     }
 
     void Start()
@@ -91,4 +92,6 @@ public class PathFinder : MonoBehaviour
         
       
     }
+
+    
 }

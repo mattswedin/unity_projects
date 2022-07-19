@@ -6,8 +6,10 @@ public class EnemySpawner : MonoBehaviour
 {
     [SerializeField] List<WaveConfigSO> waveConfigs;
     [SerializeField] float timeBetweenWaves = 0f;
+    [SerializeField] float timeUntilBoss = 2f;
     public bool bossDefeated = false;
     [SerializeField] WaveConfigSO bossWave;
+    [SerializeField] List<WaveConfigSO> finalBossWave;
     WaveConfigSO currentWave;
     LevelManager levelManager;
 
@@ -19,7 +21,15 @@ public class EnemySpawner : MonoBehaviour
 
     void Start()
     {
-        StartCoroutine(SpawnEnemyWaves());
+        if (finalBossWave.Count == 0)
+        {
+            StartCoroutine(SpawnEnemyWaves());
+        }
+        else
+        {
+            StartCoroutine(SpawnFinalBossWaves());
+        }
+
     }
 
     void Update() {
@@ -57,11 +67,33 @@ public class EnemySpawner : MonoBehaviour
 
         currentWave = bossWave;
         
+        yield return new WaitForSeconds(timeUntilBoss);
         Instantiate(bossWave.GetEnemyPrefab(0),
             currentWave.GetStartingWaypoint().position,
             Quaternion.identity,
             transform);
        
+    }
+
+    IEnumerator SpawnFinalBossWaves()
+    {
+        Debug.Log("yay");
+
+        foreach (WaveConfigSO bossWave in finalBossWave)
+        {
+            currentWave = bossWave;
+
+            for (int i = 0; i < currentWave.GetEnemyCount(); i++)
+            {
+                Instantiate(currentWave.GetEnemyPrefab(i),
+                            currentWave.GetStartingWaypoint().position,
+                            Quaternion.identity,
+                            transform);
+                yield return new WaitForSeconds(currentWave.GetRandomSpawnTime());
+
+            }
+            yield return new WaitForSeconds(timeBetweenWaves);
+        }
     }
 
 
