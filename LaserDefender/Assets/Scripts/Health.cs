@@ -80,6 +80,18 @@ public class Health : MonoBehaviour
                 }
                 
             }
+            else if (other.tag == "redLightningBolt" && isPlayer)
+            {
+                if (!playerScript.getPoweredUp())
+                {
+                    audioPlayer.PlayTakeDamage();
+                    uIDisplay.ChangeFace("redShocked");
+                    StartCoroutine(Stunned());
+                    TakeDamage(damageDealer.GetDamage());
+                    damageDealer.Hit();
+                }
+
+            }
             else if (other.tag == "suckRange" && isPlayer)
             {
                 if (!playerScript.getPoweredUp())

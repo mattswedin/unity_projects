@@ -77,8 +77,7 @@ public class EnemySpawner : MonoBehaviour
 
     IEnumerator SpawnFinalBossWaves()
     {
-        Debug.Log("yay");
-
+        yield return new WaitForSeconds(timeUntilBoss);
         foreach (WaveConfigSO bossWave in finalBossWave)
         {
             currentWave = bossWave;

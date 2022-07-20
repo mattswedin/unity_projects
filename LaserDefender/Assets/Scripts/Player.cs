@@ -142,6 +142,16 @@ public class Player : MonoBehaviour
         return recoveryAmount;
     }
 
+    public bool isFinalBoss() 
+    {
+        Scene currentScene = SceneManager.GetActiveScene();
+        if (currentScene == SceneManager.GetSceneByName("FinalBoss"))
+        {
+            return true;
+        }
+        return false;
+    }
+
     
 
 }

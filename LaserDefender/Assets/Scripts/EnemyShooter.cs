@@ -5,6 +5,8 @@ using UnityEngine;
 public class EnemyShooter : MonoBehaviour
 {
     [SerializeField] GameObject projectilePrefab;
+    [SerializeField] List<GameObject> finalBossProjectilePrefabs;
+    [SerializeField] bool isFinalBoss;
     [SerializeField] Vector3 positionOffset = new Vector3(0f, 2f, 0f);
     [SerializeField] float projectileSpeed = 10f;
     [SerializeField] float projectileLifetime = 5f;
@@ -55,8 +57,20 @@ public class EnemyShooter : MonoBehaviour
     {
         while(isFiring) 
         {
-            GameObject instance = Instantiate(projectilePrefab, transform.position + positionOffset, Quaternion.identity);
+            GameObject instance;
+
+            if (isFinalBoss && finalBossProjectilePrefabs.Count > 0)
+            {
+                int random = Random.Range(0, finalBossProjectilePrefabs.Count);
+                instance = Instantiate(finalBossProjectilePrefabs[random], transform.position + positionOffset, Quaternion.identity);
+            }
+            else
+            {
+                instance = Instantiate(projectilePrefab, transform.position + positionOffset, Quaternion.identity);
+            }
+            
             Rigidbody2D rb = instance.GetComponent<Rigidbody2D>();
+            
             if (rb != null) 
             {
                 if (enemyType != "vacuum")

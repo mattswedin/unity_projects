@@ -17,6 +17,7 @@ public class UIDisplay : MonoBehaviour
     [SerializeField] Sprite normalFace;
     [SerializeField] Sprite takeDamageFace;
     [SerializeField] Sprite shockedFace;
+    [SerializeField] Sprite redShockedFace;
     [SerializeField] Sprite suckedFace;
     [SerializeField] Sprite powerUpFace;
     static UIDisplay instance;
@@ -74,6 +75,10 @@ public class UIDisplay : MonoBehaviour
         else if (action == "shocked")
         {
             faceDisplay.sprite = shockedFace;
+        }
+        else if (action == "redShocked")
+        {
+            faceDisplay.sprite = redShockedFace;
         }
         else if (action == "sucked") 
         {

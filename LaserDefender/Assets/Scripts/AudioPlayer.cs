@@ -25,6 +25,12 @@ public class AudioPlayer : MonoBehaviour
     [SerializeField] AudioClip damage;
     [SerializeField][Range(0f, 1f)] float damageVolume = 1f;
 
+    [Header("Music")]
+    [SerializeField] AudioSource mainBG;
+    [SerializeField] AudioSource finalBossBG;
+
+    bool OneTime = false;
+
     AudioSource vacuumAudio;
 
     static AudioPlayer instance;
@@ -38,8 +44,15 @@ public class AudioPlayer : MonoBehaviour
     void Update() 
     {
         Scene currentScene = SceneManager.GetActiveScene();
+        if(currentScene == SceneManager.GetSceneByName("FinalBoss") && !OneTime)
+        {
+            FadeoutMainBG();
+            OneTime = true;
+        }
+
         if (currentScene == SceneManager.GetSceneByName("GameOver") ||
-            currentScene == SceneManager.GetSceneByName("YouWon"))
+            currentScene == SceneManager.GetSceneByName("YouWon")) 
+            
         {
             Destroy(instance);
             gameObject.SetActive(false);
@@ -132,4 +145,30 @@ public class AudioPlayer : MonoBehaviour
     {
         vacuumAudio.Stop();
     }
+
+    public void FadeoutMainBG()
+    {
+        StartCoroutine(FadeOut());
+    }
+
+    IEnumerator FadeOut()
+    {
+        
+        for(float i = mainBG.volume; i > 0; i -= .01f)
+        {
+            mainBG.volume = i;
+            yield return new WaitForSeconds(.1f);
+        }
+
+        yield return new WaitForSeconds(1f);
+
+        finalBossBG.Play();
+        for (float i = finalBossBG.volume; i < 0.1f; i += .01f)
+        {
+            finalBossBG.volume = i;
+            yield return new WaitForSeconds(.1f);
+        }
+    }
+
+    
 }

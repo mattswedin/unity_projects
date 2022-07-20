@@ -7,19 +7,22 @@ public class ScoreKeeper : MonoBehaviour
     [SerializeField] float currentScore = 000000;
     [SerializeField] float currentHighScore = 0f;
     [SerializeField] GameObject powerUp;
-    // [SerializeField] int powerUpsLeft = 2;
     static ScoreKeeper instance;
     Player playerScript;
 
     void Awake() 
     {
-        
+       
         ManageSingleton();
     }
 
     void Update() 
     {
+       
+        
         PowerUpSpawn();
+        
+        
     }
 
     public float GetCurrentScore() 
@@ -29,10 +32,7 @@ public class ScoreKeeper : MonoBehaviour
 
     public void AddToScore(float amount) 
     {
-        if (playerScript == null)
-        {
-            playerScript = FindObjectOfType<Player>();
-        }
+        playerScript = FindObjectOfType<Player>();
         
         if (!playerScript.getPoweredUp())
         {
@@ -43,6 +43,7 @@ public class ScoreKeeper : MonoBehaviour
             currentScore += amount;
             currentHighScore = currentScore;
         }
+
         Mathf.Clamp(currentScore, 000000, 999999);
         Mathf.Clamp(currentHighScore, 000000, 999999);
 
@@ -52,6 +53,7 @@ public class ScoreKeeper : MonoBehaviour
     public void ResetScore() 
     {
         currentScore = 000000;
+        currentHighScore = 000000;
     }
 
     void ManageSingleton()
@@ -72,7 +74,7 @@ public class ScoreKeeper : MonoBehaviour
     {
         if (currentScore >= (currentHighScore + 500))
         {
-            if (powerUp != null)
+            if (powerUp != null && !playerScript.isFinalBoss())
             {
                 GameObject instance = Instantiate(powerUp, transform.position + new Vector3(0, 7, 0), Quaternion.identity);
                 currentHighScore = currentScore;
