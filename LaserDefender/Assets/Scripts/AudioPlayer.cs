@@ -17,6 +17,9 @@ public class AudioPlayer : MonoBehaviour
 
     [SerializeField] AudioClip thunder;
     [SerializeField][Range(0f, 1f)] float thunderVolume = 1f;
+    [SerializeField] AudioClip bossVoice;
+    [SerializeField][Range(0f, 1f)] float bossVolume = 1f;
+
 
     [SerializeField] AudioClip sprayBottle;
     [SerializeField][Range(0f, 1f)] float sprayBottleVolume = 1f;
@@ -29,15 +32,19 @@ public class AudioPlayer : MonoBehaviour
     [SerializeField] AudioSource mainBG;
     [SerializeField] AudioSource finalBossBG;
 
+
+
     bool OneTime = false;
 
     AudioSource vacuumAudio;
+    Player player;
 
     static AudioPlayer instance;
 
     void Awake() 
     {
         ManageSingleton();
+        player = FindObjectOfType<Player>();
         vacuumAudio = GetComponent<AudioSource>();
     }
 
@@ -46,6 +53,8 @@ public class AudioPlayer : MonoBehaviour
         Scene currentScene = SceneManager.GetActiveScene();
         if(currentScene == SceneManager.GetSceneByName("FinalBoss") && !OneTime)
         {
+            PlayBossLaugh();
+            StartCoroutine(BossLaughs());
             FadeoutMainBG();
             OneTime = true;
         }
@@ -168,6 +177,21 @@ public class AudioPlayer : MonoBehaviour
             finalBossBG.volume = i;
             yield return new WaitForSeconds(.1f);
         }
+    }
+
+    public void PlayBossLaugh()
+    {
+        PlayClip(bossVoice, bossVolume);
+    }
+
+    IEnumerator BossLaughs()
+    {
+        do
+        {
+            yield return new WaitForSeconds(28f);
+            PlayBossLaugh();
+        }
+        while(player.isFinalBoss());
     }
 
     

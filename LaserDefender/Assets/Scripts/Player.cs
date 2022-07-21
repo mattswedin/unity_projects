@@ -152,6 +152,18 @@ public class Player : MonoBehaviour
         return false;
     }
 
+    public bool isTimeForPowerUp()
+    {
+        Scene currentScene = SceneManager.GetActiveScene();
+        if (currentScene == SceneManager.GetSceneByName("FinalBoss") ||
+            currentScene == SceneManager.GetSceneByName("GameOver") ||
+            currentScene == SceneManager.GetSceneByName("YouWon"))
+        {
+            return true;
+        }
+        return false;
+    }
+
     
 
 }

@@ -19,9 +19,7 @@ public class ScoreKeeper : MonoBehaviour
     void Update() 
     {
        
-        
         PowerUpSpawn();
-        
         
     }
 
@@ -74,7 +72,7 @@ public class ScoreKeeper : MonoBehaviour
     {
         if (currentScore >= (currentHighScore + 500))
         {
-            if (powerUp != null && !playerScript.isFinalBoss())
+            if (powerUp != null && !playerScript.isTimeForPowerUp())
             {
                 GameObject instance = Instantiate(powerUp, transform.position + new Vector3(0, 7, 0), Quaternion.identity);
                 currentHighScore = currentScore;
