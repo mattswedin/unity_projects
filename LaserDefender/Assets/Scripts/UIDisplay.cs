@@ -22,14 +22,10 @@ public class UIDisplay : MonoBehaviour
     [SerializeField] Sprite powerUpFace;
     static UIDisplay instance;
 
-
-    
-
     void Awake() 
     {
         ManageSingleton();
         scoreKeeper = FindObjectOfType<ScoreKeeper>();
-
     }
 
     void Start() 
@@ -66,29 +62,26 @@ public class UIDisplay : MonoBehaviour
         }
     }
 
-    public void ChangeFace(string action) 
+    public void ChangeFace(string faceType) 
     {
-        if (action == "takeDamage")
+        switch (faceType)
         {
-            StartCoroutine(TakeDamageFace());
+            case "takeDamage":
+                StartCoroutine(TakeDamageFace());
+                break;
+            case "shocked":
+                faceDisplay.sprite = shockedFace;
+                break;
+            case "redShocked":
+                faceDisplay.sprite = redShockedFace;
+                break;
+            case "sucked":
+                faceDisplay.sprite = suckedFace;
+                break;
+            case "powerUp":
+                faceDisplay.sprite = powerUpFace;
+                break;
         }
-        else if (action == "shocked")
-        {
-            faceDisplay.sprite = shockedFace;
-        }
-        else if (action == "redShocked")
-        {
-            faceDisplay.sprite = redShockedFace;
-        }
-        else if (action == "sucked") 
-        {
-            faceDisplay.sprite = suckedFace;
-        }
-        else if (action == "powerUp")
-        {
-            faceDisplay.sprite = powerUpFace;
-        }
-        
     }
 
     public void NormalFace() 

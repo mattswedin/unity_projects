@@ -6,21 +6,12 @@ using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
-    Vector2 rawInput;
     [SerializeField] float moveSpeed = 8f;
-
     [SerializeField] float paddingLeft;
     [SerializeField] float paddingRight;
     [SerializeField] float paddingTop;
     [SerializeField] float paddingBottom;
-    Vector2 minBounds;
-    Vector2 maxBounds;
-    public bool stunned = false;
-
-    static Player instance;
-
-    Shooter shooter;
-
+    
     [Header("Power Up")]
     [SerializeField] GameObject powerUpEffect;
     [SerializeField] float poweredUpTime = 15f;
@@ -28,7 +19,13 @@ public class Player : MonoBehaviour
     [SerializeField] bool isPoweredUp = false;
     [SerializeField] int recoveryAmount = 20;
 
-    
+    public bool stunned = false;
+    Vector2 rawInput;
+    Vector2 minBounds;
+    Vector2 maxBounds;
+
+    static Player instance;
+    Shooter shooter;
 
     void Awake() 
     {
@@ -81,10 +78,10 @@ public class Player : MonoBehaviour
         }
     }
 
-
     void Move()
     {
         Vector2 delta;
+
         if(isPoweredUp)
         {
             delta = rawInput * moveSpeed * poweredUpSpeed * Time.deltaTime;
@@ -97,7 +94,6 @@ public class Player : MonoBehaviour
         newPos.x = Mathf.Clamp(transform.position.x + delta.x, minBounds.x + paddingLeft, maxBounds.x - paddingRight);
         newPos.y = Mathf.Clamp(transform.position.y + delta.y, minBounds.y + paddingBottom, maxBounds.y - paddingTop);
         transform.position = newPos;
-
     }
 
     void OnMove(InputValue value) 
@@ -163,7 +159,4 @@ public class Player : MonoBehaviour
         }
         return false;
     }
-
-    
-
 }

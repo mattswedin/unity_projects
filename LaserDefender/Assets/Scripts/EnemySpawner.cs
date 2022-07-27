@@ -7,9 +7,11 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] List<WaveConfigSO> waveConfigs;
     [SerializeField] float timeBetweenWaves = 0f;
     [SerializeField] float timeUntilBoss = 2f;
-    public bool bossDefeated = false;
     [SerializeField] WaveConfigSO bossWave;
     [SerializeField] List<WaveConfigSO> finalBossWave;
+
+    public bool bossDefeated = false;
+
     WaveConfigSO currentWave;
     LevelManager levelManager;
 
@@ -18,7 +20,6 @@ public class EnemySpawner : MonoBehaviour
         levelManager = FindObjectOfType<LevelManager>();
     }
     
-
     void Start()
     {
         if (finalBossWave.Count == 0)
@@ -29,16 +30,14 @@ public class EnemySpawner : MonoBehaviour
         {
             StartCoroutine(SpawnFinalBossWaves());
         }
-
     }
 
-    void Update() {
-
+    void Update() 
+    {
         if (bossDefeated)
         {
             levelManager.LoadNextLevel();
         }
-
     }
 
     public WaveConfigSO GetCurrentWave() 
@@ -47,8 +46,7 @@ public class EnemySpawner : MonoBehaviour
     }
 
     IEnumerator SpawnEnemyWaves() 
-    {
-        
+    {    
         foreach(WaveConfigSO wave in waveConfigs)
         {
             currentWave = wave;
@@ -60,7 +58,6 @@ public class EnemySpawner : MonoBehaviour
                             Quaternion.identity,
                             transform);
                 yield return new WaitForSeconds(currentWave.GetRandomSpawnTime());
-
             }
             yield return new WaitForSeconds(timeBetweenWaves);
         }
@@ -89,11 +86,8 @@ public class EnemySpawner : MonoBehaviour
                             Quaternion.identity,
                             transform);
                 yield return new WaitForSeconds(currentWave.GetRandomSpawnTime());
-
             }
             yield return new WaitForSeconds(timeBetweenWaves);
         }
     }
-
-
 }

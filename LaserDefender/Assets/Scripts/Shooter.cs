@@ -11,11 +11,12 @@ public class Shooter : MonoBehaviour
     [SerializeField] float baseFiringRate = .2f;
     [SerializeField] float firingRateVarience = 0f;
     [SerializeField] float minimumFiringRate = .1f;
+   
+    public bool isFiring;
+
     Coroutine firingCoroutine;
     AudioPlayer audioPlayer;
     Player player;
-
-    public bool isFiring;
 
     void Awake() 
     {
@@ -30,7 +31,6 @@ public class Shooter : MonoBehaviour
 
     void Fire() 
     {
-
         if(player.getPoweredUp())
         {
             if (firingCoroutine == null)
@@ -42,7 +42,6 @@ public class Shooter : MonoBehaviour
                 StopCoroutine(firingCoroutine);
                 firingCoroutine = null;
             }
-
         }
         else
         {
@@ -56,16 +55,11 @@ public class Shooter : MonoBehaviour
                 {
                     audioPlayer.PlayShootingClipPlayer();
                     rb.velocity = transform.up * projectileSpeed;
-
                 }
                 isFiring = false;
-
             }
         }
-        
- 
     }
-
 
     IEnumerator FireContinuously()
     {
@@ -87,6 +81,5 @@ public class Shooter : MonoBehaviour
 
             yield return new WaitForSeconds(timeToNextProjectile);
         }
-
     }
 }

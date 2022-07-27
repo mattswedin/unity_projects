@@ -17,5 +17,4 @@ public class UIGameOver : MonoBehaviour
     {
         scoreDisplay.text = "SCORE:\n" + scoreKeeper.GetCurrentScore();
     }
-
 }

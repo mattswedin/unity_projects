@@ -14,13 +14,11 @@ public class AudioPlayer : MonoBehaviour
     [SerializeField] [Range(0f, 1f)] float hitMeowVolume = .5f;
 
     [Header("Enemy")]
-
     [SerializeField] AudioClip thunder;
     [SerializeField][Range(0f, 1f)] float thunderVolume = 1f;
     [SerializeField] AudioClip bossVoice;
     [SerializeField][Range(0f, 1f)] float bossVolume = 1f;
-
-
+    [SerializeField] AudioSource vacuumAudio;
     [SerializeField] AudioClip sprayBottle;
     [SerializeField][Range(0f, 1f)] float sprayBottleVolume = 1f;
 
@@ -32,31 +30,26 @@ public class AudioPlayer : MonoBehaviour
     [SerializeField] AudioSource mainBG;
     [SerializeField] AudioSource finalBossBG;
 
-
-
-    bool OneTime = false;
-
-    AudioSource vacuumAudio;
-    Player player;
+    bool OnlyOnce = false;
 
     static AudioPlayer instance;
+    Player player;
 
     void Awake() 
     {
         ManageSingleton();
         player = FindObjectOfType<Player>();
-        vacuumAudio = GetComponent<AudioSource>();
     }
 
     void Update() 
     {
         Scene currentScene = SceneManager.GetActiveScene();
-        if(currentScene == SceneManager.GetSceneByName("FinalBoss") && !OneTime)
+        if(currentScene == SceneManager.GetSceneByName("FinalBoss") && !OnlyOnce)
         {
             PlayBossLaugh();
             StartCoroutine(BossLaughs());
             FadeoutMainBG();
-            OneTime = true;
+            OnlyOnce = true;
         }
 
         if (currentScene == SceneManager.GetSceneByName("GameOver") ||
@@ -114,6 +107,7 @@ public class AudioPlayer : MonoBehaviour
     {
         if (vacuumAudio != null && enemy == "vacuum") 
         {
+            Debug.Log(vacuumAudio);
             vacuumAudio.Play();
         }
 

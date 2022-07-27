@@ -14,8 +14,8 @@ public class EnemyShooter : MonoBehaviour
     [SerializeField] float firingRateVarience = 0f;
     [SerializeField] float minimumFiringRate = .1f;
     [SerializeField] string enemyType = "vacuum";
+
     Coroutine firingCoroutine;
-    
     AudioPlayer audioPlayer;
 
     public bool isFiring;
@@ -33,7 +33,6 @@ public class EnemyShooter : MonoBehaviour
         }
     }
 
-
     void Update()
     {
         Fire();
@@ -50,7 +49,6 @@ public class EnemyShooter : MonoBehaviour
             StopCoroutine(firingCoroutine);
             firingCoroutine = null;
         }
-
     }
 
     IEnumerator FireContinuously() 
@@ -76,11 +74,10 @@ public class EnemyShooter : MonoBehaviour
                 if (enemyType != "vacuum")
                 {
                     audioPlayer.PlayShootingClipEnemy(enemyType);
-                }
-                
+                }               
                 rb.velocity = -transform.up * projectileSpeed;
-                
             }
+            
             Destroy(instance, projectileLifetime);
 
             float timeToNextProjectile = Random.Range(baseFiringRate - firingRateVarience, baseFiringRate + firingRateVarience);

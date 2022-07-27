@@ -7,16 +7,15 @@ public class Health : MonoBehaviour
 {
     // [SerializeField] ParticleSystem scratchspolsion;
     [SerializeField] int health = 50;
+    int maxHealth;
+
     [Header("Player Only")]
-    float maxHealth;
     [SerializeField] bool isPlayer = false;
-    Rigidbody2D playerRB;
     [SerializeField] float suckPower = 2f;
     [SerializeField] float stunTime = 30f;
     [SerializeField] float stunMovement = .01f;
     [SerializeField] bool applyCameraShake;
-    Player playerScript;
-    LevelManager levelManager;
+
     [Header("Boss Only")]
     [SerializeField] bool isBoss = false;
     [SerializeField] bool isFinalBoss = false;
@@ -24,15 +23,16 @@ public class Health : MonoBehaviour
 
     [Header("Enemy Only")]
     [SerializeField] int enemyValue = 0;
-     
-
-    
     [SerializeField] bool isVacuum;
+
+    Rigidbody2D playerRB;
     CameraShake cameraShake;
     AudioPlayer audioPlayer;
     ScoreKeeper scoreKeeper;
     EnemySpawner enemySpawner;
     UIDisplay uIDisplay;
+    Player playerScript;
+    LevelManager levelManager;
     
     void Awake() 
     {
@@ -48,16 +48,14 @@ public class Health : MonoBehaviour
 
         if (isPlayer)
         {
-
             playerRB = GetComponent<Rigidbody2D>();
             playerScript = FindObjectOfType<Player>();
             maxHealth = GetRemainingHealth();
         }
-
     }
 
 
-    public float GetRemainingHealth() 
+    public int GetRemainingHealth() 
     {
         return health;
     }
@@ -132,7 +130,8 @@ public class Health : MonoBehaviour
        
     }
 
-    void OnTriggerExit2D(Collider2D other) {
+    void OnTriggerExit2D(Collider2D other) 
+    {
         if (other.tag == "suckRange")
         {
             uIDisplay.NormalFace();
@@ -152,7 +151,6 @@ public class Health : MonoBehaviour
     {
         Vector3 ogPosition = transform.position;
 
-        
         playerScript.stunned = true;
         for (int i = 0; i < stunTime; i++){
             if (transform.position.x > ogPosition.x){
@@ -164,7 +162,6 @@ public class Health : MonoBehaviour
                 transform.position = ogPosition;
                 transform.position += new Vector3(stunMovement, 0f);
             }
-            Debug.Log(ogPosition);
             yield return new WaitForSeconds(.01f);
         }
         uIDisplay.NormalFace();
@@ -224,8 +221,15 @@ public class Health : MonoBehaviour
 
     void RecoverHealth(int recoveryAmount) 
     {
-        health += recoveryAmount;
-        Mathf.Clamp(health, 0, maxHealth);
+        if (health + recoveryAmount > maxHealth)
+        {
+            health = maxHealth;
+        }
+        else
+        {
+            health += recoveryAmount;
+        }
+        
     }
 
     void ShakeCamera() 

@@ -12,15 +12,12 @@ public class ScoreKeeper : MonoBehaviour
 
     void Awake() 
     {
-       
         ManageSingleton();
     }
 
     void Update() 
-    {
-       
-        PowerUpSpawn();
-        
+    {  
+        PowerUpSpawn();      
     }
 
     public float GetCurrentScore() 
@@ -43,9 +40,7 @@ public class ScoreKeeper : MonoBehaviour
         }
 
         Mathf.Clamp(currentScore, 000000, 999999);
-        Mathf.Clamp(currentHighScore, 000000, 999999);
-
-        
+        Mathf.Clamp(currentHighScore, 000000, 999999);       
     }
 
     public void ResetScore() 
@@ -79,8 +74,6 @@ public class ScoreKeeper : MonoBehaviour
                 DontDestroyOnLoad(instance);
                 instance.GetComponent<Rigidbody2D>().velocity = -transform.up;
             }
-            
         }
     }
-
 }

@@ -7,16 +7,16 @@ public class PathFinder : MonoBehaviour
     [SerializeField] bool isBoss;
     [SerializeField] bool isMouseBoss;
     [SerializeField] float rotateSpeed = 300f;
-    EnemySpawner enemySpawner;
-    WaveConfigSO waveConfig;
+    
     List<Transform> waypoints;
     int waypointIndex = 0;
 
+    EnemySpawner enemySpawner;
+    WaveConfigSO waveConfig;
+
     void Awake() 
     {
-
         enemySpawner = FindObjectOfType<EnemySpawner>();
-
     }
 
     void Start()
@@ -35,8 +35,7 @@ public class PathFinder : MonoBehaviour
         else
         {
             FollowPath();
-        }
-        
+        }      
     }
 
     void FollowPath()
@@ -51,7 +50,6 @@ public class PathFinder : MonoBehaviour
             {
                 waypointIndex++;
             }
-           
         }
         else
         {
@@ -61,8 +59,6 @@ public class PathFinder : MonoBehaviour
 
     void FollowBossPath()
     {
-
-
         if (!enemySpawner.bossDefeated)
         {
             Vector3 targetPosition = waypoints[waypointIndex].position;
@@ -74,7 +70,6 @@ public class PathFinder : MonoBehaviour
             }
             transform.position = Vector3.MoveTowards(transform.position, targetPosition, delta);
             
-            
             if (transform.position == targetPosition)
             {
                 if (waypointIndex == (waypoints.Count - 1)) 
@@ -85,13 +80,7 @@ public class PathFinder : MonoBehaviour
                 {
                     waypointIndex++;
                 }
-                
             }
-
-        }
-        
-      
+        }  
     }
-
-    
 }

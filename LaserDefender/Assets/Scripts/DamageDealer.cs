@@ -8,8 +8,8 @@ public class DamageDealer : MonoBehaviour
   [SerializeField] bool isEnemy = false;
   [SerializeField] bool isClaws = false;
   [SerializeField] ParticleSystem scratchspolsion;
-  AudioPlayer audioPlayer;
 
+  AudioPlayer audioPlayer;
 
   void Awake() 
   {
@@ -23,7 +23,6 @@ public class DamageDealer : MonoBehaviour
 
   public void Hit() 
   {
-
     if (isClaws && !isEnemy)
     {
       if (scratchspolsion != null)
@@ -43,5 +42,4 @@ public class DamageDealer : MonoBehaviour
           Destroy(instance.gameObject, instance.main.duration + instance.main.startLifetime.constantMax);
       }
   }
-
 }
