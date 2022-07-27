@@ -53,8 +53,7 @@ public class AudioPlayer : MonoBehaviour
         }
 
         if (currentScene == SceneManager.GetSceneByName("GameOver") ||
-            currentScene == SceneManager.GetSceneByName("YouWon")) 
-            
+            currentScene == SceneManager.GetSceneByName("YouWon"))     
         {
             Destroy(instance);
             gameObject.SetActive(false);
@@ -82,8 +81,7 @@ public class AudioPlayer : MonoBehaviour
     }
 
     public void PlayShootingClipPlayer() 
-    {
-        
+    {  
         if(shootingClip != null) 
         {
            PlayRandomClipinList(shootingClip, shootingVolume);
@@ -141,7 +139,6 @@ public class AudioPlayer : MonoBehaviour
         System.Random random = new System.Random();
         int randomNum = random.Next(0, clips.Count);
         PlayClip(clips[randomNum], clipVolume);
-
     }
 
     public void StopVacuumAudio() 
@@ -155,8 +152,7 @@ public class AudioPlayer : MonoBehaviour
     }
 
     IEnumerator FadeOut()
-    {
-        
+    {  
         for(float i = mainBG.volume; i > 0; i -= .01f)
         {
             mainBG.volume = i;
@@ -187,6 +183,4 @@ public class AudioPlayer : MonoBehaviour
         }
         while(player.isFinalBoss());
     }
-
-    
 }
