@@ -36,6 +36,7 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
+     <Compile Include="Assets/Scripts/ObjectHit.cs" />
      <Compile Include="Assets/Scripts/Mover.cs" />
     <Reference Include="UnityEngine">
         <HintPath>/Volumes/Carl/Unity/2021.3.0f1/Unity.app/Contents/Managed/UnityEngine/UnityEngine.dll</HintPath>
