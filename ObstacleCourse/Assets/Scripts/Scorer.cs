@@ -17,7 +17,7 @@ public class Scorer : MonoBehaviour
         else
         {
             int bumpedValue = (int) hashtable[bumpedObject];
-            hashtable[bumpedObject] = bumpedValue + 1;
+            hashtable[bumpedObject] = bumpedValue++;
         }
 
         Debug.Log("You have hit " + bumpedObject + " " + hashtable[bumpedObject] + " times.");
