@@ -4,6 +4,14 @@ using UnityEngine;
 
 public class Movement : MonoBehaviour
 {
+    Rigidbody rb;
+    [SerializeField] float thrustForce = 10f;
+
+    void Start() 
+    {
+        rb = GetComponent<Rigidbody>();
+    }
+
     void Update()
     {
         ProcessThrust();
@@ -14,7 +22,7 @@ public class Movement : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.Space))
         {
-            Debug.Log("Pressed Space");
+            rb.AddRelativeForce(Vector3.up * thrustForce * Time.deltaTime);
         }
 
     }
@@ -24,12 +32,12 @@ public class Movement : MonoBehaviour
         if (Input.GetKey(KeyCode.LeftArrow) ||
             Input.GetKey(KeyCode.A))
         {
-            Debug.Log("Pressed Left");
+            transform.Rotate(Vector3.right);
         }
         else if (Input.GetKey(KeyCode.RightArrow) ||
                  Input.GetKey(KeyCode.D))
         {
-            Debug.Log("Pressed Right");
+            transform.Rotate(-Vector3.left);
         }
     }
 }
