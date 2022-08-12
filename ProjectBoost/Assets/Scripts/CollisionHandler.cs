@@ -5,6 +5,11 @@ using UnityEngine.SceneManagement;
 
 public class CollisionHandler : MonoBehaviour
 {
+  UIDisplay uIDisplay;
+
+  void Awake() {
+    uIDisplay = FindObjectOfType<UIDisplay>();
+  }
  
   void OnCollisionEnter(Collision other) 
   {
@@ -24,7 +29,8 @@ public class CollisionHandler : MonoBehaviour
     switch (other.tag)
     {
       case "Frog":
-
+        Destroy(other.gameObject.transform.parent.gameObject);
+        uIDisplay.AddFrogPoint();
         break;
     }
   }

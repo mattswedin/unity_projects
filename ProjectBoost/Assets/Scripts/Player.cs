@@ -2,9 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Movement : MonoBehaviour
+public class Player : MonoBehaviour
 {
     Rigidbody rb;
+    [SerializeField] float health = 3;
     [SerializeField] float thrustForce = 10f;
     [SerializeField] float rotateThrustForce = 1f;
     [SerializeField] AudioSource rocketSFX;
@@ -19,6 +20,8 @@ public class Movement : MonoBehaviour
         ProcessThrust();
         ProcessRotation();
     }
+
+    //Movement
 
     void ProcessThrust() 
     {
@@ -55,5 +58,17 @@ public class Movement : MonoBehaviour
     void ApplyRotation(Vector3 direction) 
     {
         transform.Rotate(direction * rotateThrustForce * Time.deltaTime);
+    }
+
+    //Health
+
+    public float GetHealth() 
+    {
+        return health;
+    }
+
+    public void LoseLife() 
+    {
+        health -= 1;
     }
 }

@@ -38,8 +38,8 @@
   <ItemGroup>
      <Compile Include="Assets/Scripts/AssignRandomColor.cs" />
      <Compile Include="Assets/Scripts/CollisionHandler.cs" />
-     <Compile Include="Assets/Scripts/Movement.cs" />
      <Compile Include="Assets/Scripts/UIDisplay.cs" />
+     <Compile Include="Assets/Scripts/Player.cs" />
      <None Include="Assets/TextMesh Pro/Shaders/TMPro.cginc" />
      <None Include="Assets/TextMesh Pro/Shaders/TMP_SDF-Mobile Overlay.shader" />
      <None Include="Assets/TextMesh Pro/Shaders/TMP_Bitmap.shader" />
