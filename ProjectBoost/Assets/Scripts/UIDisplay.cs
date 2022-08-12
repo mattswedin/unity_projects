@@ -14,6 +14,14 @@ public class UIDisplay : MonoBehaviour
     {
         player = FindObjectOfType<Player>();
     }
+
+    void Update() 
+    {
+        if (player.GetHealth() < life.text.Length)
+        {
+            life.text = life.text.Remove(life.text.Length - 1);
+        }
+    }
     
     void Start()
     {
@@ -34,5 +42,6 @@ public class UIDisplay : MonoBehaviour
         int currentFrogAmount = Int32.Parse(frogCount.text.Split(" ")[1]);
         currentFrogAmount += 1;
         frogCount.text = "Frogs: " + currentFrogAmount;
+        return;
     }
 }

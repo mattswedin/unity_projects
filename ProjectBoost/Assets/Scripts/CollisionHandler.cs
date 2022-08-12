@@ -5,10 +5,16 @@ using UnityEngine.SceneManagement;
 
 public class CollisionHandler : MonoBehaviour
 {
+  string frogParentName;
+  bool invincibilityframes = false;
+
+  Player player;
   UIDisplay uIDisplay;
 
-  void Awake() {
+  void Awake() 
+  {
     uIDisplay = FindObjectOfType<UIDisplay>();
+    player = FindObjectOfType<Player>();
   }
  
   void OnCollisionEnter(Collision other) 
@@ -16,7 +22,7 @@ public class CollisionHandler : MonoBehaviour
     switch (other.gameObject.tag)
     {
         case "Enemy":
-            Debug.Log("I am an Enemy!");
+            player.LoseLife();
             break;
         case "Finish":
             SceneManager.LoadScene(0);
@@ -29,8 +35,14 @@ public class CollisionHandler : MonoBehaviour
     switch (other.tag)
     {
       case "Frog":
-        Destroy(other.gameObject.transform.parent.gameObject);
-        uIDisplay.AddFrogPoint();
+        if (other.gameObject.transform.parent.name != frogParentName) 
+        {
+          frogParentName = other.gameObject.transform.parent.name;
+          Destroy(other.gameObject.transform.parent.gameObject);
+          uIDisplay.AddFrogPoint();
+        }
+        
+        
         break;
     }
   }
