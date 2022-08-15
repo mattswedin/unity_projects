@@ -6,7 +6,6 @@ using UnityEngine.SceneManagement;
 public class CollisionHandler : MonoBehaviour
 {
   string frogParentName;
-  bool invincibilityframes = false;
 
   Player player;
   UIDisplay uIDisplay;
@@ -22,7 +21,7 @@ public class CollisionHandler : MonoBehaviour
     switch (other.gameObject.tag)
     {
         case "Enemy":
-            player.LoseLife();
+            StartCoroutine(player.LoseLife());
             break;
         case "Finish":
             SceneManager.LoadScene(0);

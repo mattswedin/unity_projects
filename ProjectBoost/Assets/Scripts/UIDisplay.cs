@@ -8,11 +8,22 @@ public class UIDisplay : MonoBehaviour
 {
     [SerializeField] TextMeshProUGUI life;
     [SerializeField] TextMeshProUGUI frogCount;
+    [SerializeField] int frogAmount;
+    [SerializeField] int frogGameTotal; 
     Player player;
+
 
     void Awake() 
     {
         player = FindObjectOfType<Player>();
+    }
+
+    void Start()
+    {
+        int frogTotalinCurrentScene = GameObject.Find("Frogs").transform.childCount;
+        frogGameTotal += frogTotalinCurrentScene;
+        frogCount.text = "Frogs: 0";
+        SetUpLife();
     }
 
     void Update() 
@@ -23,12 +34,6 @@ public class UIDisplay : MonoBehaviour
         }
     }
     
-    void Start()
-    {
-        frogCount.text = "Frogs: 0";
-        SetUpLife();
-    }
-
     void SetUpLife ()
     {
         for(int i = 0; i < player.GetHealth(); i++)
@@ -42,6 +47,5 @@ public class UIDisplay : MonoBehaviour
         int currentFrogAmount = Int32.Parse(frogCount.text.Split(" ")[1]);
         currentFrogAmount += 1;
         frogCount.text = "Frogs: " + currentFrogAmount;
-        return;
     }
 }

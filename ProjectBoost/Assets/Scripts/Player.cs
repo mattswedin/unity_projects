@@ -10,6 +10,9 @@ public class Player : MonoBehaviour
     [SerializeField] float rotateThrustForce = 1f;
     [SerializeField] AudioSource rocketSFX;
 
+    bool invincibilityFrames = false;
+    [SerializeField] float invincibilityTime = 10f;
+
     void Start() 
     {
         rb = GetComponent<Rigidbody>();
@@ -17,6 +20,7 @@ public class Player : MonoBehaviour
 
     void Update()
     {
+        Debug.Log(invincibilityFrames);
         ProcessThrust();
         ProcessRotation();
     }
@@ -67,8 +71,16 @@ public class Player : MonoBehaviour
         return health;
     }
 
-    public void LoseLife() 
-    {
-        health -= 1;
+    public IEnumerator LoseLife() 
+    {  
+        if (!invincibilityFrames)
+        {
+            invincibilityFrames = true;
+            health -= 1;
+            yield return new WaitForSeconds(invincibilityTime);
+
+            invincibilityFrames = false;
+        }
+        
     }
 }
