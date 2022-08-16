@@ -4,8 +4,12 @@ using UnityEngine;
 
 public class FrogMovement : MonoBehaviour
 {
-    [SerializeField] float timeBetweenJumps = .5f;
+    [SerializeField] float minTimeBetweenJumps = .1f;
+    [SerializeField] float maxTimeBetweenJumps = 1f;
+
     [SerializeField] float jumpHeight = 15f;
+    [SerializeField] bool isJumping = false;
+    [SerializeField] bool canJumpAgain = false;
     Rigidbody rb;
 
     void Awake()
@@ -13,19 +17,43 @@ public class FrogMovement : MonoBehaviour
         rb = GetComponent<Rigidbody>();
     }
 
-    // Update is called once per frame
     void Update()
     {
-        StartCoroutine(FrogJump());
+        Debug.Log(isJumping);
+        FrogJump();
     }
 
-    IEnumerator FrogJump()
+    void FrogJump()
     {
-        while (true)
+        if (!isJumping && canJumpAgain)
         {
-            rb.AddForce(Vector3.up * jumpHeight * Time.deltaTime, ForceMode.Impulse);
-            yield return new WaitForSecondsRealtime(timeBetweenJumps);
+            canJumpAgain = false;
+            rb.AddForce(Vector3.up * jumpHeight, ForceMode.Impulse);
         }
+    
+    }
+
+    void OnCollisionEnter(Collision other) {
+        if (other.gameObject.tag == "Ground")
+        {
+            isJumping = false;
+            StartCoroutine(WaitRandomSeconds());
+        }
+    }
+
+    void OnCollisionExit(Collision other)
+    {
+        if (other.gameObject.tag == "Ground")
+        {
+            isJumping = true;
+        }
+    }
+
+    IEnumerator WaitRandomSeconds()
+    {
+        float timeBetweenJumps = Random.Range(minTimeBetweenJumps, maxTimeBetweenJumps);
+        yield return new WaitForSeconds(timeBetweenJumps);
+        canJumpAgain = true;
         
     }
 }
