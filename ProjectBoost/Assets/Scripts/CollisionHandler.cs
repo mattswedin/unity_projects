@@ -9,9 +9,11 @@ public class CollisionHandler : MonoBehaviour
 
   Player player;
   UIDisplay uIDisplay;
+  SceneSwitcher sceneSwitcher;
 
   void Awake() 
   {
+    sceneSwitcher = FindObjectOfType<SceneSwitcher>();
     uIDisplay = FindObjectOfType<UIDisplay>();
     player = FindObjectOfType<Player>();
   }
@@ -24,7 +26,7 @@ public class CollisionHandler : MonoBehaviour
             StartCoroutine(player.LoseLife());
             break;
         case "Finish":
-            SceneManager.LoadScene(0);
+            sceneSwitcher.LoadFrogScoreScene();
             break;
     }
   }

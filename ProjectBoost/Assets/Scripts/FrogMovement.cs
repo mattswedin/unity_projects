@@ -6,20 +6,23 @@ public class FrogMovement : MonoBehaviour
 {
     [SerializeField] float minTimeBetweenJumps = .1f;
     [SerializeField] float maxTimeBetweenJumps = 1f;
-
     [SerializeField] float jumpHeight = 15f;
     [SerializeField] bool isJumping = false;
     [SerializeField] bool canJumpAgain = false;
+    [SerializeField] AudioClip jumpSFX;
     Rigidbody rb;
+    AudioSource audioSource;
+    
+
 
     void Awake()
     {
+        audioSource = GetComponent<AudioSource>();
         rb = GetComponent<Rigidbody>();
     }
 
     void Update()
     {
-        Debug.Log(isJumping);
         FrogJump();
     }
 
@@ -27,6 +30,7 @@ public class FrogMovement : MonoBehaviour
     {
         if (!isJumping && canJumpAgain)
         {
+            audioSource.PlayOneShot(jumpSFX, .5f);
             canJumpAgain = false;
             rb.AddForce(Vector3.up * jumpHeight, ForceMode.Impulse);
         }

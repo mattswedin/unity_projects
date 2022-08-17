@@ -8,37 +8,52 @@ public class UIDisplay : MonoBehaviour
 {
     [SerializeField] TextMeshProUGUI life;
     [SerializeField] TextMeshProUGUI frogCount;
-    [SerializeField] int frogAmount;
-    [SerializeField] int frogGameTotal; 
-    Player player;
+
+    SceneSwitcher sceneSwitcher;
+    PlayerStats playerStats;
 
 
     void Awake() 
     {
-        player = FindObjectOfType<Player>();
+        sceneSwitcher = FindObjectOfType<SceneSwitcher>();
+        playerStats = FindObjectOfType<PlayerStats>();
     }
 
     void Start()
     {
-        int frogTotalinCurrentScene = GameObject.Find("Frogs").transform.childCount;
-        frogGameTotal += frogTotalinCurrentScene;
-        frogCount.text = "Frogs: 0";
-        SetUpLife();
+        if (!sceneSwitcher.IsFrogScore())
+        {
+            SetUpFrogCounts();
+            SetUpLife();
+        }
     }
 
     void Update() 
     {
-        if (player.GetHealth() < life.text.Length)
-        {
-            life.text = life.text.Remove(life.text.Length - 1);
-        }
+        LoseLife();
+    }
+
+    void SetUpFrogCounts() 
+    {
+        int frogTotalinCurrentScene = GameObject.Find("Frogs").transform.childCount;
+        playerStats.SetFrogCurrentLevelAndGameTotal(frogTotalinCurrentScene, 
+                                                    sceneSwitcher.GetCurrentLevelName());
+        frogCount.text = "Frogs: 0";
     }
     
     void SetUpLife ()
     {
-        for(int i = 0; i < player.GetHealth(); i++)
+        for(int i = 0; i < playerStats.GetHealth(); i++)
         {
             life.text += "(";
+        }
+    }
+
+    void LoseLife() 
+    {
+        if (playerStats.GetHealth() < life.text.Length)
+        {
+            life.text = life.text.Remove(life.text.Length - 1);
         }
     }
 
@@ -47,5 +62,5 @@ public class UIDisplay : MonoBehaviour
         int currentFrogAmount = Int32.Parse(frogCount.text.Split(" ")[1]);
         currentFrogAmount += 1;
         frogCount.text = "Frogs: " + currentFrogAmount;
-    }
+    } 
 }
