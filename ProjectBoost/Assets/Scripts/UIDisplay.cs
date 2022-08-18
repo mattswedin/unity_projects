@@ -36,7 +36,7 @@ public class UIDisplay : MonoBehaviour
     void SetUpFrogCounts() 
     {
         int frogTotalinCurrentScene = GameObject.Find("Frogs").transform.childCount;
-        playerStats.SetFrogCurrentLevelAndGameTotal(frogTotalinCurrentScene, 
+        playerStats.SetFrogCurrentLevelTotal(frogTotalinCurrentScene, 
                                                     sceneSwitcher.GetCurrentLevelName());
         frogCount.text = "Frogs: 0";
     }
@@ -62,5 +62,10 @@ public class UIDisplay : MonoBehaviour
         int currentFrogAmount = Int32.Parse(frogCount.text.Split(" ")[1]);
         currentFrogAmount += 1;
         frogCount.text = "Frogs: " + currentFrogAmount;
-    } 
+    }
+
+    public int GetFinishFrogPoints() 
+    {
+        return Int32.Parse(frogCount.text.Split(" ")[1]);
+    }
 }

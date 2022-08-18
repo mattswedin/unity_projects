@@ -10,17 +10,23 @@ public class PlayerStats : MonoBehaviour
     [SerializeField] float rotateThrustForce = 100f;
     [SerializeField] float invincibilityTime = 2.5f;
 
-    [Header("FrogScores")]
-    [SerializeField] int frogCurrentLevelTotal = 0;
-    [SerializeField] int frogGameTotal = 0;
+    [Header("Frog Scores")]
     [SerializeField] Hashtable frogAmountSavedInEachLevel = new Hashtable();
     [SerializeField] Hashtable frogAmountInEachLevel = new Hashtable();
+
+    [Header("Level Information")]
+    [SerializeField] string lastLevelCompleted;
 
     //PLAYER HEALTH
 
     public float GetHealth()
     {
         return health;
+    }
+
+    public void GainLife()
+    {
+        health += 1;
     }
 
     public void LoseLife()
@@ -45,11 +51,37 @@ public class PlayerStats : MonoBehaviour
         return invincibilityTime;
     }
 
-    public void SetFrogCurrentLevelAndGameTotal(int frogAmount, string level)
+    //FROG SCORES
+
+    public int GetFrogCurrentLevelTotal(string level)
     {
-        frogCurrentLevelTotal = frogAmount;
-        frogGameTotal += frogCurrentLevelTotal;
-        frogAmountInEachLevel[level] = frogAmount;
+        return (int)frogAmountInEachLevel[level];
     }
+
+    public void SetFrogCurrentLevelTotal(int frogAmount, string level)
+    {
+        frogAmountInEachLevel[level] = frogAmount;
+        lastLevelCompleted = level;
+    }
+
+    public int GetFrogCountCurrentLevel(string level)
+    {
+        return (int)frogAmountSavedInEachLevel[level];
+    }
+
+    public void SetFrogCountCurrentLevel(int frogAmount, string level)
+    {
+        frogAmountSavedInEachLevel[level] = frogAmount;
+    }
+
+   
+
+    //LEVEL INFO
+
+    public string GetLastLevelCompleted()
+    {
+        return lastLevelCompleted;
+    }
+
 
 }

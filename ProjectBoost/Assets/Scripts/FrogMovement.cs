@@ -10,20 +10,32 @@ public class FrogMovement : MonoBehaviour
     [SerializeField] bool isJumping = false;
     [SerializeField] bool canJumpAgain = false;
     [SerializeField] AudioClip jumpSFX;
+    [Header("Score Frog")]
+    [SerializeField] bool isScoreFrogRunning;
+    [SerializeField] bool isScoreFrogEndPosition;
+    [SerializeField] float spinSpeed = 5f;
+
     Rigidbody rb;
     AudioSource audioSource;
     
-
-
     void Awake()
     {
         audioSource = GetComponent<AudioSource>();
         rb = GetComponent<Rigidbody>();
     }
 
+
     void Update()
     {
-        FrogJump();
+        if (!isScoreFrogRunning && !isScoreFrogEndPosition)
+        {
+            FrogJump();
+        }
+        else if (isScoreFrogRunning)
+        {
+            rb.AddTorque(Vector3.up * spinSpeed);
+        }
+        
     }
 
     void FrogJump()

@@ -10,9 +10,11 @@ public class CollisionHandler : MonoBehaviour
   Player player;
   UIDisplay uIDisplay;
   SceneSwitcher sceneSwitcher;
+  PlayerStats playerStats;
 
   void Awake() 
   {
+    playerStats = FindObjectOfType<PlayerStats>();
     sceneSwitcher = FindObjectOfType<SceneSwitcher>();
     uIDisplay = FindObjectOfType<UIDisplay>();
     player = FindObjectOfType<Player>();
@@ -26,6 +28,8 @@ public class CollisionHandler : MonoBehaviour
             StartCoroutine(player.LoseLife());
             break;
         case "Finish":
+            playerStats.SetFrogCountCurrentLevel(uIDisplay.GetFinishFrogPoints(), 
+                                                sceneSwitcher.GetCurrentLevelName());
             sceneSwitcher.LoadFrogScoreScene();
             break;
     }
