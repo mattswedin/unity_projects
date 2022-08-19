@@ -6,14 +6,19 @@ using UnityEngine.SceneManagement;
 public class CollisionHandler : MonoBehaviour
 {
   string frogParentName;
+  [SerializeField] List<AudioClip> robotBump;
 
+  AudioSource audioSource;
   Player player;
   UIDisplay uIDisplay;
   SceneSwitcher sceneSwitcher;
   PlayerStats playerStats;
 
+  
+
   void Awake() 
   {
+    audioSource = GetComponent<AudioSource>();
     playerStats = FindObjectOfType<PlayerStats>();
     sceneSwitcher = FindObjectOfType<SceneSwitcher>();
     uIDisplay = FindObjectOfType<UIDisplay>();
@@ -32,6 +37,11 @@ public class CollisionHandler : MonoBehaviour
                                                 sceneSwitcher.GetCurrentLevelName());
             sceneSwitcher.LoadFrogScoreScene();
             break;
+            
+        default:
+          int rando = new System.Random().Next(0, robotBump.Count);
+          audioSource.PlayOneShot(robotBump[rando]); 
+          break;
     }
   }
 

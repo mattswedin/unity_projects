@@ -15,6 +15,8 @@ public class FrogScoreDisplay : MonoBehaviour
     [SerializeField] TextMeshProUGUI frogMessage;
     [SerializeField] GameObject scoreFrogWin;
     [SerializeField] GameObject scoreFrogLose;
+    [SerializeField] int currentLevelTotal;
+    [SerializeField] int currentLevelSaved;
 
     bool scoreFrogDisplayHasEnded = false;
 
@@ -43,8 +45,8 @@ public class FrogScoreDisplay : MonoBehaviour
     IEnumerator SetScoreFrogDisplay()
     {
         string previousLevel = playerStats.GetLastLevelCompleted();
-        int currentLevelTotal = playerStats.GetFrogCurrentLevelTotal(previousLevel);
-        int currentLevelSaved = playerStats.GetFrogCountCurrentLevel(previousLevel);
+        currentLevelTotal = playerStats.GetFrogCurrentLevelTotal(previousLevel);
+        currentLevelSaved = playerStats.GetFrogCountCurrentLevel(previousLevel);
         GameObject specificFrogRow = GameObject.Find(currentLevelTotal.ToString());
 
         yield return new WaitForSeconds(timeBetweenScoreFrogs);
