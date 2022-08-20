@@ -7,18 +7,15 @@ public class CollisionHandler : MonoBehaviour
 {
   string frogParentName;
   [SerializeField] List<AudioClip> robotBump;
+  [SerializeField] AudioSource audioSourceSFX;
 
-  AudioSource audioSource;
   Player player;
   UIDisplay uIDisplay;
   SceneSwitcher sceneSwitcher;
   PlayerStats playerStats;
 
-  
-
   void Awake() 
   {
-    audioSource = GetComponent<AudioSource>();
     playerStats = FindObjectOfType<PlayerStats>();
     sceneSwitcher = FindObjectOfType<SceneSwitcher>();
     uIDisplay = FindObjectOfType<UIDisplay>();
@@ -27,6 +24,7 @@ public class CollisionHandler : MonoBehaviour
  
   void OnCollisionEnter(Collision other) 
   {
+
     switch (other.gameObject.tag)
     {
         case "Enemy":
@@ -37,11 +35,13 @@ public class CollisionHandler : MonoBehaviour
                                                 sceneSwitcher.GetCurrentLevelName());
             sceneSwitcher.LoadFrogScoreScene();
             break;
-            
-        default:
-          int rando = new System.Random().Next(0, robotBump.Count);
-          audioSource.PlayOneShot(robotBump[rando]); 
+        case "Ground":
           break;
+
+        default:
+            int rando = new System.Random().Next(0, robotBump.Count);
+            audioSourceSFX.PlayOneShot(robotBump[rando]);
+            break;
     }
   }
 
