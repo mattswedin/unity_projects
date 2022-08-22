@@ -96,31 +96,38 @@ public class Player : MonoBehaviour
         if (Input.GetKey(KeyCode.RightArrow) ||
             Input.GetKey(KeyCode.D))
         {
-            if (jetArmRight.isEmitting)
+            if (!jetArmRight.isPlaying)
             {
-                jetArmRight.Stop();
+                jetArmRight.Play();
             }
-            jetArmLeft.Play();
+            else
+            {
+                jetArmLeft.Play();
+            }
             ApplyRotation(Vector3.right);
             
         }
         else if (Input.GetKey(KeyCode.LeftArrow) ||
                  Input.GetKey(KeyCode.A))
         {
-            if (jetArmLeft.isEmitting)
+            if (!jetArmLeft.isPlaying)
             {
-                jetArmLeft.Stop();
+                jetArmLeft.Play();
             }
-            jetArmRight.Play();
+            else
+            {
+                jetArmRight.Play();
+            }
+            
             ApplyRotation(Vector3.left);
         }
         else
         {
-            if (jetArmLeft.isEmitting)
+            if (jetArmLeft.isPlaying)
             {
                 jetArmLeft.Stop();
             }
-            if (jetArmRight.isEmitting)
+            if (jetArmRight.isPlaying)
             {
                 jetArmRight.Stop();
             }
