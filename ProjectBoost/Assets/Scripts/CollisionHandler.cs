@@ -31,9 +31,10 @@ public class CollisionHandler : MonoBehaviour
             StartCoroutine(player.LoseLife());
             break;
         case "Finish":
+            StartCoroutine(player.DissapearAtFinish());
             playerStats.SetFrogCountCurrentLevel(uIDisplay.GetFinishFrogPoints(), 
                                                 sceneSwitcher.GetCurrentLevelName());
-            sceneSwitcher.LoadFrogScoreScene();
+            StartCoroutine(sceneSwitcher.LoadFrogScoreScene());
             break;
         case "Ground":
           break;

@@ -8,7 +8,8 @@ public class FrogScoreDisplay : MonoBehaviour
     PlayerStats playerStats;
     SceneSwitcher sceneSwitcher;
 
-    [SerializeField] float timeBetweenScoreFrogs = 1f;
+    [SerializeField] float timeBetweenScores = 1f;
+    [SerializeField] float timeBetweenScoreFrogs = .3f;
     [SerializeField] TextMeshProUGUI levelName;
     [SerializeField] TextMeshProUGUI remainingLife;
     string lifeAmountDisplay;
@@ -49,11 +50,11 @@ public class FrogScoreDisplay : MonoBehaviour
         currentLevelSaved = playerStats.GetFrogCountCurrentLevel(previousLevel);
         GameObject specificFrogRow = GameObject.Find(currentLevelTotal.ToString());
 
-        yield return new WaitForSeconds(timeBetweenScoreFrogs);
+        yield return new WaitForSeconds(timeBetweenScores);
 
         levelName.text = previousLevel + " Completed";
 
-        yield return new WaitForSeconds(timeBetweenScoreFrogs);
+        yield return new WaitForSeconds(timeBetweenScores);
 
         for (int i = 0; i < playerStats.GetHealth(); i++)
         {
@@ -62,7 +63,7 @@ public class FrogScoreDisplay : MonoBehaviour
 
         remainingLife.text = "Life: " + lifeAmountDisplay;
 
-        yield return new WaitForSeconds(timeBetweenScoreFrogs);
+        yield return new WaitForSeconds(timeBetweenScores);
 
         for(int i = 0; i < currentLevelSaved; i++)
         {
@@ -77,13 +78,14 @@ public class FrogScoreDisplay : MonoBehaviour
             Instantiate
             (
                 currentLevelSaved != currentLevelTotal ? scoreFrogLose : scoreFrogWin,
-                currentLevelSaved != currentLevelTotal ? new Vector3(frogPos.x, frogPos.y + .3f, frogPos.z) : new Vector3(frogPos.x, frogPos.y + 1.9f, frogPos.z),
-                currentLevelSaved != currentLevelTotal ? new Quaternion(0, 0, 0, 0) : new Quaternion(0, 90, 0, 90),
+                currentLevelSaved != currentLevelTotal ? new Vector3(frogPos.x, frogPos.y + .3f, frogPos.z) :
+                                                         new Vector3(frogPos.x, frogPos.y, frogPos.z),
+                new Quaternion(0, 90, 0, 90),
                 specificFrogRow.transform
             );
         }
 
-        yield return new WaitForSeconds(timeBetweenScoreFrogs);
+        yield return new WaitForSeconds(timeBetweenScores + .5f);
 
         if(currentLevelSaved != currentLevelTotal)
         {
@@ -97,7 +99,7 @@ public class FrogScoreDisplay : MonoBehaviour
 
         }
 
-        yield return new WaitForSeconds(timeBetweenScoreFrogs);
+        yield return new WaitForSeconds(timeBetweenScores);
 
         scoreFrogDisplayHasEnded = true;
 
