@@ -76,7 +76,7 @@ public class FrogScoreDisplay : MonoBehaviour
             specificFrogRow.transform.GetChild(i).gameObject.SetActive(true);
             yield return new WaitForSeconds(timeBetweenScoreFrogs);
         }
-        audioPlayer.PlayTextAppear();
+        if (currentLevelSaved != currentLevelTotal) audioPlayer.PlayTextAppear();
         for(int i = 0; i <currentLevelSaved; i++)
         {
             Vector3 frogPos = specificFrogRow.transform.GetChild(i).gameObject.transform.position;   

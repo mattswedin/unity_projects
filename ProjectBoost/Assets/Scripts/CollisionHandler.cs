@@ -7,6 +7,7 @@ public class CollisionHandler : MonoBehaviour
 {
   string frogParentName;
   [SerializeField] List<AudioClip> robotBump;
+  [SerializeField] List<AudioClip> robotBumpGround;
   [SerializeField] AudioClip losLifeExplos;
   [SerializeField] [Range(0, 5f)] float loseLifeExplosVolume;
   [SerializeField] AudioSource audioSourceSFX;
@@ -42,8 +43,9 @@ public class CollisionHandler : MonoBehaviour
             StartCoroutine(sceneSwitcher.LoadFrogScoreScene());
             break;
         case "Ground":
-          break;
-
+            int randoGround = new System.Random().Next(0, robotBumpGround.Count);
+            audioSourceSFX.PlayOneShot(robotBumpGround[randoGround]);
+            break;
         default:
             int rando = new System.Random().Next(0, robotBump.Count);
             audioSourceSFX.PlayOneShot(robotBump[rando]);

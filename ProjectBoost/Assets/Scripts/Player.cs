@@ -103,25 +103,18 @@ public class Player : MonoBehaviour
         if (Input.GetKey(KeyCode.RightArrow) ||
             Input.GetKey(KeyCode.D))
         {
-            if (!jetArmRight.isPlaying)
-            {
-                jetArmRight.Play();
-            }
-            else
+            if (!jetArmLeft.isPlaying)
             {
                 jetArmLeft.Play();
             }
+        
             ApplyRotation(Vector3.right);
             
         }
         else if (Input.GetKey(KeyCode.LeftArrow) ||
                  Input.GetKey(KeyCode.A))
         {
-            if (!jetArmLeft.isPlaying)
-            {
-                jetArmLeft.Play();
-            }
-            else
+            if (!jetArmRight.isPlaying)
             {
                 jetArmRight.Play();
             }
