@@ -5,8 +5,7 @@ using TMPro;
 
 public class FrogScoreDisplay : MonoBehaviour
 {
-    PlayerStats playerStats;
-    SceneSwitcher sceneSwitcher;
+    
 
     [SerializeField] float timeBetweenScores = 1f;
     [SerializeField] float timeBetweenScoreFrogs = .3f;
@@ -18,11 +17,15 @@ public class FrogScoreDisplay : MonoBehaviour
     [SerializeField] GameObject scoreFrogLose;
     [SerializeField] int currentLevelTotal;
     [SerializeField] int currentLevelSaved;
-
     bool scoreFrogDisplayHasEnded = false;
+
+    PlayerStats playerStats;
+    SceneSwitcher sceneSwitcher;
+    AudioPlayer audioPlayer;
 
     void Awake() 
     {
+        audioPlayer = FindObjectOfType<AudioPlayer>();
         sceneSwitcher = FindObjectOfType<SceneSwitcher>();
         playerStats = FindObjectOfType<PlayerStats>();
     }
@@ -52,6 +55,7 @@ public class FrogScoreDisplay : MonoBehaviour
 
         yield return new WaitForSeconds(timeBetweenScores);
 
+        audioPlayer.PlayTextAppear();
         levelName.text = previousLevel + " Completed";
 
         yield return new WaitForSeconds(timeBetweenScores);
@@ -61,20 +65,23 @@ public class FrogScoreDisplay : MonoBehaviour
             lifeAmountDisplay += "(";
         }
 
+        audioPlayer.PlayTextAppear();
         remainingLife.text = "Life: " + lifeAmountDisplay;
 
         yield return new WaitForSeconds(timeBetweenScores);
 
         for(int i = 0; i < currentLevelSaved; i++)
         {
+            audioPlayer.PlayRandomRibbet();
             specificFrogRow.transform.GetChild(i).gameObject.SetActive(true);
             yield return new WaitForSeconds(timeBetweenScoreFrogs);
         }
-
+        audioPlayer.PlayTextAppear();
         for(int i = 0; i <currentLevelSaved; i++)
         {
             Vector3 frogPos = specificFrogRow.transform.GetChild(i).gameObject.transform.position;   
             specificFrogRow.transform.GetChild(i).gameObject.SetActive(false);
+            if (currentLevelSaved == currentLevelTotal) audioPlayer.PlayRandomRibbet();
             Instantiate
             (
                 currentLevelSaved != currentLevelTotal ? scoreFrogLose : scoreFrogWin,
@@ -86,7 +93,7 @@ public class FrogScoreDisplay : MonoBehaviour
         }
 
         yield return new WaitForSeconds(timeBetweenScores + .5f);
-
+        audioPlayer.PlayTextAppear();
         if(currentLevelSaved != currentLevelTotal)
         {
             frogMessage.text = "Save More Frogs";

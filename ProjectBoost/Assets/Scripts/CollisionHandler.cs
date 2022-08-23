@@ -7,15 +7,20 @@ public class CollisionHandler : MonoBehaviour
 {
   string frogParentName;
   [SerializeField] List<AudioClip> robotBump;
+  [SerializeField] AudioClip losLifeExplos;
+  [SerializeField] [Range(0, 5f)] float loseLifeExplosVolume;
   [SerializeField] AudioSource audioSourceSFX;
 
   Player player;
   UIDisplay uIDisplay;
   SceneSwitcher sceneSwitcher;
   PlayerStats playerStats;
+  FrogMovement frogMovement;
+  AudioPlayer audioPlayer;
 
   void Awake() 
   {
+    audioPlayer = FindObjectOfType<AudioPlayer>();
     playerStats = FindObjectOfType<PlayerStats>();
     sceneSwitcher = FindObjectOfType<SceneSwitcher>();
     uIDisplay = FindObjectOfType<UIDisplay>();
@@ -46,15 +51,23 @@ public class CollisionHandler : MonoBehaviour
     }
   }
 
+  public void PlayExplosion() 
+  {
+        audioSourceSFX.PlayOneShot(losLifeExplos, loseLifeExplosVolume);
+  }
+
   void OnTriggerEnter(Collider other)
   {
+    var parent = other.gameObject.transform.parent;
     switch (other.tag)
     {
+      
       case "Frog":
-        if (other.gameObject.transform.parent.name != frogParentName) 
+        if (parent.name != frogParentName) 
         {
-          frogParentName = other.gameObject.transform.parent.name;
-          Destroy(other.gameObject.transform.parent.gameObject);
+          frogParentName = parent.name;
+          audioPlayer.PlayRandomRibbet();
+          Destroy(parent.gameObject);
           uIDisplay.AddFrogPoint();
         }
         

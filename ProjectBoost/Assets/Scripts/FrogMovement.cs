@@ -10,6 +10,7 @@ public class FrogMovement : MonoBehaviour
     [SerializeField] bool isJumping = false;
     [SerializeField] bool canJumpAgain = false;
     [SerializeField] AudioClip jumpSFX;
+    [SerializeField] AudioClip ribbet;
     [Header("Score Frog")]
     [SerializeField] bool isScoreFrogRunning;
     [SerializeField] bool isScoreFrogEndPosition;
@@ -72,4 +73,5 @@ public class FrogMovement : MonoBehaviour
         canJumpAgain = true;
         
     }
+
 }

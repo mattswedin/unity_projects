@@ -16,9 +16,13 @@ public class Player : MonoBehaviour
     bool invincibilityFrames = false;
     Rigidbody rb;
     PlayerStats playerStats;
+    AudioPlayer audioPlayer;
+    CollisionHandler collisionHandler;
 
     void Awake() 
     {
+        collisionHandler = FindObjectOfType<CollisionHandler>();
+        audioPlayer = FindObjectOfType<AudioPlayer>();
         playerStats = FindObjectOfType<PlayerStats>();
         rb = GetComponent<Rigidbody>();
     }
@@ -50,7 +54,9 @@ public class Player : MonoBehaviour
             child.gameObject.SetActive(false);
         }
         yield return new WaitForSeconds(.1f);
+        audioPlayer.PlayAppearVanish();
         appearEffect.Play();
+
         foreach (Transform child in transform.GetChild(0))
         {
             child.gameObject.SetActive(true);
@@ -60,6 +66,7 @@ public class Player : MonoBehaviour
    public IEnumerator DissapearAtFinish()
     {
         appearEffect.Play();
+        audioPlayer.PlayAppearVanish();
         yield return new WaitForSeconds(.1f);
         foreach (Transform child in transform.GetChild(0))
         {
@@ -148,6 +155,7 @@ public class Player : MonoBehaviour
             loseLifeEffect.Play();
             invincibilityFrames = true;
             playerStats.LoseLife();
+            collisionHandler.PlayExplosion();
             yield return new WaitForSeconds(playerStats.GetInvincibilityTime());
             invincibilityFrames = false;
         }
