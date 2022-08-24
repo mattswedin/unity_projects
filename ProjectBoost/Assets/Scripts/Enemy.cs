@@ -5,10 +5,12 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     Rigidbody rb;
-    [SerializeField] bool isFlying;
     [SerializeField] float speed = 5f;
+    [SerializeField] float rotationSpeed = 20f;
     [SerializeField] Transform[] wayPoints;
+    [SerializeField] Transform[] rotation;
     int i = 0;
+    int j = 0;
     
     void Awake()
     {
@@ -29,7 +31,26 @@ public class Enemy : MonoBehaviour
                                                     speed * Time.deltaTime);
             if (transform.position == wayPoints[i].position)
             {
-                i++;
+                if (rotation != null)
+                {
+                    transform.rotation = Quaternion.RotateTowards(transform.rotation,
+                                                    rotation[j].rotation,
+                                                    rotationSpeed * Time.deltaTime);
+                    if (transform.rotation == rotation[j].rotation)
+                    {
+                        i++;
+                        j++;
+
+                        if (j == rotation.Length)
+                        {
+                            j = 0;
+                        }
+                    }
+                }
+                else
+                {
+                    i++;
+                }        
             }
 
             if (i == wayPoints.Length)
@@ -38,5 +59,4 @@ public class Enemy : MonoBehaviour
             }
         }
     }
-    
 }
