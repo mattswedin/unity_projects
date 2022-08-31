@@ -81,6 +81,7 @@ public class FrogMovement : MonoBehaviour
                 if (transform.rotation == rotation[j].rotation)
                 {
                     rb.AddForce(Vector3.up * jumpHeight * extraHeight, ForceMode.Impulse);
+                    audioSource.PlayOneShot(jumpSFX, .5f);
                     j++;
                     i++;
                     
