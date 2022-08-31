@@ -9,6 +9,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] float rotationSpeed = 20f;
     [SerializeField] Transform[] wayPoints;
     [SerializeField] Transform[] rotation;
+    [SerializeField] bool isFlyer;
     int i = 0;
     int j = 0;
     
@@ -31,7 +32,7 @@ public class Enemy : MonoBehaviour
                                                     speed * Time.deltaTime);
             if (transform.position == wayPoints[i].position)
             {
-                if (rotation != null)
+                if (!isFlyer)
                 {
                     transform.rotation = Quaternion.RotateTowards(transform.rotation,
                                                     rotation[j].rotation,

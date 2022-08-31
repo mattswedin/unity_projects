@@ -5,6 +5,7 @@ using UnityEngine;
 public class Spinner : MonoBehaviour
 {
     Rigidbody rb;
+    [SerializeField] bool isWheel;
     [SerializeField] float spinSpeed = 20f;
     
     void Awake()
@@ -15,6 +16,14 @@ public class Spinner : MonoBehaviour
     
     void Update()
     {
-        rb.AddTorque(Vector3.up * spinSpeed);
+        if (isWheel)
+        {
+            rb.AddTorque(new Vector3(0,0,1 * spinSpeed));
+        }
+        else
+        {
+            rb.AddTorque(Vector3.up * spinSpeed);
+        }
+        
     }
 }
