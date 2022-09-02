@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,6 +13,7 @@ public class Player : MonoBehaviour
     [SerializeField] ParticleSystem jetLegRight;
     [SerializeField] ParticleSystem jetArmLeft;
     [SerializeField] ParticleSystem jetArmRight;
+    [SerializeField] Collider headCollider;
     bool cantMove = false;
     bool invincibilityFrames = false;
     Rigidbody rb;
@@ -29,8 +31,10 @@ public class Player : MonoBehaviour
 
     void Start() 
     {
+        SetUpColliderIgnore();
         StartCoroutine(AppearAtStart());
     }
+
 
     void Update()
     {
@@ -39,6 +43,25 @@ public class Player : MonoBehaviour
             ProcessRotation();
             ProcessThrust();         
         }
+    }
+
+    void SetUpColliderIgnore()
+    {
+       var allFrogs = GameObject.Find("Frogs");
+       int childCount = allFrogs.transform.childCount;
+       for (int i = 0; i < childCount; i++)
+       {
+            if (allFrogs.transform.GetChild(i).transform.childCount > 0)
+            {
+                GameObject childFrog = allFrogs.transform.GetChild(i).gameObject;
+                int childsChildCount = childFrog.transform.childCount;
+                GameObject childCollider = childFrog.transform.GetChild(childsChildCount - 1).gameObject;
+                Collider childFrogCollider = childCollider.GetComponent<Collider>();
+                Physics.IgnoreCollision(headCollider, childFrogCollider, true);
+            }
+            
+
+       }
     }
 
     public void SetCantMove(bool state) 
