@@ -6,10 +6,16 @@ public class Enemy : MonoBehaviour
 {
     Rigidbody rb;
     [SerializeField] float speed = 5f;
+    [SerializeField] float chaseSpeed = .7f;
     [SerializeField] float rotationSpeed = 20f;
     [SerializeField] Transform[] wayPoints;
     [SerializeField] Transform[] rotation;
     [SerializeField] bool isFlyer;
+    [SerializeField] bool isChasing;
+    [SerializeField] public bool frogTaken;
+    [SerializeField] Material angryEyes;
+    Material defaultMaterial;
+
     int i = 0;
     int j = 0;
     
@@ -20,7 +26,47 @@ public class Enemy : MonoBehaviour
 
     void Update() 
     {
-        Move();
+        if (!isChasing)
+        {
+            Move();
+        }
+
+        if(frogTaken && angryEyes != null)
+        {
+            ChangeEyes(angryEyes);
+        }
+    }
+
+    void ChangeEyes(Material material)
+    {
+        GameObject eyes = this.transform.Find("Eyes").gameObject;
+        int childLength = eyes.transform.childCount;
+        for (int i = 0; i < childLength; i++)
+        {
+            GameObject eye = eyes.transform.GetChild(i).gameObject;
+            defaultMaterial = eye.GetComponent<MeshRenderer>().material;
+            eye.GetComponent<MeshRenderer>().material = material;
+        }
+    }
+
+    void OnTriggerStay(Collider other) 
+    {
+        if (other.tag == "Robot" && frogTaken)
+        {
+            Chase(other.gameObject.transform);
+            isChasing = true;                                            
+        }
+        else
+        {
+            isChasing = false;
+        }
+    }
+
+    void Chase(Transform chased)
+    {
+    transform.position = Vector3.MoveTowards(transform.position,
+                                            chased.position,
+                                            chaseSpeed * Time.deltaTime);
     }
 
     void Move() 

@@ -12,6 +12,7 @@ public class CollisionHandler : MonoBehaviour
   [SerializeField] [Range(0, 5f)] float loseLifeExplosVolume;
   [SerializeField] AudioSource audioSourceSFX;
 
+  Enemy enemyScript;
   Player player;
   UIDisplay uIDisplay;
   SceneSwitcher sceneSwitcher;
@@ -69,14 +70,23 @@ public class CollisionHandler : MonoBehaviour
         {
           frogParentName = parent.name;
           audioPlayer.PlayRandomRibbet();
+          if (parent.gameObject.transform.parent.tag == "Enemy") StartCoroutine(FrogIsTaken(parent.gameObject.transform.parent.gameObject));
+
           Destroy(parent.gameObject);
           uIDisplay.AddFrogPoint();
         }
-        
-        
         break;
     }
   }
+
+  IEnumerator FrogIsTaken(GameObject parent)
+  {
+    enemyScript = parent.GetComponent<Enemy>();
+    yield return new WaitForSeconds(1f);
+    enemyScript.frogTaken = true;
+  }
 }
+
+
 
 

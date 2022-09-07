@@ -47,7 +47,7 @@ public class Player : MonoBehaviour
 
     void SetUpColliderIgnore()
     {
-       var allFrogs = GameObject.Find("Frogs");
+       GameObject allFrogs = GameObject.Find("Frogs");
        int childCount = allFrogs.transform.childCount;
        for (int i = 0; i < childCount; i++)
        {
@@ -59,8 +59,6 @@ public class Player : MonoBehaviour
                 Collider childFrogCollider = childCollider.GetComponent<Collider>();
                 Physics.IgnoreCollision(headCollider, childFrogCollider, true);
             }
-            
-
        }
     }
 
@@ -71,12 +69,11 @@ public class Player : MonoBehaviour
 
     IEnumerator AppearAtStart()
     {
-        
         foreach (Transform child in transform.GetChild(0)) 
         {
             child.gameObject.SetActive(false);
         }
-        yield return new WaitForSeconds(.1f);
+        yield return new WaitForSeconds(1f);
         audioPlayer.PlayAppearVanish();
         appearEffect.Play();
 
