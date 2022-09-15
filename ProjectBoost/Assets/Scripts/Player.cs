@@ -14,7 +14,7 @@ public class Player : MonoBehaviour
     [SerializeField] ParticleSystem jetArmLeft;
     [SerializeField] ParticleSystem jetArmRight;
     [SerializeField] Collider headCollider;
-    bool cantMove = false;
+    [SerializeField] bool cantMove = false;
     bool invincibilityFrames = false;
     Rigidbody rb;
     PlayerStats playerStats;
@@ -73,7 +73,7 @@ public class Player : MonoBehaviour
         {
             child.gameObject.SetActive(false);
         }
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(.5f);
         audioPlayer.PlayAppearVanish();
         appearEffect.Play();
 

@@ -5,23 +5,23 @@ using UnityEngine.SceneManagement;
 
 public class SceneSwitcher : MonoBehaviour
 {
-
+    PlayerStats playerStats;
+    int ActiveSceneInt;
     [SerializeField] float endOfLevelDelay = 1f;
 
-    int currentLevel;
-
-    void Start()
+    void Awake() 
     {
-        if (SceneManager.GetActiveScene().name != "FrogScore")
-        {
-            currentLevel = SceneManager.GetActiveScene().buildIndex;
-        }
-        
+        playerStats = FindObjectOfType<PlayerStats>();
+    }
+
+    public void SetActiveSceneInt(int scene)
+    {
+        ActiveSceneInt = scene;
     }
 
     public void LoadNextLevel()
-    {
-        SceneManager.LoadScene(currentLevel + 1);   
+    {  
+        SceneManager.LoadScene(ActiveSceneInt + 1);   
     }
 
     public IEnumerator LoadFrogScoreScene()

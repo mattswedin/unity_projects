@@ -5,21 +5,48 @@ using UnityEngine;
 public class AssignRandomColor : MonoBehaviour
 {
     [SerializeField] Color[] colors;
+    int childCount;
 
     void Start()
     {
-        Mesh mesh = GetComponent<MeshFilter>().mesh;
-        var uv = mesh.uv;
+        childCount = transform.childCount;
 
-        Color[] meshColors = new Color[uv.Length];
-
-        for (int i = 0; i < uv.Length; i++)
+        if (childCount > 0)
         {
-            meshColors[i] = Color.Lerp(colors[0], colors[1], uv[i].y);
+            ColorChildren();
         }
-
-        mesh.colors = meshColors;
-        
+        else
+        {
+            ColorObject();
+        }
     }
 
+    void ColorChildren()
+    {
+        for (int i = 0; i < childCount; i++)
+        {
+            Mesh mesh = transform.GetChild(i).GetComponent<MeshFilter>().mesh;
+            var uv = mesh.uv;
+            Color[] meshColors = new Color[uv.Length];
+            for (int j = 0; j < uv.Length; j++)
+            {
+                meshColors[j] = Color.Lerp(colors[0], colors[1], uv[j].y);
+            }
+            mesh.colors = meshColors;
+        }
+    }
+
+    void ColorObject()
+    {
+        Mesh mesh = GetComponent<MeshFilter>().mesh;
+        var uv = mesh.uv;
+        Color[] meshColors = new Color[uv.Length];
+        for (int j = 0; j < uv.Length; j++)
+        {
+            meshColors[j] = Color.Lerp(colors[0], colors[1], uv[j].y);
+        }
+        mesh.colors = meshColors;
+    }
 }
+
+

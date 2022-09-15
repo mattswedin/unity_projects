@@ -70,8 +70,10 @@ public class CollisionHandler : MonoBehaviour
         {
           frogParentName = parent.name;
           audioPlayer.PlayRandomRibbet();
-          if (parent.gameObject.transform.parent.tag == "Enemy") StartCoroutine(FrogIsTaken(parent.gameObject.transform.parent.gameObject));
-
+          if (parent.gameObject.transform.parent.tag == "Enemy")
+          {
+            StartCoroutine(FrogIsTaken(parent.gameObject.transform.parent.gameObject));
+          }
           Destroy(parent.gameObject);
           uIDisplay.AddFrogPoint();
         }
@@ -83,7 +85,7 @@ public class CollisionHandler : MonoBehaviour
   {
     enemyScript = parent.GetComponent<Enemy>();
     yield return new WaitForSeconds(1f);
-    enemyScript.frogTaken = true;
+    enemyScript.setFrogTaken();
   }
 }
 

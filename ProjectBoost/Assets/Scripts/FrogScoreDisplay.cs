@@ -18,6 +18,7 @@ public class FrogScoreDisplay : MonoBehaviour
     [SerializeField] int currentLevelTotal;
     [SerializeField] int currentLevelSaved;
     bool scoreFrogDisplayHasEnded = false;
+    string previousLevel;
 
     PlayerStats playerStats;
     SceneSwitcher sceneSwitcher;
@@ -48,7 +49,7 @@ public class FrogScoreDisplay : MonoBehaviour
 
     IEnumerator SetScoreFrogDisplay()
     {
-        string previousLevel = playerStats.GetLastLevelCompleted();
+        previousLevel = playerStats.GetLastLevelCompleted();
         currentLevelTotal = playerStats.GetFrogCurrentLevelTotal(previousLevel);
         currentLevelSaved = playerStats.GetFrogCountCurrentLevel(previousLevel);
         GameObject specificFrogRow = GameObject.Find(currentLevelTotal.ToString());

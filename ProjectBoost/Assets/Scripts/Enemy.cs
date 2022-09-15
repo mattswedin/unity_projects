@@ -12,7 +12,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] Transform[] rotation;
     [SerializeField] bool isFlyer;
     [SerializeField] bool isChasing;
-    [SerializeField] public bool frogTaken;
+    [SerializeField] bool frogTaken;
     [SerializeField] Material angryEyes;
     Material defaultMaterial;
 
@@ -105,5 +105,10 @@ public class Enemy : MonoBehaviour
                 i = 0;
             }
         }
+    }
+
+    public void setFrogTaken()
+    {
+        frogTaken = true;
     }
 }

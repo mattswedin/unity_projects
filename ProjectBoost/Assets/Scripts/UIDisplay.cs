@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using System;
+using UnityEngine.SceneManagement;
 
 public class UIDisplay : MonoBehaviour
 {
@@ -23,6 +24,7 @@ public class UIDisplay : MonoBehaviour
     {
         if (!sceneSwitcher.IsFrogScore())
         {
+            GetCurrentSceneBuildIndex();
             SetUpFrogCounts();
             SetUpLife();
         }
@@ -74,5 +76,10 @@ public class UIDisplay : MonoBehaviour
     public int GetFinishFrogPoints() 
     {
         return Int32.Parse(frogCount.text.Split(" ")[1]);
+    }
+
+    public void GetCurrentSceneBuildIndex()
+    {
+        sceneSwitcher.SetActiveSceneInt(SceneManager.GetActiveScene().buildIndex);
     }
 }
