@@ -33,7 +33,15 @@ public class FrogScoreDisplay : MonoBehaviour
 
     void Start() 
     {
-        StartCoroutine(SetScoreFrogDisplay());
+        if (!sceneSwitcher.isBossLevel())
+        {
+            StartCoroutine(SetScoreFrogDisplay());
+        }
+        else
+        {
+            levelName.text = "Boss";
+        }
+        
     }
 
     void Update() 

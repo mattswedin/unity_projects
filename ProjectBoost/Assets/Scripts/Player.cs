@@ -48,16 +48,20 @@ public class Player : MonoBehaviour
     void SetUpColliderIgnore()
     {
        GameObject allFrogs = GameObject.Find("Frogs");
-       int childCount = allFrogs.transform.childCount;
-       for (int i = 0; i < childCount; i++)
+       
+       if (allFrogs != null)
        {
-            if (allFrogs.transform.GetChild(i).transform.childCount > 0)
+            int childCount = allFrogs.transform.childCount;
+            for (int i = 0; i < childCount; i++)
             {
-                GameObject childFrog = allFrogs.transform.GetChild(i).gameObject;
-                int childsChildCount = childFrog.transform.childCount;
-                GameObject childCollider = childFrog.transform.GetChild(childsChildCount - 1).gameObject;
-                Collider childFrogCollider = childCollider.GetComponent<Collider>();
-                Physics.IgnoreCollision(headCollider, childFrogCollider, true);
+                if (allFrogs.transform.GetChild(i).transform.childCount > 0)
+                {
+                    GameObject childFrog = allFrogs.transform.GetChild(i).gameObject;
+                    int childsChildCount = childFrog.transform.childCount;
+                    GameObject childCollider = childFrog.transform.GetChild(childsChildCount - 1).gameObject;
+                    Collider childFrogCollider = childCollider.GetComponent<Collider>();
+                    Physics.IgnoreCollision(headCollider, childFrogCollider, true);
+                }
             }
        }
     }

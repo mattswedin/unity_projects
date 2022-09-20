@@ -9,6 +9,8 @@ public class PlayerStats : MonoBehaviour
     [SerializeField] float thrustForce = 1000f;
     [SerializeField] float rotateThrustForce = 100f;
     [SerializeField] float invincibilityTime = 2.5f;
+    float defaultHealth;
+    bool canDie = true;
 
     [Header("Frog Scores")]
     [SerializeField] Hashtable frogAmountSavedInEachLevel = new Hashtable();
@@ -16,6 +18,26 @@ public class PlayerStats : MonoBehaviour
 
     [Header("Level Information")]
     [SerializeField] string lastLevelCompleted;
+
+    SceneSwitcher sceneSwitcher;
+
+    void Awake() 
+    {
+        sceneSwitcher = FindObjectOfType<SceneSwitcher>();
+    }
+
+    void Start()
+    {
+        defaultHealth = health;
+    }
+
+    void Update() 
+    {
+        if (health == 0 && canDie)
+        {
+            Die();
+        }
+    }
 
     //PLAYER HEALTH
 
@@ -32,6 +54,22 @@ public class PlayerStats : MonoBehaviour
     public void LoseLife()
     {
         health -= 1;
+    }
+
+    public void RestartHealth()
+    {
+        health = defaultHealth;
+        canDie = true;
+    }
+
+    void Die()
+    {
+        canDie = false;
+        GameObject player = GameObject.Find("Robot (Player)");
+        player.GetComponent<Player>().SetCantMove(true);
+        player.transform.GetChild(0).gameObject.SetActive(false);
+        player.transform.GetChild(1).gameObject.SetActive(true);
+        StartCoroutine(sceneSwitcher.ToContinue());
     }
 
     //PLAYER STAT VALUES

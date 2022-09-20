@@ -22,7 +22,12 @@ public class UIDisplay : MonoBehaviour
 
     void Start()
     {
-        if (!sceneSwitcher.IsFrogScore())
+        if (sceneSwitcher.isBossLevel())
+        {
+            GetCurrentSceneBuildIndex();
+            SetUpLife();
+        }
+        else if (!sceneSwitcher.IsFrogScore())
         {
             GetCurrentSceneBuildIndex();
             SetUpFrogCounts();

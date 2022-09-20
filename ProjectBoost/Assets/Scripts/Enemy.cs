@@ -71,7 +71,7 @@ public class Enemy : MonoBehaviour
 
     void Move() 
     {
-        if (i < wayPoints.Length)
+        if (wayPoints.Length != 0 && i < wayPoints.Length)
         {
             transform.position = Vector3.MoveTowards(transform.position, 
                                                     wayPoints[i].position,
