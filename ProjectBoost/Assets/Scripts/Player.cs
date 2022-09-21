@@ -20,6 +20,7 @@ public class Player : MonoBehaviour
     PlayerStats playerStats;
     AudioPlayer audioPlayer;
     CollisionHandler collisionHandler;
+    ShakeScreen shakeScreen;
 
     void Awake() 
     {
@@ -27,6 +28,7 @@ public class Player : MonoBehaviour
         audioPlayer = FindObjectOfType<AudioPlayer>();
         playerStats = FindObjectOfType<PlayerStats>();
         rb = GetComponent<Rigidbody>();
+        shakeScreen = FindObjectOfType<ShakeScreen>();
     }
 
     void Start() 
@@ -73,13 +75,15 @@ public class Player : MonoBehaviour
 
     IEnumerator AppearAtStart()
     {
+        rb.useGravity = false;
         foreach (Transform child in transform.GetChild(0)) 
         {
             child.gameObject.SetActive(false);
         }
-        yield return new WaitForSeconds(.5f);
+        yield return new WaitForSeconds(1.3f);
         audioPlayer.PlayAppearVanish();
         appearEffect.Play();
+        rb.useGravity = true;
 
         foreach (Transform child in transform.GetChild(0))
         {
@@ -169,6 +173,7 @@ public class Player : MonoBehaviour
     {  
         if (!invincibilityFrames)
         {
+            StartCoroutine(shakeScreen.ScreenShake());
             loseLifeEffect.Play();
             invincibilityFrames = true;
             playerStats.LoseLife();

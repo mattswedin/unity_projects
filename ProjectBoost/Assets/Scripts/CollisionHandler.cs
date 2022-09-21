@@ -19,6 +19,7 @@ public class CollisionHandler : MonoBehaviour
   PlayerStats playerStats;
   FrogMovement frogMovement;
   AudioPlayer audioPlayer;
+  ShakeScreen shakeScreen;
 
   void Awake() 
   {
@@ -27,6 +28,7 @@ public class CollisionHandler : MonoBehaviour
     sceneSwitcher = FindObjectOfType<SceneSwitcher>();
     uIDisplay = FindObjectOfType<UIDisplay>();
     player = FindObjectOfType<Player>();
+    shakeScreen = FindObjectOfType<ShakeScreen>();
   }
  
   void OnCollisionEnter(Collision other) 
