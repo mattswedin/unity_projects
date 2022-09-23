@@ -7,12 +7,16 @@ public class SceneSwitcher : MonoBehaviour
 {
     PlayerStats playerStats;
     int ActiveSceneInt;
+    FadeInOut fadeInOut;
+
     [SerializeField] string lastScene;
     [SerializeField] float endOfLevelDelay = 1f;
+    [SerializeField] float dieDelay = 1.6f;
 
     void Awake() 
     {
         playerStats = FindObjectOfType<PlayerStats>();
+        fadeInOut = FindObjectOfType<FadeInOut>();
     }
 
     void Start()
@@ -32,7 +36,9 @@ public class SceneSwitcher : MonoBehaviour
     {
         lastScene = SceneManager.GetActiveScene().name;
 
-        yield return new WaitForSecondsRealtime(1.3f);
+        yield return new WaitForSecondsRealtime(dieDelay - 1f);
+        fadeInOut.FadeInBlack();
+        yield return new WaitForSecondsRealtime(1f);
         playerStats.RestartHealth();
         SceneManager.LoadScene("Continue");
         
@@ -49,7 +55,7 @@ public class SceneSwitcher : MonoBehaviour
     }
 
     public void LoadNextLevel()
-    {  
+    {
         SceneManager.LoadScene(ActiveSceneInt + 1);   
     }
 

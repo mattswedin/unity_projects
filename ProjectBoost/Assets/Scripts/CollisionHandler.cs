@@ -20,6 +20,7 @@ public class CollisionHandler : MonoBehaviour
   FrogMovement frogMovement;
   AudioPlayer audioPlayer;
   ShakeScreen shakeScreen;
+  FadeInOut fadeInOut;
 
   void Awake() 
   {

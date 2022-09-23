@@ -2,31 +2,30 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Continue : MonoBehaviour
+public class MainMenu : MonoBehaviour
 {
     SceneSwitcher sceneSwitcher;
     FadeInOut fadeInOut;
-    // Start is called before the first frame update
-    void Awake()
+    void Start()
     {
         sceneSwitcher = FindObjectOfType<SceneSwitcher>();
         fadeInOut = FindObjectOfType<FadeInOut>();
-    }
-
-    void Start() 
-    {
         fadeInOut.FadeOutBlack();
+
     }
 
-    public void RestartCurrentLevel()
+    public void StartFirstLevel()
     {
-        StartCoroutine(Restart());
+        StartCoroutine(StartLevel());
     }
 
-    IEnumerator Restart() 
+
+
+    IEnumerator StartLevel()
     {
         fadeInOut.FadeInBlack();
         yield return new WaitForSeconds(1f);
-        sceneSwitcher.RestartLevel();
+        sceneSwitcher.LoadFirstLevel();
     }
+
 }

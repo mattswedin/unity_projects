@@ -20,10 +20,12 @@ public class PlayerStats : MonoBehaviour
     [SerializeField] string lastLevelCompleted;
 
     SceneSwitcher sceneSwitcher;
+    FadeInOut fadeInOut;
 
     void Awake() 
     {
         sceneSwitcher = FindObjectOfType<SceneSwitcher>();
+        fadeInOut = FindObjectOfType<FadeInOut>();
     }
 
     void Start()

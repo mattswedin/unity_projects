@@ -21,6 +21,7 @@ public class Player : MonoBehaviour
     AudioPlayer audioPlayer;
     CollisionHandler collisionHandler;
     ShakeScreen shakeScreen;
+    FadeInOut fadeInOut;
 
     void Awake() 
     {
@@ -29,6 +30,7 @@ public class Player : MonoBehaviour
         playerStats = FindObjectOfType<PlayerStats>();
         rb = GetComponent<Rigidbody>();
         shakeScreen = FindObjectOfType<ShakeScreen>();
+        fadeInOut = FindObjectOfType<FadeInOut>();
     }
 
     void Start() 
@@ -76,13 +78,16 @@ public class Player : MonoBehaviour
     IEnumerator AppearAtStart()
     {
         rb.useGravity = false;
+        cantMove = true;
         foreach (Transform child in transform.GetChild(0)) 
         {
             child.gameObject.SetActive(false);
         }
+        fadeInOut.FadeOutBlack();
         yield return new WaitForSeconds(1.3f);
         audioPlayer.PlayAppearVanish();
         appearEffect.Play();
+        cantMove = false;
         rb.useGravity = true;
 
         foreach (Transform child in transform.GetChild(0))
@@ -100,6 +105,8 @@ public class Player : MonoBehaviour
         {
             child.gameObject.SetActive(false);
         }
+        fadeInOut.FadeInBlack();
+        yield return new WaitForSeconds(1f);
     }
     
 

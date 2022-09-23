@@ -20,6 +20,7 @@ public class FrogScoreDisplay : MonoBehaviour
     bool scoreFrogDisplayHasEnded = false;
     string previousLevel;
 
+    FadeInOut fadeInOut;
     PlayerStats playerStats;
     SceneSwitcher sceneSwitcher;
     AudioPlayer audioPlayer;
@@ -29,10 +30,12 @@ public class FrogScoreDisplay : MonoBehaviour
         audioPlayer = FindObjectOfType<AudioPlayer>();
         sceneSwitcher = FindObjectOfType<SceneSwitcher>();
         playerStats = FindObjectOfType<PlayerStats>();
+        fadeInOut = FindObjectOfType<FadeInOut>();
     }
 
     void Start() 
     {
+        fadeInOut.FadeOutBlack();
         if (!sceneSwitcher.isBossLevel())
         {
             StartCoroutine(SetScoreFrogDisplay());
@@ -50,9 +53,16 @@ public class FrogScoreDisplay : MonoBehaviour
         {
             if(Input.GetKey(KeyCode.Space))
             {
+                fadeInOut.FadeInBlack();
+                StartCoroutine(WaitOneSecond());
                 sceneSwitcher.LoadNextLevel();
             }
         }
+    }
+
+    IEnumerator WaitOneSecond() 
+    {
+        yield return new WaitForSeconds(1f);
     }
 
     IEnumerator SetScoreFrogDisplay()
