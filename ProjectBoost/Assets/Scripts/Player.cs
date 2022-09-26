@@ -105,8 +105,6 @@ public class Player : MonoBehaviour
         {
             child.gameObject.SetActive(false);
         }
-        fadeInOut.FadeInBlack();
-        yield return new WaitForSeconds(1f);
     }
     
 

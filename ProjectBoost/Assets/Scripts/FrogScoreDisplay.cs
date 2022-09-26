@@ -53,16 +53,9 @@ public class FrogScoreDisplay : MonoBehaviour
         {
             if(Input.GetKey(KeyCode.Space))
             {
-                fadeInOut.FadeInBlack();
-                StartCoroutine(WaitOneSecond());
-                sceneSwitcher.LoadNextLevel();
+                StartCoroutine(sceneSwitcher.LoadNextLevel());
             }
         }
-    }
-
-    IEnumerator WaitOneSecond() 
-    {
-        yield return new WaitForSeconds(1f);
     }
 
     IEnumerator SetScoreFrogDisplay()

@@ -23,7 +23,7 @@ public class SceneSwitcher : MonoBehaviour
     {
         if (SceneManager.GetActiveScene().buildIndex ==  0)
         {
-            SceneManager.LoadScene("MainMenu");
+            SceneManager.LoadScene("MainMenu", LoadSceneMode.Additive);
         }
     }
 
@@ -36,17 +36,26 @@ public class SceneSwitcher : MonoBehaviour
     {
         lastScene = SceneManager.GetActiveScene().name;
 
-        yield return new WaitForSecondsRealtime(dieDelay - 1f);
-        fadeInOut.FadeInBlack();
-        yield return new WaitForSecondsRealtime(1f);
+        yield return new WaitForSecondsRealtime(dieDelay);
+        fadeInOut.CutToBlack();
+        yield return new WaitForSecondsRealtime(.5f);
         playerStats.RestartHealth();
         SceneManager.LoadScene("Continue");
         
     }
 
-    public void RestartLevel()
+    public IEnumerator RestartLevel()
     {
+        fadeInOut.FadeInBlack();
+        yield return new WaitForSeconds(1f);
         SceneManager.LoadScene(lastScene);
+    }
+
+    public IEnumerator ToResultDisplay()
+    {
+        fadeInOut.FadeInBlack();
+        yield return new WaitForSeconds(1f);
+        SceneManager.LoadScene("Results");
     }
 
     public void SetActiveSceneInt(int scene)
@@ -54,8 +63,10 @@ public class SceneSwitcher : MonoBehaviour
         ActiveSceneInt = scene;
     }
 
-    public void LoadNextLevel()
+    public IEnumerator LoadNextLevel()
     {
+        fadeInOut.FadeInBlack();
+        yield return new WaitForSeconds(1f);
         SceneManager.LoadScene(ActiveSceneInt + 1);   
     }
 
@@ -66,6 +77,7 @@ public class SceneSwitcher : MonoBehaviour
 
     public IEnumerator LoadFrogScoreScene()
     {
+        fadeInOut.FadeInBlack();
         yield return new WaitForSeconds(endOfLevelDelay);
         SceneManager.LoadScene("FrogScore");
     }

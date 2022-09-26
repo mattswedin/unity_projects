@@ -36,6 +36,7 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
+     <Compile Include="Assets/Scripts/MainMenu.cs" />
      <Compile Include="Assets/Scripts/Player.cs" />
      <Compile Include="Assets/Scripts/AssignRandomColor.cs" />
      <Compile Include="Assets/Scripts/PlayerStats.cs" />
@@ -53,7 +54,7 @@
      <Compile Include="Assets/Scripts/SceneSwitcher.cs" />
      <Compile Include="Assets/Scripts/FrogMovement.cs" />
      <Compile Include="Assets/Scripts/Spinner.cs" />
-     <Compile Include="Assets/Scripts/MainMenu.cs" />
+     <Compile Include="Assets/Scripts/Results.cs" />
      <None Include="Assets/TextMesh Pro/Shaders/TMPro.cginc" />
      <None Include="Assets/TextMesh Pro/Shaders/TMP_SDF-Mobile Overlay.shader" />
      <None Include="Assets/TextMesh Pro/Shaders/TMP_Bitmap.shader" />

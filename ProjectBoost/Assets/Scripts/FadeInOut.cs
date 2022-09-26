@@ -24,4 +24,9 @@ public class FadeInOut : MonoBehaviour
     {
         image.CrossFadeAlpha(0, speedOfFade, false);
     }
+
+    public void CutToBlack()
+    {
+        image.CrossFadeAlpha(1, 0, false);
+    }
 }

@@ -16,6 +16,9 @@ public class PlayerStats : MonoBehaviour
     [SerializeField] Hashtable frogAmountSavedInEachLevel = new Hashtable();
     [SerializeField] Hashtable frogAmountInEachLevel = new Hashtable();
 
+    [Header("Time Score")]
+    [SerializeField] Hashtable timeInEachLevel = new Hashtable();
+
     [Header("Level Information")]
     [SerializeField] string lastLevelCompleted;
 
@@ -114,7 +117,18 @@ public class PlayerStats : MonoBehaviour
         frogAmountSavedInEachLevel[level] = frogAmount;
     }
 
-   
+    //Time Scores
+
+    public void SetTimeCurrentLevel(float time, string level)
+    {
+        timeInEachLevel[level] = time;
+    }
+
+    public float GetTimeLevel(string level)
+    {
+        return (float)timeInEachLevel[level];
+    }
+
 
     //LEVEL INFO
 

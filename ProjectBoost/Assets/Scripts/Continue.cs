@@ -6,7 +6,7 @@ public class Continue : MonoBehaviour
 {
     SceneSwitcher sceneSwitcher;
     FadeInOut fadeInOut;
-    // Start is called before the first frame update
+    
     void Awake()
     {
         sceneSwitcher = FindObjectOfType<SceneSwitcher>();
@@ -20,13 +20,12 @@ public class Continue : MonoBehaviour
 
     public void RestartCurrentLevel()
     {
-        StartCoroutine(Restart());
+        StartCoroutine(sceneSwitcher.RestartLevel());
     }
 
-    IEnumerator Restart() 
+    public void ToResults()
     {
-        fadeInOut.FadeInBlack();
-        yield return new WaitForSeconds(1f);
-        sceneSwitcher.RestartLevel();
+        StartCoroutine(sceneSwitcher.ToResultDisplay());
     }
+
 }

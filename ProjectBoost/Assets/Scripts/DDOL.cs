@@ -9,8 +9,6 @@ public class DDOL : MonoBehaviour
     void Awake()
     {
         DontDestroyOnLoad(gameObject);
-        // sceneSwitcher = FindObjectOfType<SceneSwitcher>();
-        // sceneSwitcher.LoadNextLevel();
     }
 
 }

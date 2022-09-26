@@ -9,6 +9,8 @@ public class UIDisplay : MonoBehaviour
 {
     [SerializeField] TextMeshProUGUI life;
     [SerializeField] TextMeshProUGUI frogCount;
+    [SerializeField] float levelTime = 0;
+    [SerializeField] bool isTiming = true;
 
     SceneSwitcher sceneSwitcher;
     PlayerStats playerStats;
@@ -38,6 +40,15 @@ public class UIDisplay : MonoBehaviour
     void Update() 
     {
         LoseLife();
+        Timer();
+    }
+
+    void Timer()
+    {
+        if (isTiming)
+        {
+            levelTime += Time.deltaTime;
+        }
     }
 
     void SetUpFrogCounts() 
@@ -81,6 +92,12 @@ public class UIDisplay : MonoBehaviour
     public int GetFinishFrogPoints() 
     {
         return Int32.Parse(frogCount.text.Split(" ")[1]);
+    }
+
+    public float GetFinishTime()
+    {
+        isTiming = false;
+        return levelTime;
     }
 
     public void GetCurrentSceneBuildIndex()

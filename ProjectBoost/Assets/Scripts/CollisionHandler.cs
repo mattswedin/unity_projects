@@ -44,6 +44,8 @@ public class CollisionHandler : MonoBehaviour
             StartCoroutine(player.DissapearAtFinish());
             playerStats.SetFrogCountCurrentLevel(uIDisplay.GetFinishFrogPoints(), 
                                                 sceneSwitcher.GetCurrentLevelName());
+            playerStats.SetTimeCurrentLevel(uIDisplay.GetFinishTime(),
+                                            sceneSwitcher.GetCurrentLevelName());
             StartCoroutine(sceneSwitcher.LoadFrogScoreScene());
             break;
         case "Ground":
