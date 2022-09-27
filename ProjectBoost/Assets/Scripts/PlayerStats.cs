@@ -137,5 +137,10 @@ public class PlayerStats : MonoBehaviour
         return lastLevelCompleted;
     }
 
+    public int GetLevelsCompleted()
+    {
+        return timeInEachLevel.Count;
+    }
+
 
 }
