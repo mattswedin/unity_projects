@@ -14,6 +14,8 @@ public class Enemy : MonoBehaviour
     [SerializeField] bool isChasing;
     [SerializeField] bool frogTaken;
     [SerializeField] Material angryEyes;
+    [SerializeField] AudioSource chaseAlarm;
+    [SerializeField] AudioSource robotScream;
     Material defaultMaterial;
 
     int i = 0;
@@ -34,6 +36,7 @@ public class Enemy : MonoBehaviour
         if(frogTaken && angryEyes != null)
         {
             ChangeEyes(angryEyes);
+
         }
     }
 
@@ -53,11 +56,24 @@ public class Enemy : MonoBehaviour
     {
         if (other.tag == "Robot" && frogTaken)
         {
+            
             Chase(other.gameObject.transform);
+            if (chaseAlarm != null && !chaseAlarm.isPlaying)
+            {
+                chaseAlarm.Play();
+            } 
             isChasing = true;                                            
         }
-        else
+    }
+
+    void OnTriggerExit(Collider other)
+    {
+        if (other.tag == "Robot" && frogTaken)
         {
+            if (chaseAlarm != null && chaseAlarm.isPlaying)
+            {
+                chaseAlarm.Stop();
+            }
             isChasing = false;
         }
     }
@@ -109,6 +125,7 @@ public class Enemy : MonoBehaviour
 
     public void setFrogTaken()
     {
+        robotScream.Play();
         frogTaken = true;
     }
 }
