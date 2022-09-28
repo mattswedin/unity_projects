@@ -12,6 +12,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] Transform[] rotation;
     [SerializeField] bool isFlyer;
     [SerializeField] bool isChasing;
+    [SerializeField] bool isStatic;
     [SerializeField] bool frogTaken;
     [SerializeField] Material angryEyes;
     [SerializeField] AudioSource chaseAlarm;
@@ -26,17 +27,20 @@ public class Enemy : MonoBehaviour
         rb = GetComponent<Rigidbody>();
     }
 
-    void Update() 
+    void Update()
     {
-        if (!isChasing)
+        if (!isStatic)
         {
-            Move();
-        }
+            if (!isChasing)
+            {
+                Move();
+            }
 
-        if(frogTaken && angryEyes != null)
-        {
-            ChangeEyes(angryEyes);
+            if(frogTaken && angryEyes != null)
+            {
+                ChangeEyes(angryEyes);
 
+            }
         }
     }
 
