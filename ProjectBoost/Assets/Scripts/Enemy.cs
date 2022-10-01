@@ -129,7 +129,10 @@ public class Enemy : MonoBehaviour
 
     public void setFrogTaken()
     {
-        robotScream.Play();
+        if (robotScream != null)
+        {
+            robotScream.Play();
+        }
         frogTaken = true;
     }
 }

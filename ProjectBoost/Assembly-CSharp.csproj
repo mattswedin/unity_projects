@@ -46,6 +46,7 @@
      <Compile Include="Assets/Scripts/Continue.cs" />
      <Compile Include="Assets/Scripts/Enemy.cs" />
      <Compile Include="Assets/Scripts/UIDisplay.cs" />
+     <Compile Include="Assets/Scripts/Boss.cs" />
      <Compile Include="Assets/Scripts/CollisionHandler.cs" />
      <Compile Include="Assets/Scripts/FrogScoreDisplay.cs" />
      <Compile Include="Assets/Scripts/FinishPad.cs" />

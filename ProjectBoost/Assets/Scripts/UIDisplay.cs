@@ -24,12 +24,7 @@ public class UIDisplay : MonoBehaviour
 
     void Start()
     {
-        if (sceneSwitcher.isBossLevel())
-        {
-            GetCurrentSceneBuildIndex();
-            SetUpLife();
-        }
-        else if (!sceneSwitcher.IsFrogScore())
+        if (!sceneSwitcher.IsFrogScore())
         {
             GetCurrentSceneBuildIndex();
             SetUpFrogCounts();
@@ -53,10 +48,18 @@ public class UIDisplay : MonoBehaviour
 
     void SetUpFrogCounts() 
     {
-        int frogTotalinCurrentScene = GameObject.Find("Frogs").transform.childCount;
-        playerStats.SetFrogCurrentLevelTotal(frogTotalinCurrentScene, 
-                                                    sceneSwitcher.GetCurrentLevelName());
-        frogCount.text = "Frogs: 00";
+        if (!sceneSwitcher.isBossLevel())
+        {
+            int frogTotalinCurrentScene = GameObject.Find("Frogs").transform.childCount;
+            playerStats.SetFrogCurrentLevelTotal(frogTotalinCurrentScene,
+                                                        sceneSwitcher.GetCurrentLevelName());
+            frogCount.text = "Frogs: 00";
+        }
+        else
+        {
+            frogCount.text = "BOSS";
+        }
+        
     }
     
     void SetUpLife ()
