@@ -15,6 +15,10 @@ public class Player : MonoBehaviour
     [SerializeField] ParticleSystem jetArmRight;
     [SerializeField] Collider headCollider;
     [SerializeField] bool cantMove = false;
+
+    [Header("Special Weapon")]
+    [SerializeField] bool isPoweredUpRobot;
+
     bool invincibilityFrames = false;
     Rigidbody rb;
     PlayerStats playerStats;
@@ -34,7 +38,10 @@ public class Player : MonoBehaviour
     }
 
     void Start() 
+    {   if (isPoweredUpRobot)
     {
+        SetUpSpecialWeapon();
+    }
         SetUpColliderIgnore();
         StartCoroutine(AppearAtStart());
     }
@@ -93,6 +100,45 @@ public class Player : MonoBehaviour
         foreach (Transform child in transform.GetChild(0))
         {
             child.gameObject.SetActive(true);
+        }
+    }
+
+    void SetUpSpecialWeapon()
+    {
+        int total = playerStats.GetFrogTotalCount();
+        GameObject specialWeapon = GameObject.Find("SpecialWeapon");
+
+        if (total == 0)
+        {
+
+        }
+        else if (total <= 6)
+        {
+
+        }
+        else if (total > 6 && total <= 12)
+        {
+
+        }
+        else if (total > 12 && total <= 18)
+        {
+
+        }
+        else if (total > 18 && total <= 24)
+        {
+
+        }
+        else if (total > 24 && total <= 30)
+        {
+
+        }
+        else if (total > 30 && total < 36)
+        {
+
+        }
+        else if (total == 36)
+        {
+
         }
     }
 

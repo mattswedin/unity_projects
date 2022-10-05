@@ -8,9 +8,12 @@ public class Results : MonoBehaviour
 {
     
     [SerializeField] TextMeshProUGUI levelResult;
+    [SerializeField] TextMeshProUGUI resultResult;
+    [SerializeField] int numberOfCompleted = 0;
 
     FadeInOut fadeInOut;
     PlayerStats playerStats;
+
 
     void Awake() 
     {
@@ -22,6 +25,7 @@ public class Results : MonoBehaviour
     {
         fadeInOut.FadeOutBlack();
         SetUpResults();
+        SetUpDeathsResult();
     }
 
     void SetUpResults()
@@ -31,7 +35,6 @@ public class Results : MonoBehaviour
             int clearTime = Convert.ToInt32(Math.Round(playerStats.GetTimeLevel($"Level {i}")));
             string clearTimeString;
 
-            Debug.Log(clearTime);
             
             if (clearTime.ToString().Length == 2) 
             {
@@ -73,9 +76,32 @@ public class Results : MonoBehaviour
                 clearTimeString = "TIMEOUT";
             }
 
+            if (playerStats.GetFrogCountCurrentLevel($"Level {i}") == 12)
+            {
+                numberOfCompleted += 1;
+            }
+
             levelResult.text += $"Level {i}   Frogs: {playerStats.GetFrogCountCurrentLevel($"Level {i}")}/12   Time: {clearTimeString}";
             levelResult.text += System.Environment.NewLine;
             levelResult.text += System.Environment.NewLine;
+        }
+    }
+
+    void SetUpDeathsResult() 
+    {
+        resultResult.text = $"Deaths: {playerStats.GetDeathCount()}    ";
+
+        if (numberOfCompleted == 3 && playerStats.GetDeathCount() == 0)
+        {
+            resultResult.text += "YOU ARE TRULY FROG SAVIOR!";
+        }
+        else if (numberOfCompleted == 3)
+        {
+            resultResult.text += "EVERY FROG SAVED!";
+        }
+        else
+        {
+            resultResult.text += "FROGS DIED BECAUSE OF YOUR CARELESSNESS...";
         }
     }
 }

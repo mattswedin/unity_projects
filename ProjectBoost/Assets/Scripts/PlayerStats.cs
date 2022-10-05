@@ -9,6 +9,7 @@ public class PlayerStats : MonoBehaviour
     [SerializeField] float thrustForce = 1000f;
     [SerializeField] float rotateThrustForce = 100f;
     [SerializeField] float invincibilityTime = 2.5f;
+    [SerializeField] float deathCount = 0;
     float defaultHealth;
     bool canDie = true;
 
@@ -70,11 +71,20 @@ public class PlayerStats : MonoBehaviour
     void Die()
     {
         canDie = false;
+        if (!sceneSwitcher.isBossLevel())
+        {
+            deathCount += 1;
+        }
         GameObject player = GameObject.Find("Robot (Player)");
         player.GetComponent<Player>().SetCantMove(true);
         player.transform.GetChild(0).gameObject.SetActive(false);
         player.transform.GetChild(1).gameObject.SetActive(true);
         StartCoroutine(sceneSwitcher.ToContinue());
+    }
+
+    public float GetDeathCount()
+    {
+        return deathCount;
     }
 
     //PLAYER STAT VALUES
@@ -115,6 +125,18 @@ public class PlayerStats : MonoBehaviour
     public void SetFrogCountCurrentLevel(int frogAmount, string level)
     {
         frogAmountSavedInEachLevel[level] = frogAmount;
+    }
+
+    public int GetFrogTotalCount()
+    {
+        int total = 0;
+
+        for(int i = 1; i < frogAmountSavedInEachLevel.Count + 1; i++)
+        {
+            total += (int)frogAmountSavedInEachLevel[$"Level {i}"];
+        }
+        
+        return total;
     }
 
     //Time Scores
