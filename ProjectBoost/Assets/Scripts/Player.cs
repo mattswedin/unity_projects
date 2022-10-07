@@ -110,35 +110,42 @@ public class Player : MonoBehaviour
 
         if (total == 0)
         {
-
+            //game over
         }
         else if (total <= 6)
         {
-
+            //tiny spike
+            specialWeapon.transform.GetChild(0).gameObject.SetActive(true);
         }
         else if (total > 6 && total <= 12)
         {
-
+            //regs spike
+            specialWeapon.transform.GetChild(1).gameObject.SetActive(true);
         }
         else if (total > 12 && total <= 18)
         {
-
+            //plug
+            specialWeapon.transform.GetChild(2).gameObject.SetActive(true);
         }
         else if (total > 18 && total <= 24)
         {
-
+            //frog spike
+            specialWeapon.transform.GetChild(3).gameObject.SetActive(true);
         }
         else if (total > 24 && total <= 30)
         {
-
+            //frog plug
+            specialWeapon.transform.GetChild(4).gameObject.SetActive(true);
         }
         else if (total > 30 && total < 36)
         {
-
+            //frog gun
+            specialWeapon.transform.GetChild(5).gameObject.SetActive(true);
         }
         else if (total == 36)
         {
-
+            //frog sword
+            specialWeapon.transform.GetChild(6).gameObject.SetActive(true);
         }
     }
 

@@ -38,6 +38,7 @@
   <ItemGroup>
      <Compile Include="Assets/Scripts/MainMenu.cs" />
      <Compile Include="Assets/Scripts/Player.cs" />
+     <Compile Include="Assets/Scripts/SpecialWeapon.cs" />
      <Compile Include="Assets/Scripts/AssignRandomColor.cs" />
      <Compile Include="Assets/Scripts/PlayerStats.cs" />
      <Compile Include="Assets/Scripts/FadeInOut.cs" />
