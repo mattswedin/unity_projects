@@ -75,8 +75,8 @@ public class PlayerStats : MonoBehaviour
         {
             deathCount += 1;
         }
-        GameObject player = GameObject.Find("Robot (Player)");
-        player.GetComponent<Player>().SetCantMove(true);
+        Player player = FindObjectOfType<Player>();
+        player.SetCantMove(true);
         player.transform.GetChild(0).gameObject.SetActive(false);
         player.transform.GetChild(1).gameObject.SetActive(true);
         StartCoroutine(sceneSwitcher.ToContinue());

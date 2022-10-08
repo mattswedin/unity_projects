@@ -39,9 +39,9 @@ public class Player : MonoBehaviour
 
     void Start() 
     {   if (isPoweredUpRobot)
-    {
-        SetUpSpecialWeapon();
-    }
+        {
+            SetUpSpecialWeapon();
+        }
         SetUpColliderIgnore();
         StartCoroutine(AppearAtStart());
     }

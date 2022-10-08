@@ -10,5 +10,4 @@ public class SpecialWeapon : MonoBehaviour
     {
         return weaponPower;
     }
-
 }
