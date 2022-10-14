@@ -13,12 +13,14 @@ public class Results : MonoBehaviour
 
     FadeInOut fadeInOut;
     PlayerStats playerStats;
+    SceneSwitcher sceneSwitcher;
 
 
     void Awake() 
     {
         playerStats = FindObjectOfType<PlayerStats>();
         fadeInOut = FindObjectOfType<FadeInOut>();
+        sceneSwitcher = FindObjectOfType<SceneSwitcher>();
     }
 
     void Start()
@@ -26,6 +28,14 @@ public class Results : MonoBehaviour
         fadeInOut.FadeOutBlack();
         SetUpResults();
         SetUpDeathsResult();
+    }
+
+    void Update() 
+    {
+        if (Input.anyKey)
+        {
+            sceneSwitcher.ToMainMenu();
+        }
     }
 
     void SetUpResults()

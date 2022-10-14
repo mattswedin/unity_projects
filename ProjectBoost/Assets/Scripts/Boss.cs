@@ -16,6 +16,20 @@ public class Boss : MonoBehaviour
     [SerializeField] bool hasRisen = false;
     [SerializeField] float risingShakeMagnitude = 1f;
 
+    [Header("Boss Hands")]
+    [SerializeField] GameObject BossHandLeft;
+    [SerializeField] float leftSpeed;
+    [SerializeField] GameObject BossHandRight;
+    [SerializeField] float rightSpeed;
+
+    [Header("Boss Hands Rising")]
+    [SerializeField] Transform leftHandsUpPos;
+    [SerializeField] Transform leftHandsDownPos;
+    [SerializeField] Transform rightHandsUpPos;
+    [SerializeField] Transform rightHandsDownPos;
+
+    bool handsUp;
+
     ShakeScreen shakeScreen;
 
     void Awake() 
@@ -27,11 +41,47 @@ public class Boss : MonoBehaviour
     {
         if (!hasRisen)
         {
-            Rise();
+            HandsRise();
+
+            if (handsUp)
+            {
+                Rise();
+            }  
+        }
+        else
+        {
+            RandomAttacks();
+        }
+    }
+
+    void RandomAttacks() 
+    {
+
+    }
+
+    void ClapAttack()
+    {
+
+    }
+
+    void HandsRise()
+    {
+        BossHandRight.transform.position = Vector3.MoveTowards(BossHandRight.transform.position, rightHandsUpPos.position, rightSpeed * Time.deltaTime);
+
+        if (BossHandRight.transform.position == rightHandsUpPos.position)
+        {
+
+            BossHandRight.transform.rotation = Quaternion.RotateTowards(BossHandRight.transform.rotation, rightHandsDownPos.rotation, rightSpeed * Time.deltaTime);
+
+            // BossHandRight.transform.position = Vector3.MoveTowards(BossHandRight.transform.position, rightHandsDownPos.position, rightSpeed * Time.deltaTime);
+
+            if (BossHandRight.transform.position == rightHandsDownPos.position && BossHandRight.transform.rotation == rightHandsDownPos.rotation)
+            {
+                handsUp = true;
+            }
         }
     }
         
-
     void Rise() 
     {
         shakeScreen.ScreenShakeBool(risingShakeMagnitude);

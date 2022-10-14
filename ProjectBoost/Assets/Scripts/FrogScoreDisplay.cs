@@ -43,17 +43,24 @@ public class FrogScoreDisplay : MonoBehaviour
         else
         {
             levelName.text = "Boss";
-        }
-        
+        } 
     }
 
     void Update() 
     {
         if (scoreFrogDisplayHasEnded)
         {
-            if(Input.GetKey(KeyCode.Space))
+            if (Input.anyKey)
             {
                 StartCoroutine(sceneSwitcher.LoadNextLevel());
+            }
+        }
+        else
+        {
+            if (Input.anyKey)
+            {
+                timeBetweenScoreFrogs = 0;
+                timeBetweenScores = 0;
             }
         }
     }
@@ -104,8 +111,9 @@ public class FrogScoreDisplay : MonoBehaviour
             );
         }
 
-        yield return new WaitForSeconds(timeBetweenScores + .5f);
+        yield return new WaitForSeconds(timeBetweenScores * 1.5f);
         audioPlayer.PlayTextAppear();
+
         if(currentLevelSaved != currentLevelTotal)
         {
             frogMessage.text = "Save More Frogs";
@@ -115,7 +123,6 @@ public class FrogScoreDisplay : MonoBehaviour
             frogMessage.text = "All Frogs Saved";
             remainingLife.text += "(";
             playerStats.GainLife();
-
         }
 
         yield return new WaitForSeconds(timeBetweenScores);
