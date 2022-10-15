@@ -10,6 +10,11 @@ public class Results : MonoBehaviour
     [SerializeField] TextMeshProUGUI levelResult;
     [SerializeField] TextMeshProUGUI resultResult;
     [SerializeField] int numberOfCompleted = 0;
+    [SerializeField] float timeBetweenFrogsMin = .0005f;
+    [SerializeField] float timeBetweenFrogsMax = .7f;
+    [SerializeField] GameObject frog;
+    bool frogFallsEnded;
+    GameObject rainbow;
 
     FadeInOut fadeInOut;
     PlayerStats playerStats;
@@ -21,18 +26,24 @@ public class Results : MonoBehaviour
         playerStats = FindObjectOfType<PlayerStats>();
         fadeInOut = FindObjectOfType<FadeInOut>();
         sceneSwitcher = FindObjectOfType<SceneSwitcher>();
+        rainbow = GameObject.Find("AllFrogsSaved");
     }
 
     void Start()
     {
+        if (playerStats.GetFrogTotalCount() == 36)
+        {
+            rainbow.transform.GetChild(0).gameObject.SetActive(true);
+        }
         fadeInOut.FadeOutBlack();
         SetUpResults();
         SetUpDeathsResult();
+        StartCoroutine(SetUpFrogsSaved());
     }
 
     void Update() 
     {
-        if (Input.anyKey)
+        if (Input.anyKeyDown)
         {
             sceneSwitcher.ToMainMenu();
         }
@@ -111,7 +122,30 @@ public class Results : MonoBehaviour
         }
         else
         {
-            resultResult.text += "FROGS DIED BECAUSE OF YOUR CARELESSNESS...";
+            resultResult.text += $"FROG DEATHS: {36 - playerStats.GetFrogTotalCount()}";
+        }
+    }
+
+    IEnumerator SetUpFrogsSaved()
+    {
+        yield return new WaitForSeconds(timeBetweenFrogsMin);
+
+        if (!frogFallsEnded)
+        {
+            //add playerStats.GetFrogTotalCount()
+            for (int i = 0; i < playerStats.GetFrogTotalCount(); i++)
+            {
+                int rando = UnityEngine.Random.Range(-11, 1);
+                Vector3 pos = new Vector3(-26, rando, 13.7f);
+                
+
+                GameObject frogGuy = Instantiate(frog, pos, Quaternion.identity);
+                Rigidbody frogGuyRB = frogGuy.GetComponent<Rigidbody>();
+                frogGuyRB.AddForce(new Vector3(500,0,0), ForceMode.Impulse);
+                frogGuyRB.AddForce(new Vector3(0, 250, 0), ForceMode.Impulse);
+                yield return new WaitForSeconds(UnityEngine.Random.Range(timeBetweenFrogsMin, timeBetweenFrogsMax));
+            }
+            frogFallsEnded = true;
         }
     }
 }

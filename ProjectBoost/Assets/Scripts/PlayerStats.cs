@@ -45,6 +45,17 @@ public class PlayerStats : MonoBehaviour
         }
     }
 
+    public void Reset() 
+    {
+        deathCount = 0;
+        health = 3;
+        frogAmountSavedInEachLevel = new Hashtable();
+        frogAmountInEachLevel = new Hashtable();
+        timeInEachLevel = new Hashtable();
+        timeInEachLevel = new Hashtable();
+        lastLevelCompleted = "";
+    }
+
     //PLAYER HEALTH
 
     public float GetHealth()

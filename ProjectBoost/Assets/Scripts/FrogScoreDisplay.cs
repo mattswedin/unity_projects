@@ -50,14 +50,14 @@ public class FrogScoreDisplay : MonoBehaviour
     {
         if (scoreFrogDisplayHasEnded)
         {
-            if (Input.anyKey)
+            if (Input.anyKeyDown)
             {
                 StartCoroutine(sceneSwitcher.LoadNextLevel());
             }
         }
         else
         {
-            if (Input.anyKey)
+            if (Input.anyKeyDown)
             {
                 timeBetweenScoreFrogs = 0;
                 timeBetweenScores = 0;

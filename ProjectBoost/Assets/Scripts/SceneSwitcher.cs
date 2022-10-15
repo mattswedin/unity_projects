@@ -29,6 +29,14 @@ public class SceneSwitcher : MonoBehaviour
 
     public void ToMainMenu()
     {
+        StartCoroutine(_ToMainMenu());
+    }
+
+    IEnumerator _ToMainMenu()
+    {
+        fadeInOut.FadeInBlack();
+        playerStats.Reset();
+        yield return new WaitForSeconds(1f);
         SceneManager.LoadScene("MainMenu");
     }
 
