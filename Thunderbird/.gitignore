@@ -19,6 +19,8 @@
 /Assets/Waves & Paths
 /Assets/Animator
 /Assets/Terrains
+/Assets/TerrainSampleAssets
+/Assets/HDRPDefaultResources
 .fake
 /.vscode
 /Assembly-CSharp
