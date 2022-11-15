@@ -26,7 +26,7 @@ public class Player : MonoBehaviour
 
     void Fly() 
     {
-        Vector3 playerVelocity = new Vector3(moveInput.x, moveInput.y, 0.0f);
-        rb.velocity = transform.TransformDirection(playerVelocity * speed);
+        Vector3 playerVelocity = new Vector2(moveInput.x, moveInput.y);
+        transform.localPosition += playerVelocity * speed * Time.deltaTime;
     }
 }
