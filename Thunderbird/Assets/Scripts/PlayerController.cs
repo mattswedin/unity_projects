@@ -1,17 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
-    Vector2 moveInput;
+    float xThrow, yThrow;
     [SerializeField] float xRange = 5f;
     [SerializeField] float yRangeTop = 10f;
     [SerializeField] float yRangeBottom = -3f;
     [SerializeField] float moveSpeed = 10f;
     [SerializeField] float positionPitchFactor = -3f;
     [SerializeField] float controlPitchFactor = -10f;
+    [SerializeField] float positionYawFactor = 2;
+    [SerializeField] float controlRollFactor = 5;
+    float xMovement;
+    float yMovement;
 
     void Update()
     {
@@ -19,42 +22,32 @@ public class PlayerController : MonoBehaviour
         FlyRotation();
     }
 
-    void OnMove(InputValue value)
-    {
-        moveInput = value.Get<Vector2>();
-    }
+  
 
     void Fly() 
     {
-        if(IsMoving())
-        {
-            float xClamp = UnityEngine.Mathf.Clamp(transform.localPosition.x 
-                                                    + moveInput.x * moveSpeed * Time.deltaTime, -xRange, xRange);
-            float yClamp = UnityEngine.Mathf.Clamp(transform.localPosition.y 
-                                                    + moveInput.y * moveSpeed * Time.deltaTime, yRangeBottom, yRangeTop);
-            Vector3 movement = new Vector3(xClamp, yClamp, 0);
-            transform.localPosition = new Vector3(movement.x, movement.y, transform.localPosition.z);
-        }
+        xThrow = Input.GetAxis("Horizontal");
+        yThrow = Input.GetAxis("Vertical");
+        xMovement = xThrow * Time.deltaTime * moveSpeed;
+        yMovement = yThrow * Time.deltaTime * moveSpeed;
+        float xClamp = Mathf.Clamp(transform.localPosition.x 
+                                                + xMovement, -xRange, xRange);
+        float yClamp = Mathf.Clamp(transform.localPosition.y 
+                                                + yMovement, yRangeBottom, yRangeTop);
+        Vector3 newMovement = new Vector3(xClamp, yClamp, 0);
+
+        transform.localPosition = new Vector3(newMovement.x, newMovement.y, transform.localPosition.z);
     }
 
     void FlyRotation() 
     {
-        if (IsMoving())
-        {
-            float pitch = transform.localPosition.y * positionPitchFactor + moveInput.y * controlPitchFactor;
-            float yaw = 0f;
-            float roll = 0f;
-            transform.localRotation = Quaternion.Euler(pitch, yaw, roll);
-        }
+        float pitchDueToPos = transform.localPosition.y * positionPitchFactor;
+        float pitchDueToControl = yThrow * controlPitchFactor;
 
-    }
-
-    bool IsMoving()
-    {
-        if (moveInput.x > 0 || moveInput.x < 0 || moveInput.y > 0 || moveInput.y < 0)
-        {
-            return true;
-        }
-        return false;
+        float pitch =  pitchDueToPos + pitchDueToControl;
+        float roll = xThrow * controlRollFactor;
+        float yaw = transform.localPosition.x * positionYawFactor;
+        
+        transform.localRotation = Quaternion.Euler(pitch, yaw, roll);
     }
 }
