@@ -8,11 +8,14 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float xRange = 5f;
     [SerializeField] float yRangeTop = 10f;
     [SerializeField] float yRangeBottom = -3f;
+    [SerializeField] GameObject[] lasers;
     [SerializeField] float moveSpeed = 10f;
     [SerializeField] float positionPitchFactor = -3f;
     [SerializeField] float controlPitchFactor = -10f;
     [SerializeField] float positionYawFactor = 2;
     [SerializeField] float controlRollFactor = 5;
+    
+
     float xMovement;
     float yMovement;
 
@@ -20,9 +23,19 @@ public class PlayerController : MonoBehaviour
     {
         Fly();
         FlyRotation();
+        Shoot();
     }
 
-  
+    void Shoot() 
+    {
+        if (Input.GetButton("Fire1"))
+        {
+            foreach (GameObject laser in lasers)
+            {
+            
+            }
+        }
+    }
 
     void Fly() 
     {
