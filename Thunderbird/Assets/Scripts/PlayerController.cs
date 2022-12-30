@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    
     float xThrow, yThrow;
     [SerializeField] float xRange = 5f;
     [SerializeField] float yRangeTop = 10f;
@@ -15,7 +16,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float positionYawFactor = 2;
     [SerializeField] float controlRollFactor = 5;
     
-
     float xMovement;
     float yMovement;
 
@@ -30,10 +30,21 @@ public class PlayerController : MonoBehaviour
     {
         if (Input.GetButton("Fire1"))
         {
-            foreach (GameObject laser in lasers)
-            {
-            
-            }
+            ActivateLasers(true);
+        }
+        else
+        {
+            ActivateLasers(false);
+        }
+
+    }
+
+    void ActivateLasers(bool state) 
+    {
+        foreach (GameObject laser in lasers)
+        {
+            var emissionModule = laser.GetComponent<ParticleSystem>().emission;
+            emissionModule.enabled = state;
         }
     }
 
