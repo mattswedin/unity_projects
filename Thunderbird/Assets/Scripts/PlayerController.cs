@@ -4,20 +4,24 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    
+    [Header("Movement")]
     float xThrow, yThrow;
     [SerializeField] float xRange = 5f;
     [SerializeField] float yRangeTop = 10f;
     [SerializeField] float yRangeBottom = -3f;
-    [SerializeField] GameObject[] lasers;
     [SerializeField] float moveSpeed = 10f;
     [SerializeField] float positionPitchFactor = -3f;
     [SerializeField] float controlPitchFactor = -10f;
     [SerializeField] float positionYawFactor = 2;
     [SerializeField] float controlRollFactor = 5;
-    
     float xMovement;
     float yMovement;
+
+    [Header("Lasers")]
+    [SerializeField] GameObject[] lasers;
+    [SerializeField] int laserBasePower = 1;
+
+    
 
     void Update()
     {
@@ -74,4 +78,9 @@ public class PlayerController : MonoBehaviour
         
         transform.localRotation = Quaternion.Euler(pitch, yaw, roll);
     }
+
+    public int GetLaserPower()
+    {
+        return laserBasePower;
+    } 
 }
