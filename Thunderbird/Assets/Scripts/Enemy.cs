@@ -6,6 +6,7 @@ public class Enemy : MonoBehaviour
 {
     [SerializeField] int health = 100;
     [SerializeField] Material[] hitColor;
+    int hitColorIndex = 0;
     PlayerController playerController;
     List<Material> og = new List<Material>();
     MeshRenderer[] meshRenderers;
@@ -24,15 +25,24 @@ public class Enemy : MonoBehaviour
 
     void OnParticleCollision(GameObject other) 
     {
-        int rando = Random.Range(0, hitColor.Length); 
+        
+
         for (int i = 0; i < meshRenderers.Length; i++)
         {
             MeshRenderer mesh = meshRenderers[i];
             og.Add(mesh.material);
-            mesh.material = hitColor[rando];
+            mesh.material = hitColor[hitColorIndex];
         }
         if (!ogObtained) ogObtained = true;
         health -= playerController.GetLaserPower();
+        if (hitColorIndex == 0)
+        {
+            hitColorIndex = 1;
+        }
+        else
+        {
+            hitColorIndex = 0;
+        }
         if (health < 1) Destroy(gameObject);
     }
 
