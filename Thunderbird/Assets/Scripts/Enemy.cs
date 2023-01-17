@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,7 +11,14 @@ public class Enemy : MonoBehaviour
     PlayerController playerController;
     List<Material> og = new List<Material>();
     MeshRenderer[] meshRenderers;
-    bool ogObtained;
+    bool ogMaterialsObtained;
+
+    [Header("Enemy Type")]
+    [SerializeField] bool isFlyingBetweenPoints;
+    [SerializeField] Transform[] points;
+    [SerializeField] int flyingSpeedBetweenPoints;
+    int j = 0;
+    
 
     void Awake()
     {
@@ -20,20 +28,41 @@ public class Enemy : MonoBehaviour
 
     void Update() 
     {
-       if (ogObtained) BringOGColorsBack();
+       if (ogMaterialsObtained) BringOGColorsBack();
+       if (isFlyingBetweenPoints) FlyingMovement();
+    }
+
+    void FlyingMovement()
+    {
+        if (points.Length != 0 && j < points.Length)
+        {
+            Vector3 currentPoint = points[j].position;
+            transform.position = Vector3.MoveTowards(transform.position, currentPoint, flyingSpeedBetweenPoints * Time.deltaTime);
+            
+            if (transform.position == currentPoint)
+            {
+                if (j != points.Length - 1)
+                {
+                    j++;
+                }
+                else
+                {
+                    j = 0;
+                }
+                
+            }
+        }
     }
 
     void OnParticleCollision(GameObject other) 
     {
-        
-
         for (int i = 0; i < meshRenderers.Length; i++)
         {
             MeshRenderer mesh = meshRenderers[i];
             og.Add(mesh.material);
             mesh.material = hitColor[hitColorIndex];
         }
-        if (!ogObtained) ogObtained = true;
+        if (!ogMaterialsObtained) ogMaterialsObtained = true;
         health -= playerController.GetLaserPower();
         if (hitColorIndex == 0)
         {
