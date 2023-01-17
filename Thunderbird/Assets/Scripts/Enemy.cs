@@ -12,11 +12,14 @@ public class Enemy : MonoBehaviour
     List<Material> og = new List<Material>();
     MeshRenderer[] meshRenderers;
     bool ogMaterialsObtained;
+    bool died;
 
     [Header("Enemy Type")]
     [SerializeField] bool isFlyingBetweenPoints;
     [SerializeField] Transform[] points;
     [SerializeField] int flyingSpeedBetweenPoints;
+    [SerializeField] GameObject normalVersion;
+    [SerializeField] ParticleSystem deathExplosion;
     int j = 0;
     
 
@@ -72,7 +75,23 @@ public class Enemy : MonoBehaviour
         {
             hitColorIndex = 0;
         }
-        if (health < 1) Destroy(gameObject);
+        if (health < 1) Death(); 
+    }
+
+    void Death()
+    {
+        if (!died)
+        {
+            if (deathExplosion != null) Instantiate(deathExplosion, transform.position, transform.rotation);
+            if (normalVersion != null)
+            {
+                GameObject normie = Instantiate(normalVersion, transform.position, transform.rotation);
+                normie.GetComponent<Rigidbody>().AddForce(Vector3.up, ForceMode.Impulse);
+            } 
+            died = true;
+        }
+       
+        Destroy(gameObject);
     }
 
     void BringOGColorsBack()
