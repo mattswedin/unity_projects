@@ -5,22 +5,31 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
+    [Header("General")]
     [SerializeField] int health = 100;
     [SerializeField] Material[] hitColor;
+    [SerializeField] GameObject normalVersion;
+    [SerializeField] ParticleSystem deathExplosion;
     int hitColorIndex = 0;
-    PlayerController playerController;
     List<Material> og = new List<Material>();
     MeshRenderer[] meshRenderers;
     bool ogMaterialsObtained;
     bool died;
 
     [Header("Enemy Type")]
+    [Header("Flying Between Points")]
     [SerializeField] bool isFlyingBetweenPoints;
     [SerializeField] Transform[] points;
     [SerializeField] int flyingSpeedBetweenPoints;
-    [SerializeField] GameObject normalVersion;
-    [SerializeField] ParticleSystem deathExplosion;
     int j = 0;
+    [Header("Flightless Running")]
+    [SerializeField] bool isFlightlessRunning;
+
+
+    
+
+    PlayerController playerController;
+    
     
 
     void Awake()
@@ -52,7 +61,6 @@ public class Enemy : MonoBehaviour
                 {
                     j = 0;
                 }
-                
             }
         }
     }
