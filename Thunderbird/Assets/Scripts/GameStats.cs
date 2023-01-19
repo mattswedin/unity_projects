@@ -4,28 +4,29 @@ using UnityEngine;
 
 public class GameStats : MonoBehaviour
 {
-    string birdsCuredScore = 0
-    
-    void Start()
+    [Header("Player Stats")]
+    [SerializeField] int playerHealth = 100;
+    [SerializeField] int currentBirdsCuredScore = 0;
+
+    [Header("Current Level Stats")]
+    [SerializeField] string levelName = "Violet Island";
+
+    //Score
+
+    public void SetBirdsCured()
     {
-        
+        currentBirdsCuredScore += 1;
     }
 
-    void SetBirdsCured()
+    public string GetCurrentBirdsCured()
     {
-        birdsCuredScore += 1
-    }
-
-    string GetBirdsCured()
-    {
-        if (birdsCuredScore.ToString().Length == 1)
+        if (currentBirdsCuredScore.ToString().Length == 1)
         {
-            return $"0{birdsCuredScore}";
+            return $"0{currentBirdsCuredScore}";
         }
         else
         {
-            return birdsCuredScore.ToString();
+            return currentBirdsCuredScore.ToString();
         }
-        
     }
 }

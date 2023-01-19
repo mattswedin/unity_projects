@@ -24,16 +24,21 @@ public class Enemy : MonoBehaviour
     int j = 0;
     [Header("Flightless Running")]
     [SerializeField] bool isFlightlessRunning;
+    [Header("Rotating Between Points")]
+    [SerializeField] bool isRotatingBetweenPoints;
+    [SerializeField] int rotationSpeed;
 
 
     
 
     PlayerController playerController;
+    GameStats gameStats;
     
     
 
     void Awake()
     {
+        gameStats = FindObjectOfType<GameStats>();
         playerController = FindObjectOfType<PlayerController>();
         meshRenderers = gameObject.GetComponentsInChildren<MeshRenderer>();
     }
@@ -41,10 +46,11 @@ public class Enemy : MonoBehaviour
     void Update() 
     {
        if (ogMaterialsObtained) BringOGColorsBack();
-       if (isFlyingBetweenPoints) FlyingMovement();
+       if (isFlyingBetweenPoints) PositionMovement();
+       if (isRotatingBetweenPoints) RotationMovement();
     }
 
-    void FlyingMovement()
+    void PositionMovement()
     {
         if (points.Length != 0 && j < points.Length)
         {
@@ -52,6 +58,26 @@ public class Enemy : MonoBehaviour
             transform.position = Vector3.MoveTowards(transform.position, currentPoint, flyingSpeedBetweenPoints * Time.deltaTime);
             
             if (transform.position == currentPoint)
+            {
+                if (j != points.Length - 1)
+                {
+                    j++;
+                }
+                else
+                {
+                    j = 0;
+                }
+            }
+        }
+    }
+    void RotationMovement()
+    {
+        if (points.Length != 0 && j < points.Length)
+        {
+            Quaternion currentRotation = points[j].rotation;
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, currentRotation, rotationSpeed * Time.deltaTime);
+
+            if (transform.rotation == currentRotation)
             {
                 if (j != points.Length - 1)
                 {
@@ -91,14 +117,16 @@ public class Enemy : MonoBehaviour
         if (!died)
         {
             if (deathExplosion != null) Instantiate(deathExplosion, transform.position, transform.rotation);
+
             if (normalVersion != null)
             {
                 GameObject normie = Instantiate(normalVersion, transform.position, transform.rotation);
                 normie.GetComponent<Rigidbody>().AddForce(Vector3.up, ForceMode.Impulse);
             } 
             died = true;
+            gameStats.SetBirdsCured();
         }
-       
+        
         Destroy(gameObject);
     }
 
