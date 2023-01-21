@@ -6,10 +6,11 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     [Header("General")]
-    [SerializeField] int health = 100;
+    [SerializeField] float health = 100;
     [SerializeField] Material[] hitColor;
     [SerializeField] GameObject normalVersion;
     [SerializeField] ParticleSystem deathExplosion;
+    [SerializeField] float attackPower = 0;
     int hitColorIndex = 0;
     List<Material> og = new List<Material>();
     MeshRenderer[] meshRenderers;
@@ -79,6 +80,7 @@ public class Enemy : MonoBehaviour
 
             if (transform.rotation == currentRotation)
             {
+                
                 if (j != points.Length - 1)
                 {
                     j++;
@@ -136,5 +138,10 @@ public class Enemy : MonoBehaviour
         {
             meshRenderers[i].material = og[i];
         }
+    }
+
+    public float GetAttackPower()
+    {
+        return attackPower;
     }
 }

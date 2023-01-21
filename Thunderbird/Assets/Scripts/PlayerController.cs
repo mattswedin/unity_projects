@@ -21,7 +21,13 @@ public class PlayerController : MonoBehaviour
     [SerializeField] GameObject[] lasers;
     [SerializeField] int laserBasePower = 1;
 
-    
+    GameStats gameStats;
+    Enemy enemy;
+
+    void Awake() 
+    {
+        gameStats = FindObjectOfType<GameStats>();
+    }
 
     void Update()
     {
@@ -83,4 +89,12 @@ public class PlayerController : MonoBehaviour
     {
         return laserBasePower;
     } 
+
+    void OnParticleCollision(GameObject other) 
+    {
+        if (other.tag == "Fire")
+        {
+            gameStats.LoseHealth("Fire"); 
+        }  
+    }
 }

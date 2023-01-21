@@ -5,11 +5,30 @@ using UnityEngine;
 public class GameStats : MonoBehaviour
 {
     [Header("Player Stats")]
-    [SerializeField] int playerHealth = 100;
+    [SerializeField] float playerHealth = 100;
     [SerializeField] int currentBirdsCuredScore = 0;
 
     [Header("Current Level Stats")]
     [SerializeField] string levelName = "Violet Island";
+
+    [Header("Enemy Stats")]
+    [SerializeField] float firePower = .5f;
+
+    //Health
+
+    public void LoseHealth(string type)
+    {
+        if (type == "Fire")
+        {
+            playerHealth -= firePower;
+        }
+        
+    }
+
+    public float GetHealth()
+    {
+        return playerHealth;
+    }
 
     //Score
 
