@@ -21,6 +21,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] GameObject[] lasers;
     [SerializeField] int laserBasePower = 1;
 
+    
+
     GameStats gameStats;
     Enemy enemy;
 
@@ -96,5 +98,13 @@ public class PlayerController : MonoBehaviour
         {
             gameStats.LoseHealth("Fire"); 
         }  
+    }
+
+    void OnCollisionEnter(Collision other) 
+    {
+        if (other.gameObject.tag == "Enemy")
+        {
+            gameStats.LoseHealth("Enemy");
+        }
     }
 }

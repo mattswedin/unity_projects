@@ -13,6 +13,7 @@ public class GameStats : MonoBehaviour
 
     [Header("Enemy Stats")]
     [SerializeField] float firePower = .5f;
+    [SerializeField] float enemyBumpPower = 10f;
 
     //Health
 
@@ -21,6 +22,10 @@ public class GameStats : MonoBehaviour
         if (type == "Fire")
         {
             playerHealth -= firePower;
+        }
+        else if (type == "Enemy")
+        {
+            playerHealth -= enemyBumpPower;
         }
         
     }
