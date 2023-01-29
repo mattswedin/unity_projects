@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+
+    [Header("Fly In")]
+    [SerializeField] Vector3 startingPos;
+
     [Header("Movement")]
     float xThrow, yThrow;
     [SerializeField] float xRange = 5f;
@@ -16,12 +20,11 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float controlRollFactor = 5;
     float xMovement;
     float yMovement;
+    bool hasFlownIn = false;
 
     [Header("Lasers")]
     [SerializeField] GameObject[] lasers;
     [SerializeField] int laserBasePower = 1;
-
-    
 
     GameStats gameStats;
     Enemy enemy;
@@ -33,9 +36,16 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        Fly();
-        FlyRotation();
-        Shoot();
+        if (hasFlownIn) 
+        {
+            Fly();
+            FlyRotation();
+            Shoot(); 
+        }
+        else
+        {
+            FlyIntoView();  
+        }
     }
 
     void Shoot() 
@@ -57,6 +67,17 @@ public class PlayerController : MonoBehaviour
         {
             var emissionModule = laser.GetComponent<ParticleSystem>().emission;
             emissionModule.enabled = state;
+        }
+    }
+
+    void FlyIntoView()
+    {
+        transform.localPosition = Vector3.MoveTowards(transform.localPosition, startingPos, moveSpeed * Time.deltaTime);
+
+        if (transform.localPosition == startingPos)
+        {
+            hasFlownIn = true;
+            return;
         }
     }
 
