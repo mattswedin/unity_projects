@@ -7,6 +7,7 @@ public class PlayerController : MonoBehaviour
 
     [Header("Fly In")]
     [SerializeField] Vector3 startingPos;
+    [SerializeField] float flyInSpeed = 10f;
 
     [Header("Movement")]
     float xThrow, yThrow;
@@ -20,7 +21,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float controlRollFactor = 5;
     float xMovement;
     float yMovement;
-    bool hasFlownIn = false;
+    bool canMove = false;
 
     [Header("Lasers")]
     [SerializeField] GameObject[] lasers;
@@ -36,16 +37,17 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        if (hasFlownIn) 
+        if (!canMove) 
         {
-            Fly();
-            FlyRotation();
-            Shoot(); 
+            FlyIntoView();
         }
         else
         {
-            FlyIntoView();  
+            Fly();
+            FlyRotation();  
         }
+
+        Shoot();
     }
 
     void Shoot() 
@@ -58,7 +60,6 @@ public class PlayerController : MonoBehaviour
         {
             ActivateLasers(false);
         }
-
     }
 
     void ActivateLasers(bool state) 
@@ -72,11 +73,11 @@ public class PlayerController : MonoBehaviour
 
     void FlyIntoView()
     {
-        transform.localPosition = Vector3.MoveTowards(transform.localPosition, startingPos, moveSpeed * Time.deltaTime);
+        transform.localPosition = Vector3.MoveTowards(transform.localPosition, startingPos, flyInSpeed * Time.deltaTime);
 
         if (transform.localPosition == startingPos)
         {
-            hasFlownIn = true;
+            canMove = true;
             return;
         }
     }
@@ -88,9 +89,9 @@ public class PlayerController : MonoBehaviour
         xMovement = xThrow * Time.deltaTime * moveSpeed;
         yMovement = yThrow * Time.deltaTime * moveSpeed;
         float xClamp = Mathf.Clamp(transform.localPosition.x 
-                                                + xMovement, -xRange, xRange);
+                                + xMovement, -xRange, xRange);
         float yClamp = Mathf.Clamp(transform.localPosition.y 
-                                                + yMovement, yRangeBottom, yRangeTop);
+                                + yMovement, yRangeBottom, yRangeTop);
         Vector3 newMovement = new Vector3(xClamp, yClamp, 0);
 
         transform.localPosition = new Vector3(newMovement.x, newMovement.y, transform.localPosition.z);
@@ -121,10 +122,12 @@ public class PlayerController : MonoBehaviour
         }  
     }
 
-    void OnCollisionEnter(Collision other) 
+    void OnTriggerEnter(Collider other) 
     {
-        if (other.gameObject.tag == "Enemy")
+        Debug.Log("here");
+        if (other.tag == "Enemy")
         {
+            Debug.Log("enemy");
             gameStats.LoseHealth("Enemy");
         }
     }

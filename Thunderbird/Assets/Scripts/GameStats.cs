@@ -11,6 +11,10 @@ public class GameStats : MonoBehaviour
     [Header("Current Level Stats")]
     [SerializeField] string levelName = "Violet Island";
 
+    [Header("All Level Stats")]
+    [SerializeField] Dictionary<string, int> birdsCured;
+    [SerializeField] Dictionary<string, float> damageDoneToBoss;
+
     [Header("Enemy Stats")]
     [SerializeField] float firePower = .5f;
     [SerializeField] float enemyBumpPower = 10f;
