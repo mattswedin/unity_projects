@@ -13,25 +13,20 @@ public class GameStats : MonoBehaviour
 
     [Header("All Level Stats")]
     [SerializeField] Dictionary<string, int> birdsCured;
-    [SerializeField] Dictionary<string, float> damageDoneToBoss;
 
-    [Header("Enemy Stats")]
-    [SerializeField] float firePower = .5f;
-    [SerializeField] float enemyBumpPower = 10f;
+    [Header("Boss: Spiral Eyes ")]
+    [SerializeField] float damageDoneSpiralEyes = 0;
 
     //Health
 
     public void LoseHealth(string type)
     {
-        if (type == "Fire")
-        {
-            playerHealth -= firePower;
-        }
-        else if (type == "Enemy")
-        {
-            playerHealth -= enemyBumpPower;
-        }
-        
+     
+    }
+
+    public void LoseHealthTest(float damage)
+    {
+        playerHealth -= damage;
     }
 
     public float GetHealth()

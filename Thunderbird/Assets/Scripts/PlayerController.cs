@@ -124,11 +124,10 @@ public class PlayerController : MonoBehaviour
 
     void OnTriggerEnter(Collider other) 
     {
-        Debug.Log("here");
         if (other.tag == "Enemy")
         {
-            Debug.Log("enemy");
-            gameStats.LoseHealth("Enemy");
+            enemy = other.gameObject.GetComponentInParent<Enemy>();
+            gameStats.LoseHealthTest(enemy.GetAttackPower());
         }
     }
 }
