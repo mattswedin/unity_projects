@@ -26,6 +26,7 @@ public class PlayerController : MonoBehaviour
     [Header("Lasers")]
     [SerializeField] GameObject[] lasers;
     [SerializeField] int laserBasePower = 1;
+    [SerializeField] int laserPowerUpPower = 1;
 
     GameStats gameStats;
     Enemy enemy;
@@ -109,10 +110,6 @@ public class PlayerController : MonoBehaviour
         transform.localRotation = Quaternion.Euler(pitch, yaw, roll);
     }
 
-    public int GetLaserPower()
-    {
-        return laserBasePower;
-    } 
 
     void OnParticleCollision(GameObject other) 
     {

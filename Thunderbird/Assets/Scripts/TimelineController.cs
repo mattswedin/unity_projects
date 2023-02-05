@@ -9,9 +9,12 @@ public class TimelineController : MonoBehaviour
     [SerializeField] bool isLevel;
     [SerializeField] float speed = 2f;
 
+    LevelStats levelStats;
+
 
     void Awake() 
     {
+        levelStats = FindObjectOfType<LevelStats>();
         pd = GetComponent<PlayableDirector>();
     }
 
@@ -23,9 +26,16 @@ public class TimelineController : MonoBehaviour
 
     void Update() 
     {
-        if (isLevel && pd.playableGraph.IsDone())
+        if (isLevel)
         {
-            Debug.Log("Done");
+            if (pd.playableGraph.GetRootPlayable(0).GetTime() < 75f
+            && levelStats.isSpecialTriggered()) SpecialEnding();
         }
+    }
+
+    void SpecialEnding()
+    {
+        Debug.Log("YES");
+        pd.playableGraph.GetRootPlayable(0).Pause();
     }
 }

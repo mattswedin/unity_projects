@@ -28,19 +28,19 @@ public class Enemy : MonoBehaviour
     [Header("Rotating Between Points")]
     [SerializeField] bool isRotatingBetweenPoints;
     [SerializeField] int rotationSpeed;
+    [Header("Mini Boss")]
+    [SerializeField] bool isMiniBoss;
+    [SerializeField] float defeatBeforeTime;
 
-
-    
-
-    PlayerController playerController;
     GameStats gameStats;
+    LevelStats levelStats;
     
     
 
     void Awake()
     {
+        levelStats = FindObjectOfType<LevelStats>();
         gameStats = FindObjectOfType<GameStats>();
-        playerController = FindObjectOfType<PlayerController>();
         meshRenderers = gameObject.GetComponentsInChildren<MeshRenderer>();
     }
 
@@ -102,7 +102,7 @@ public class Enemy : MonoBehaviour
             mesh.material = hitColor[hitColorIndex];
         }
         if (!ogMaterialsObtained) ogMaterialsObtained = true;
-        health -= playerController.GetLaserPower();
+        health -= gameStats.GetLaserPower();
         if (hitColorIndex == 0)
         {
             hitColorIndex = 1;
@@ -127,6 +127,15 @@ public class Enemy : MonoBehaviour
             } 
             died = true;
             gameStats.SetBirdsCured();
+            if (!isMiniBoss)
+            {
+                levelStats.EnemyDestroyed(gameObject.transform.parent.name);
+            }
+            else
+            {
+                levelStats.MiniBossDestroyed();
+            }
+            
         }
         
         Destroy(gameObject);
