@@ -20,13 +20,7 @@ public class GameStats : MonoBehaviour
     [SerializeField] float damageDoneSpiralEyes = 0;
 
     //Health
-    //OPTIMIZE
-    public void LoseHealth(string type)
-    {
-        playerHealth -= .5f;
-    }
-
-    public void LoseHealthTest(float damage)
+    public void LoseHealth(float damage)
     {
         playerHealth -= damage;
     }

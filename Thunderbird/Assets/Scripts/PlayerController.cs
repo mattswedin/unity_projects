@@ -30,6 +30,7 @@ public class PlayerController : MonoBehaviour
 
     GameStats gameStats;
     Enemy enemy;
+    EnemyProjectile enemyProjectile;
 
     void Awake() 
     {
@@ -113,9 +114,10 @@ public class PlayerController : MonoBehaviour
 
     void OnParticleCollision(GameObject other) 
     {
-        if (other.tag == "Fire")
+        if (other.tag == "Enemy")
         {
-            gameStats.LoseHealth("Fire"); 
+            enemyProjectile = other.gameObject.GetComponentInParent<EnemyProjectile>();
+            gameStats.LoseHealth(enemyProjectile.GetAttackPower());
         }  
     }
 
@@ -124,7 +126,7 @@ public class PlayerController : MonoBehaviour
         if (other.tag == "Enemy")
         {
             enemy = other.gameObject.GetComponentInParent<Enemy>();
-            gameStats.LoseHealthTest(enemy.GetAttackPower());
+            gameStats.LoseHealth(enemy.GetAttackPower());
         }
     }
 }
