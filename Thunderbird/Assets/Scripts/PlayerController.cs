@@ -24,21 +24,31 @@ public class PlayerController : MonoBehaviour
     bool canMove = false;
 
     [Header("Lasers")]
-    [SerializeField] GameObject[] lasers;
+    [SerializeField] GameObject lasers;
     [SerializeField] int laserBasePower = 1;
     [SerializeField] int laserPowerUpPower = 1;
+    [SerializeField] string laserLevelName;
+    bool needToSwitchLasers = true;
+    Transform laserLevel;
 
     GameStats gameStats;
     Enemy enemy;
     EnemyProjectile enemyProjectile;
 
     void Awake() 
-    {
+    {   
         gameStats = FindObjectOfType<GameStats>();
+    }
+
+    void Start() 
+    {
+        laserLevelName = lasers.transform.GetChild(gameStats.GetLaserLevel()).name;
     }
 
     void Update()
     {
+        if (needToSwitchLasers) SwitchLasers(gameStats.GetLaserLevel());
+
         if (!canMove) 
         {
             FlyIntoView();
@@ -66,8 +76,17 @@ public class PlayerController : MonoBehaviour
 
     void ActivateLasers(bool state) 
     {
-        foreach (GameObject laser in lasers)
+        laserLevel = lasers.transform.GetChild(gameStats.GetLaserLevel());
+
+        if (laserLevelName != laserLevel.name)
         {
+            needToSwitchLasers = true;
+            laserLevelName = laserLevel.name;
+        } 
+
+        for(int i = 0; i < laserLevel.childCount; i++)
+        {
+            GameObject laser = laserLevel.GetChild(i).gameObject;
             var emissionModule = laser.GetComponent<ParticleSystem>().emission;
             emissionModule.enabled = state;
         }
@@ -128,5 +147,18 @@ public class PlayerController : MonoBehaviour
             enemy = other.gameObject.GetComponentInParent<Enemy>();
             gameStats.LoseHealth(enemy.GetAttackPower());
         }
+    }
+
+    void SwitchLasers(int laserLevel)
+    {
+        for(int i = 0; i < lasers.transform.childCount; i++)
+        {
+            lasers.transform.GetChild(i).gameObject.SetActive(false);
+        }
+
+        lasers.transform.GetChild(laserLevel).gameObject.SetActive(true);
+
+        needToSwitchLasers = false;
+        
     }
 }

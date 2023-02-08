@@ -9,6 +9,7 @@ public class GameStats : MonoBehaviour
     [SerializeField] int currentBirdsCuredScore = 0;
     [SerializeField] int laserBasePower = 1;
     [SerializeField] int laserPowerUpPower = 1;
+    [SerializeField] int laserLevel = 0;
 
     [Header("Current Level Stats")]
     [SerializeField] string levelName = "Violet Island";
@@ -16,7 +17,7 @@ public class GameStats : MonoBehaviour
     [Header("All Level Stats")]
     [SerializeField] Dictionary<string, int> birdsCured;
 
-    [Header("Boss: Spiral Eyes ")]
+    [Header("Boss: Spiral Eyes")]
     [SerializeField] float damageDoneSpiralEyes = 0;
 
     //Health
@@ -35,6 +36,7 @@ public class GameStats : MonoBehaviour
 
     public void PowerUp()
     {
+        laserLevel += 1;
         laserPowerUpPower += 1;
     }
 
@@ -60,6 +62,11 @@ public class GameStats : MonoBehaviour
         {
             return currentBirdsCuredScore.ToString();
         }
+    }
+
+    public int GetLaserLevel()
+    {
+        return laserLevel;
     }
 
 }
