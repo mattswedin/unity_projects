@@ -7,6 +7,7 @@ public class GameStats : MonoBehaviour
     [Header("Player Stats")]
     [SerializeField] float playerHealth = 100;
     [SerializeField] int currentBirdsCuredScore = 0;
+    [SerializeField] double birdsCuredUntilPowerUp = 5;
     [SerializeField] int laserBasePower = 1;
     [SerializeField] int laserPowerUpPower = 1;
     [SerializeField] int laserLevel = 0;
@@ -50,6 +51,12 @@ public class GameStats : MonoBehaviour
     public void SetBirdsCured()
     {
         currentBirdsCuredScore += 1;
+        if (currentBirdsCuredScore >= birdsCuredUntilPowerUp)
+        {
+            PowerUp();
+
+            birdsCuredUntilPowerUp = System.Math.Ceiling(birdsCuredUntilPowerUp * 2.5f);
+        }
     }
 
     public string GetCurrentBirdsCured()

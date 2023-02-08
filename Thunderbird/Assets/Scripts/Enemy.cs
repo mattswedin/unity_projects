@@ -127,14 +127,7 @@ public class Enemy : MonoBehaviour
             } 
             died = true;
             gameStats.SetBirdsCured();
-            if (!isMiniBoss)
-            {
-                levelStats.EnemyDestroyed(gameObject.transform.parent.name);
-            }
-            else
-            {
-                levelStats.MiniBossDestroyed();
-            }
+            if (isMiniBoss) levelStats.MiniBossDestroyed();
             
         }
         
