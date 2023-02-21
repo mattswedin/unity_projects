@@ -21,7 +21,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float controlRollFactor = 5;
     float xMovement;
     float yMovement;
-    bool canMove = false;
+    bool introFlight = false;
+    bool cantMove = false;
 
     [Header("Lasers")]
     [SerializeField] GameObject lasers;
@@ -49,17 +50,19 @@ public class PlayerController : MonoBehaviour
     {
         if (needToSwitchLasers) SwitchLasers(gameStats.GetLaserLevel());
 
-        if (!canMove) 
+        if (!cantMove)
         {
-            FlyIntoView();
+            if (!introFlight)
+            {
+                FlyIntoView();
+            }
+            else
+            {
+                Fly();
+                FlyRotation();
+            }
+            Shoot();
         }
-        else
-        {
-            Fly();
-            FlyRotation();  
-        }
-
-        Shoot();
     }
 
     void Shoot() 
@@ -98,7 +101,7 @@ public class PlayerController : MonoBehaviour
 
         if (transform.localPosition == startingPos)
         {
-            canMove = true;
+            introFlight = true;
             return;
         }
     }
@@ -160,5 +163,10 @@ public class PlayerController : MonoBehaviour
 
         needToSwitchLasers = false;
         
+    }
+
+    public void SetCantMove(bool state) 
+    {
+        cantMove = state;
     }
 }

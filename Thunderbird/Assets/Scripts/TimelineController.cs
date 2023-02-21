@@ -8,34 +8,40 @@ public class TimelineController : MonoBehaviour
     PlayableDirector pd;
     [SerializeField] bool isLevel;
     [SerializeField] float speed = 2f;
+    [SerializeField] float eventTime = 90f;
+    [SerializeField] Camera[] cutSceneCameras;
+    Camera currentCamera;
 
     LevelStats levelStats;
+    PlayerController playerController;
 
 
     void Awake() 
     {
+        playerController = FindObjectOfType<PlayerController>();
         levelStats = FindObjectOfType<LevelStats>();
         pd = GetComponent<PlayableDirector>();
     }
 
     void Start() 
     {
-        pd.playableGraph.GetRootPlayable(0).SetSpeed(speed);
-        
+       currentCamera = Camera.current;
+       pd.playableGraph.GetRootPlayable(0).SetSpeed(speed);
     }
 
     void Update() 
     {
-        if (isLevel)
+        if (pd.playableGraph.GetRootPlayable(0).GetTime() == eventTime)
         {
-            if (pd.playableGraph.GetRootPlayable(0).GetTime() < 75f
-            && levelStats.isSpecialTriggered()) SpecialEnding();
-        }
+            playerController.SetCantMove(true);
+            ChangeCamera(0);
+        };
     }
 
-    void SpecialEnding()
+    void ChangeCamera(int idx)
     {
-        Debug.Log("YES");
-        pd.playableGraph.GetRootPlayable(0).Pause();
+        currentCamera.enabled = false;
+        cutSceneCameras[idx].enabled = true;
+        currentCamera = cutSceneCameras[idx];
     }
 }
