@@ -8,9 +8,7 @@ public class TimelineController : MonoBehaviour
     PlayableDirector pd;
     [SerializeField] bool isLevel;
     [SerializeField] float speed = 2f;
-    [SerializeField] float eventTime = 90f;
-    [SerializeField] Camera[] cutSceneCameras;
-    Camera currentCamera;
+    [SerializeField] float timelineBreakpoint = 90f;
 
     LevelStats levelStats;
     PlayerController playerController;
@@ -25,23 +23,16 @@ public class TimelineController : MonoBehaviour
 
     void Start() 
     {
-       currentCamera = Camera.current;
        pd.playableGraph.GetRootPlayable(0).SetSpeed(speed);
     }
 
-    void Update() 
+    public void Play() 
     {
-        if (pd.playableGraph.GetRootPlayable(0).GetTime() == eventTime)
-        {
-            playerController.SetCantMove(true);
-            ChangeCamera(0);
-        };
+        pd.Play();
     }
 
-    void ChangeCamera(int idx)
+    public float GetTimelineBreakpoint()
     {
-        currentCamera.enabled = false;
-        cutSceneCameras[idx].enabled = true;
-        currentCamera = cutSceneCameras[idx];
+        return timelineBreakpoint;
     }
 }
