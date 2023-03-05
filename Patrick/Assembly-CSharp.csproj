@@ -36,11 +36,16 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
-     <Compile Include="Assets/Scripts/Transitions/PixelFade.cs" />
-     <Compile Include="Assets/Scripts/ClickableObject.cs" />
-     <Compile Include="Assets/Scripts/SceneSwitcher.cs" />
-     <Compile Include="Assets/Scripts/Transitions/ZoomBlur.cs" />
+     <Compile Include="Assets/Scripts/SceneStats.cs" />
      <Compile Include="Assets/Scripts/Transitions/FadeToBlack.cs" />
+     <Compile Include="Assets/Scripts/Transitions/PixelFade.cs" />
+     <Compile Include="Assets/Scripts/Transitions/ZoomBlur.cs" />
+     <Compile Include="Assets/Scripts/DialogueController.cs" />
+     <Compile Include="Assets/Scripts/ClickableObject.cs" />
+     <Compile Include="Assets/Scripts/DialogueManager.cs" />
+     <Compile Include="Assets/Scripts/SceneSwitcher.cs" />
+     <Compile Include="Assets/Scripts/DDOL.cs" />
+     <Compile Include="Assets/Scripts/GameStats.cs" />
      <None Include="Assets/TextMesh Pro/Shaders/TMPro.cginc" />
      <None Include="Assets/TextMesh Pro/Shaders/TMP_SDF-Mobile Overlay.shader" />
      <None Include="Assets/TextMesh Pro/Shaders/TMP_Bitmap.shader" />

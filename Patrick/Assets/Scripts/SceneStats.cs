@@ -5,15 +5,17 @@ using UnityEngine;
 public class SceneStats : MonoBehaviour
 {
     FadeToBlack fadeToBlack;
+    GameStats gameStats;
     
     void Awake()
     {
-       fadeToBlack = FindObjectOfType<FadeToBlack>();
+      gameStats = FindObjectOfType<GameStats>();
+      fadeToBlack = FindObjectOfType<FadeToBlack>();
     }
 
-    
     void Start()
     {
-       fadeToBlack.FadeOutBlack(); 
+      gameStats.SetCanClick();
+      fadeToBlack.FadeOutBlack(); 
     }
 }

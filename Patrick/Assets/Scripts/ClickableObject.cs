@@ -11,26 +11,35 @@ public class ClickableObject : MonoBehaviour
 
     ZoomBlur zoomBlur;
     FadeToBlack fadeToBlack;
+    GameStats gameStats;
 
     void Awake() 
     {
+        gameStats = FindObjectOfType<GameStats>();
         zoomBlur = FindObjectOfType<ZoomBlur>();
         fadeToBlack = FindObjectOfType<FadeToBlack>();
     }
 
     void OnMouseDown() 
     {
-        if(areaToWarp != "") 
+        if (gameStats.GetCanClick(gameObject.name))
         {
-            zoomBlur.SetZoomNow(true, gameObject.transform);
-            StartCoroutine(Delay());
+            if(areaToWarp != "") 
+            {
+                zoomBlur.SetZoomNow(true, gameObject.transform);
+                StartCoroutine(Delay());
+            }
+            clickOverlay.SetActive(true);
         }
-        clickOverlay.SetActive(true);
+        
     }
 
     void OnMouseUp()
     {
-        clickOverlay.SetActive(false);
+        if (gameStats.GetCanClick(gameObject.name))
+        {
+            clickOverlay.SetActive(false);
+        }
     }
 
     IEnumerator Delay() 

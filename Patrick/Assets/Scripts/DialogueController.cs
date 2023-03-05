@@ -6,18 +6,26 @@ public class DialogueController : MonoBehaviour
 {
     [Header("Character Name")]
     [SerializeField] string charName;
+    [SerializeField] GameObject openMouthAni;
+    SpriteRenderer spriteRenderer;
+    [SerializeField] Color opaqueOpenMouth;
+    [SerializeField] Color transparentOpenMouth;
 
-    [Header("Beginning Dialogue")]
+    [Header("Dialogue")]
     [SerializeField] string dialogue;
     [SerializeField] bool inConversation = false;
+    [SerializeField] bool isSpeakingLine = false;
     [SerializeField] int convoIndex = 0;
     string[] lines;
+    
 
-    UIController uIController;
+    DialogueManager dialogueManager;
+    GameStats gameStats;
 
     void Awake() 
     {
-        uIController = FindObjectOfType<UIController>();
+        gameStats = FindObjectOfType<GameStats>();
+        dialogueManager = FindObjectOfType<DialogueManager>();
     }
 
     private void Start() 
@@ -27,27 +35,49 @@ public class DialogueController : MonoBehaviour
 
     private void OnMouseDown() 
     {
-        if (!inConversation)
+        if (gameStats.GetCanClick(gameObject.name)) 
         {
-            uIController.SetName(charName);
-            inConversation = true;
-        }
-        else
-        {
-            if (convoIndex != lines.Length - 1)
+            if (isSpeakingLine) 
             {
-                convoIndex++;
+                Debug.Log("speedup");
+                dialogueManager.SpeedUpText();
+                return;
+            } 
+
+            if (!inConversation)
+            {
+                dialogueManager.SetName(charName);
+                inConversation = true;
             }
             else
             {
-                uIController.ClearText();
-                inConversation = false;
-                convoIndex = 0;
+                if (convoIndex != lines.Length - 1)
+                {
+                    convoIndex++;
+                }
+                else
+                {
+                    dialogueManager.ClearText();
+                    inConversation = false;
+                    convoIndex = 0;
+                    return;
+                }
             }
-
-            string line = lines[convoIndex];
-            StartCoroutine(uIController.SpeakLine(line));
+        string line = lines[convoIndex];
+        StartCoroutine(dialogueManager.SpeakLine(line));
         }
+    }
+
+    public void SetIsSpeakingLine(bool state) 
+    {
+        isSpeakingLine = state;
+    }
+
+    public void SetMouthAnimation(bool state) 
+    {
+       if (spriteRenderer == null) spriteRenderer = openMouthAni.GetComponent<SpriteRenderer>();
+
+        spriteRenderer.color = state ? opaqueOpenMouth : transparentOpenMouth;
     }
 
 }

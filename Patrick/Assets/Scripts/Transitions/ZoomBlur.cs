@@ -24,7 +24,6 @@ public class ZoomBlur : MonoBehaviour
 
     void Update() 
     {
-        Debug.Log(objPos);
         if (zoomNow) 
         {
             ZoomBlurTransition();
