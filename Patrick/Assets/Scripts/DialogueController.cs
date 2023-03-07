@@ -16,20 +16,24 @@ public class DialogueController : MonoBehaviour
     [SerializeField] bool inConversation = false;
     [SerializeField] bool isSpeakingLine = false;
     [SerializeField] int convoIndex = 0;
+    [SerializeField] Vector2 defaultColliderSize;
     string[] lines;
     
 
     DialogueManager dialogueManager;
     GameStats gameStats;
+    BoxCollider2D boxCollider2D;
 
     void Awake() 
     {
+        boxCollider2D = GetComponent<BoxCollider2D>();
         gameStats = FindObjectOfType<GameStats>();
         dialogueManager = FindObjectOfType<DialogueManager>();
     }
 
     private void Start() 
     {
+        defaultColliderSize = boxCollider2D.size;
         lines = dialogue.Split("*");
     }
 
@@ -37,9 +41,10 @@ public class DialogueController : MonoBehaviour
     {
         if (gameStats.GetCanClick(gameObject.name)) 
         {
+            boxCollider2D.size = new Vector2(Screen.width, Screen.height);
+
             if (isSpeakingLine) 
             {
-                Debug.Log("speedup");
                 dialogueManager.SpeedUpText();
                 return;
             } 
@@ -78,6 +83,11 @@ public class DialogueController : MonoBehaviour
        if (spriteRenderer == null) spriteRenderer = openMouthAni.GetComponent<SpriteRenderer>();
 
         spriteRenderer.color = state ? opaqueOpenMouth : transparentOpenMouth;
+    }
+
+    public void SetBoxColliderSizeToDefault() 
+    {
+        boxCollider2D.size = defaultColliderSize;
     }
 
 }

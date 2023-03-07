@@ -28,9 +28,15 @@ public class DialogueManager : MonoBehaviour
 
     private void Start() 
     {
+        ClearTextAtStart();
+    }
+
+    private void ClearTextAtStart() 
+    {
         textBox.gameObject.SetActive(true);
         textBox.CrossFadeColor(new Color(0, 0, 0, 0), 0, false, true);
-        ClearText();
+        charName.text = "";
+        charText.text = "";
     }
 
     public void ClearText() 
@@ -38,6 +44,7 @@ public class DialogueManager : MonoBehaviour
         textBox.CrossFadeColor(new Color(0, 0, 0, 0), textBoxFadeSpeed, false, true);
         charName.text = "";
         charText.text = "";
+        dialogueController.SetBoxColliderSizeToDefault();
         gameStats.SetCanClick();
     }
 

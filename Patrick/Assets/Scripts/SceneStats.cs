@@ -6,15 +6,11 @@ public class SceneStats : MonoBehaviour
 {
     FadeToBlack fadeToBlack;
     GameStats gameStats;
-    
-    void Awake()
-    {
-      gameStats = FindObjectOfType<GameStats>();
-      fadeToBlack = FindObjectOfType<FadeToBlack>();
-    }
 
     void Start()
     {
+      gameStats = FindObjectOfType<GameStats>();
+      fadeToBlack = FindObjectOfType<FadeToBlack>();
       gameStats.SetCanClick();
       fadeToBlack.FadeOutBlack(); 
     }

@@ -7,26 +7,26 @@ public class FadeToBlack : MonoBehaviour
 {
     [SerializeField] float durationOfColor = 2f;
     [SerializeField] float speedOfFade = 1f;
-    Image image;
+    [SerializeField] Image black;
 
-    void Awake()
+    private void Awake()
     {
-        image = GetComponent<Image>();
+        black.gameObject.SetActive(true);
     }
 
     public void FadeInBlack()
     {
-        image.CrossFadeAlpha(1, speedOfFade, false);
+        black.CrossFadeAlpha(1, speedOfFade, false);
 
     }
 
     public void FadeOutBlack()
     {
-        image.CrossFadeAlpha(0, speedOfFade, false);
+        black.CrossFadeAlpha(0, speedOfFade, false);
     }
 
     public void CutToBlack()
     {
-        image.CrossFadeAlpha(1, 0, false);
+        black.CrossFadeAlpha(1, 0, false);
     }
 }

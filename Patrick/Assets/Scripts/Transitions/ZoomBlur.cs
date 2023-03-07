@@ -8,17 +8,15 @@ public class ZoomBlur : MonoBehaviour
     Vector2 worldPos;
     Vector3 worldScale;
     GameObject environment;
-    [SerializeField] GameObject cutToBlack;
     [SerializeField] float moveSpeed = 4f;
     [SerializeField] float zoomSpeed = 1.5f;
     [SerializeField] float amountToZoom = 3;
     [SerializeField] bool zoomNow;
 
     FadeToBlack fadeToBlack;
-    
-    void Start()
-    {
 
+    void Start() 
+    {
         environment = GameObject.Find("Environment");
     }
 
@@ -45,10 +43,8 @@ public class ZoomBlur : MonoBehaviour
 
         if (environment.transform.position == -objPos)
         {
-            if (cutToBlack != null)
-            {
-                cutToBlack.SetActive(true);
-            }
+            fadeToBlack.FadeInBlack();
+
         }
     }
 

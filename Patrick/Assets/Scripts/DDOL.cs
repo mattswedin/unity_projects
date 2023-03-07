@@ -11,9 +11,9 @@ public class DDOL : MonoBehaviour
        DontDestroyOnLoad(gameObject);
     }
 
-    void Start() 
-    {
-        SceneManager.LoadScene("Beginning");
-    }
+    // void Start() 
+    // {
+    //     SceneManager.LoadScene("Beginning");
+    // }
 
 }

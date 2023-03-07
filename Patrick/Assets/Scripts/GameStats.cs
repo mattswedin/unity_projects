@@ -1,11 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameStats : MonoBehaviour
 {
+    [Header("Clickables")]
     [SerializeField] bool canClick = false;
     [SerializeField] string gameObjName;
+
     
     public bool GetCanClick(string name) 
     {
@@ -32,8 +35,4 @@ public class GameStats : MonoBehaviour
         canClick = true;
         gameObjName = "";
     }
-
-
-
-    
 }

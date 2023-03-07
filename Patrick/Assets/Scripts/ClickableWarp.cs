@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class ClickableObject : MonoBehaviour
+public class ClickableWarp : MonoBehaviour
 {
     [SerializeField] string areaToWarp = "";
     [SerializeField] GameObject clickOverlay;
@@ -18,6 +18,11 @@ public class ClickableObject : MonoBehaviour
         gameStats = FindObjectOfType<GameStats>();
         zoomBlur = FindObjectOfType<ZoomBlur>();
         fadeToBlack = FindObjectOfType<FadeToBlack>();
+    }
+
+    private void Start() 
+    {
+        if (areaToWarp == "") areaToWarp = gameObject.name;
     }
 
     void OnMouseDown() 
