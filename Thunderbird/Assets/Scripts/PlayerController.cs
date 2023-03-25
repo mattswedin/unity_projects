@@ -48,7 +48,7 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        if (needToSwitchLasers) SwitchLasers(gameStats.GetLaserLevel());
+        if (needToSwitchLasers && !cantMove) SwitchLasers(gameStats.GetLaserLevel());
 
         if (!cantMove)
         {

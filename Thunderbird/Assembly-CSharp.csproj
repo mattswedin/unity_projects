@@ -43,6 +43,7 @@
      <Compile Include="Assets/Scripts/MultiTimelineManager.cs" />
      <Compile Include="Assets/Scripts/GameStats.cs" />
      <Compile Include="Assets/Scripts/PlayerController.cs" />
+     <Compile Include="Assets/Scripts/CameraManager.cs" />
      <Compile Include="Assets/Scripts/Enemy.cs" />
      <None Include="Assets/TerrainSampleAssets/ThirdPartyNotices.txt" />
      <None Include="Assets/TextMesh Pro/Shaders/TMPro.cginc" />
