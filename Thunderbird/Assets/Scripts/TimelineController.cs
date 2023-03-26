@@ -9,16 +9,13 @@ public class TimelineController : MonoBehaviour
     [SerializeField] bool isLevel;
     [SerializeField] bool isCutscene;
     [SerializeField] float speed = 2f;
-    [SerializeField] float timelineBreakpoint = 90f;
 
-    LevelStats levelStats;
     PlayerController playerController;
 
 
     void Awake() 
     {
         playerController = FindObjectOfType<PlayerController>();
-        levelStats = FindObjectOfType<LevelStats>();
         pd = GetComponent<PlayableDirector>();
     }
 
@@ -50,10 +47,5 @@ public class TimelineController : MonoBehaviour
     public void Play() 
     {
         pd.Play();
-    }
-
-    public float GetTimelineBreakpoint()
-    {
-        return timelineBreakpoint;
     }
 }

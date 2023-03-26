@@ -36,15 +36,13 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
-     <Compile Include="Assets/Scripts/LevelStats.cs" />
      <Compile Include="Assets/Scripts/EnemyProjectile.cs" />
      <Compile Include="Assets/Scripts/TimelineController.cs" />
      <Compile Include="Assets/Scripts/UIController.cs" />
-     <Compile Include="Assets/Scripts/MultiTimelineManager.cs" />
      <Compile Include="Assets/Scripts/GameStats.cs" />
      <Compile Include="Assets/Scripts/PlayerController.cs" />
-     <Compile Include="Assets/Scripts/CameraManager.cs" />
      <Compile Include="Assets/Scripts/Enemy.cs" />
+     <Compile Include="Assets/Scripts/Fade.cs" />
      <None Include="Assets/TerrainSampleAssets/ThirdPartyNotices.txt" />
      <None Include="Assets/TextMesh Pro/Shaders/TMPro.cginc" />
      <None Include="Assets/TextMesh Pro/Shaders/TMP_SDF-Mobile Overlay.shader" />

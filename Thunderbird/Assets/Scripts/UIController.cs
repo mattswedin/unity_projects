@@ -8,6 +8,8 @@ public class UIController : MonoBehaviour
 {
     [SerializeField] TextMeshProUGUI birdsCuredScore;
     [SerializeField] Slider healthSlider;
+    [SerializeField] Image black;
+    [SerializeField] float fadeSpeed = 1;
     GameStats gameStats;
 
     void Awake()
@@ -40,6 +42,19 @@ public class UIController : MonoBehaviour
         if (gameStats.GetHealth() != healthSlider.value)
         {
             healthSlider.value = gameStats.GetHealth();
+        }
+    }
+
+    public void Fade(bool fadeOut) 
+    {
+        if (fadeOut)
+        {
+            Debug.Log("FadeOut");
+            black.CrossFadeAlpha(1, fadeSpeed, false);
+        } 
+        else
+        {
+            black.CrossFadeAlpha(0, fadeSpeed, false);
         }
     }
 }

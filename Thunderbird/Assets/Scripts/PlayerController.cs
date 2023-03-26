@@ -168,5 +168,6 @@ public class PlayerController : MonoBehaviour
     public void SetCantMove(bool state) 
     {
         cantMove = state;
+        if (state) ActivateLasers(false);
     }
 }

@@ -33,13 +33,11 @@ public class Enemy : MonoBehaviour
     [SerializeField] float defeatBeforeTime;
 
     GameStats gameStats;
-    LevelStats levelStats;
     
     
 
     void Awake()
     {
-        levelStats = FindObjectOfType<LevelStats>();
         gameStats = FindObjectOfType<GameStats>();
         meshRenderers = gameObject.GetComponentsInChildren<MeshRenderer>();
     }
@@ -127,7 +125,6 @@ public class Enemy : MonoBehaviour
             } 
             died = true;
             gameStats.SetBirdsCured();
-            if (isMiniBoss) levelStats.MiniBossDestroyed();
             
         }
         
