@@ -6,8 +6,6 @@ using UnityEngine.Playables;
 public class TimelineController : MonoBehaviour
 {
     PlayableDirector pd;
-    [SerializeField] bool isLevel;
-    [SerializeField] bool isCutscene;
     [SerializeField] float speed = 2f;
 
     PlayerController playerController;
@@ -25,9 +23,6 @@ public class TimelineController : MonoBehaviour
        {
             pd.playableGraph.GetRootPlayable(0).SetSpeed(speed);
        }
-
-       if (isCutscene) playerController.SetCantMove(true);
-
     }
 
     public bool canPlay() 

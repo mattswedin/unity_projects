@@ -13,9 +13,10 @@ public class Fade : MonoBehaviour
         uIController = FindObjectOfType<UIController>();
     }
 
-    void Start()
+    void OnEnable() 
     {
         uIController.Fade(FadeOut);
-    }
+    } 
+
 
 }

@@ -143,13 +143,16 @@ public class PlayerController : MonoBehaviour
         }  
     }
 
-    void OnTriggerEnter(Collider other) 
-    {
-        if (other.tag == "Enemy")
+
+    private void OnTriggerEnter(Collider other) {
+        Debug.Log("IN");
+        if (other.transform.tag == "Enemy")
         {
             enemy = other.gameObject.GetComponentInParent<Enemy>();
+            Debug.Log(enemy.name);
             gameStats.LoseHealth(enemy.GetAttackPower());
         }
+
     }
 
     void SwitchLasers(int laserLevel)
