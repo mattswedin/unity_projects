@@ -29,7 +29,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] bool isRotatingBetweenPoints;
     [SerializeField] int rotationSpeed;
     [Header("Mini Boss")]
-    [SerializeField] bool isMiniBoss;
+    [SerializeField] bool isBoss;
     [SerializeField] float defeatBeforeTime;
 
     GameStats gameStats;
