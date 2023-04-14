@@ -61,7 +61,10 @@ public class DialogueController : MonoBehaviour
         }
         else
         {
+           
             nextScene.SetActive(true);
+            text.text = "";
+            dialogueObj.SetActive(false);
         }
 
        

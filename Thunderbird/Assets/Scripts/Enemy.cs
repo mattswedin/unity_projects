@@ -28,8 +28,9 @@ public class Enemy : MonoBehaviour
     [Header("Rotating Between Points")]
     [SerializeField] bool isRotatingBetweenPoints;
     [SerializeField] int rotationSpeed;
-    [Header("Mini Boss")]
+    [Header("Boss")]
     [SerializeField] bool isBoss;
+    [SerializeField] GameObject hitZone;
     [SerializeField] float defeatBeforeTime;
 
     GameStats gameStats;
@@ -39,7 +40,15 @@ public class Enemy : MonoBehaviour
     void Awake()
     {
         gameStats = FindObjectOfType<GameStats>();
-        meshRenderers = gameObject.GetComponentsInChildren<MeshRenderer>();
+        if (isBoss) 
+        {
+            meshRenderers = hitZone.GetComponents<MeshRenderer>();
+        }
+        else
+        {
+            meshRenderers = gameObject.GetComponentsInChildren<MeshRenderer>();
+        }
+        
     }
 
     void Update() 
@@ -116,7 +125,15 @@ public class Enemy : MonoBehaviour
     {
         if (!died)
         {
-            if (deathExplosion != null) Instantiate(deathExplosion, transform.position, transform.rotation);
+            if (deathExplosion != null && isBoss) 
+            {
+                Instantiate(deathExplosion, hitZone.transform.position, hitZone.transform.rotation);
+            }
+            else if (deathExplosion != null)
+            {
+                Instantiate(deathExplosion, transform.position, transform.rotation);
+            }
+                
 
             if (normalVersion != null)
             {
@@ -124,19 +141,31 @@ public class Enemy : MonoBehaviour
                 normie.GetComponent<Rigidbody>().AddForce(Vector3.up, ForceMode.Impulse);
             } 
             died = true;
-            gameStats.SetBirdsCured();
+            if (!isBoss) gameStats.SetBirdsCured();
             
         }
         
-        Destroy(gameObject);
+        if (isBoss) 
+        {
+            Destroy(hitZone);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+        
     }
 
     void BringOGColorsBack()
     {
-        for (int i = 0; i < meshRenderers.Length; i++)
+        if (!died) 
         {
-            meshRenderers[i].material = og[i];
+            for (int i = 0; i < meshRenderers.Length; i++)
+            {
+                meshRenderers[i].material = og[i];
+            }
         }
+
     }
 
     public float GetAttackPower()
