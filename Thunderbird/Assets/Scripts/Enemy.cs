@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Playables;
 
 public class Enemy : MonoBehaviour
 {
@@ -29,9 +30,13 @@ public class Enemy : MonoBehaviour
     [SerializeField] bool isRotatingBetweenPoints;
     [SerializeField] int rotationSpeed;
     [Header("Boss")]
+    [SerializeField] PlayableDirector pd;
     [SerializeField] bool isBoss;
     [SerializeField] GameObject hitZone;
-    [SerializeField] float defeatBeforeTime;
+    [SerializeField] Vector3 startingPos;
+    [SerializeField] float bossStunTime = 1f;
+    [SerializeField] double bossSlowMo = .0050;
+    int bossPhases = 3;
 
     GameStats gameStats;
     
@@ -42,6 +47,7 @@ public class Enemy : MonoBehaviour
         gameStats = FindObjectOfType<GameStats>();
         if (isBoss) 
         {
+            pd =  GetComponent<PlayableDirector>();
             meshRenderers = hitZone.GetComponents<MeshRenderer>();
         }
         else
@@ -128,6 +134,8 @@ public class Enemy : MonoBehaviour
             if (deathExplosion != null && isBoss) 
             {
                 Instantiate(deathExplosion, hitZone.transform.position, hitZone.transform.rotation);
+                
+                
             }
             else if (deathExplosion != null)
             {
@@ -141,6 +149,7 @@ public class Enemy : MonoBehaviour
                 normie.GetComponent<Rigidbody>().AddForce(Vector3.up, ForceMode.Impulse);
             } 
             died = true;
+            if (isBoss) transform.position = Vector3.MoveTowards(transform.position, startingPos, 3f * Time.deltaTime);
             if (!isBoss) gameStats.SetBirdsCured();
             
         }
@@ -171,5 +180,13 @@ public class Enemy : MonoBehaviour
     public float GetAttackPower()
     {
         return attackPower;
+    }
+
+    IEnumerator BossPhaseIsOver()
+    {
+        pd.playableGraph.GetRootPlayable(0).SetSpeed<Playable>(bossSlowMo);
+        yield return new WaitForSeconds(bossStunTime);
+        
+
     }
 }

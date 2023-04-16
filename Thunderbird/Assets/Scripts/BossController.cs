@@ -13,11 +13,6 @@ public class BossController : MonoBehaviour
     [Header("Boss Timing")]
     [SerializeField] float startDelay = 1.5f;
 
-    
-    void Start()
-    {
-        
-    }
 
     IEnumerator BossPhaseOne() 
     {

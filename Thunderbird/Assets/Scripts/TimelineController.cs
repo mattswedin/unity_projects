@@ -25,6 +25,11 @@ public class TimelineController : MonoBehaviour
        }
     }
 
+    public void ToggleHold() 
+    {
+        
+    }
+
     public bool canPlay() 
     {
         return pd != null;
