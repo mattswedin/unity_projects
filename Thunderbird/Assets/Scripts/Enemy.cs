@@ -32,13 +32,20 @@ public class Enemy : MonoBehaviour
     [Header("Boss")]
     [SerializeField] PlayableDirector pd;
     [SerializeField] bool isBoss;
+    [SerializeField] bool bossDefeated = false;
     [SerializeField] GameObject hitZone;
+    [SerializeField] GameObject bossProjectile;
+    [SerializeField] Transform bossProjectileLocation;
     [SerializeField] Vector3 startingPos;
     [SerializeField] float bossStunTime = 1f;
     [SerializeField] double bossSlowMo = .0050;
+    [SerializeField] float bossFallTime = 5f;
+    [SerializeField] float bossFallSpeed = 3f;
+    [SerializeField] Vector3 bossEndPos;
     int bossPhases = 3;
-
+    Animator animator;
     GameStats gameStats;
+    BossController bossController;
     
     
 
@@ -48,6 +55,8 @@ public class Enemy : MonoBehaviour
         if (isBoss) 
         {
             pd =  GetComponent<PlayableDirector>();
+            animator = GetComponentInChildren<Animator>();
+            bossController = FindObjectOfType<BossController>();
             meshRenderers = hitZone.GetComponents<MeshRenderer>();
         }
         else
@@ -62,6 +71,7 @@ public class Enemy : MonoBehaviour
        if (ogMaterialsObtained) BringOGColorsBack();
        if (isFlyingBetweenPoints) PositionMovement();
        if (isRotatingBetweenPoints) RotationMovement();
+       if (bossDefeated) BossExit();
     }
 
     void PositionMovement()
@@ -149,7 +159,7 @@ public class Enemy : MonoBehaviour
                 normie.GetComponent<Rigidbody>().AddForce(Vector3.up, ForceMode.Impulse);
             } 
             died = true;
-            if (isBoss) transform.position = Vector3.MoveTowards(transform.position, startingPos, 3f * Time.deltaTime);
+            if (isBoss) StartCoroutine(BossPhaseIsOver());
             if (!isBoss) gameStats.SetBirdsCured();
             
         }
@@ -186,7 +196,27 @@ public class Enemy : MonoBehaviour
     {
         pd.playableGraph.GetRootPlayable(0).SetSpeed<Playable>(bossSlowMo);
         yield return new WaitForSeconds(bossStunTime);
-        
-
+        pd.playableGraph.Stop();
+        bossEndPos.x = transform.position.x;
+        bossEndPos.y = transform.position.y - 200;
+        bossEndPos.z = transform.position.z;
+        bossDefeated = true;
     }
+
+    void BossExit() 
+    {
+        transform.position = Vector3.MoveTowards(transform.position, bossEndPos, bossFallSpeed * Time.deltaTime);
+
+        if (transform.position == bossEndPos)
+        {
+            StartCoroutine(bossController.EndBossPhaseOne());
+        }
+    }
+
+    public void BossShoot()
+    {
+        Instantiate(bossProjectile, bossProjectileLocation.position, Quaternion.identity);
+    }
+
+
 }
