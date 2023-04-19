@@ -42,6 +42,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] float bossFallTime = 5f;
     [SerializeField] float bossFallSpeed = 3f;
     [SerializeField] Vector3 bossEndPos;
+    [SerializeField] bool canShoot = false;
     int bossPhases = 3;
     Animator animator;
     GameStats gameStats;
@@ -197,9 +198,6 @@ public class Enemy : MonoBehaviour
         pd.playableGraph.GetRootPlayable(0).SetSpeed<Playable>(bossSlowMo);
         yield return new WaitForSeconds(bossStunTime);
         pd.playableGraph.Stop();
-        bossEndPos.x = transform.position.x;
-        bossEndPos.y = transform.position.y - 200;
-        bossEndPos.z = transform.position.z;
         bossDefeated = true;
     }
 
@@ -215,7 +213,17 @@ public class Enemy : MonoBehaviour
 
     public void BossShoot()
     {
-        Instantiate(bossProjectile, bossProjectileLocation.position, Quaternion.identity);
+        
+        if (canShoot)
+        {
+            Instantiate(bossProjectile, bossProjectileLocation.position, bossProjectileLocation.rotation);
+        }
+        
+    }
+
+    public void CanBossShoot(bool state)
+    {
+        canShoot = state;
     }
 
 

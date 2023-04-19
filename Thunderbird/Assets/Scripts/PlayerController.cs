@@ -136,12 +136,14 @@ public class PlayerController : MonoBehaviour
 
     void OnParticleCollision(GameObject other) 
     {
+        Debug.Log("Hurt");
         if (other.tag == "Enemy")
         {
             enemyProjectile = other.gameObject.GetComponentInParent<EnemyProjectile>();
             gameStats.LoseHealth(enemyProjectile.GetAttackPower());
         }  
     }
+
 
 
     private void OnTriggerEnter(Collider other) {

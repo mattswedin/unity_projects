@@ -9,10 +9,15 @@ public class BossController : MonoBehaviour
 
     [Header("Boss Timing")]
     [SerializeField] float startDelay = 1.5f;
+    [SerializeField] bool canShoot = true;
 
     [Header("Boss Objects")]
     [SerializeField] GameObject bossPhaseOne;
     [SerializeField] GameObject bossPhaseTwo;
+
+    
+
+    GameObject currentBossPhase;
 
     void Start() 
     {
@@ -23,6 +28,7 @@ public class BossController : MonoBehaviour
     {
         yield return new WaitForSeconds(startDelay);
         bossPhaseOne.SetActive(true);
+        currentBossPhase = bossPhaseOne;
 
     }
 
@@ -30,7 +36,13 @@ public class BossController : MonoBehaviour
     {
         yield return new WaitForSeconds(startDelay);
         bossPhaseTwo.SetActive(true);
+        currentBossPhase = bossPhaseTwo;
         Destroy(bossPhaseOne);
+    }
+
+    public void CanBossShoot(bool state) 
+    {
+        currentBossPhase.GetComponent<Enemy>().CanBossShoot(state);
     }
 
 
