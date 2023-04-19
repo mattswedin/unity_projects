@@ -7,6 +7,8 @@ public class ProjectileController : MonoBehaviour
     GameObject thunderBirdObj;
     Vector3 thunderBirdpos;
     [SerializeField] float speed = 200f;
+    [SerializeField] Vector3 projectilePos;
+    bool continueing = false;
 
     void Awake()
     {
@@ -16,9 +18,11 @@ public class ProjectileController : MonoBehaviour
 
     }
 
+
     void Update()
     {
         Shoot();
+        if (continueing) ShootStraight();
     }
 
     void ShootStraight()
@@ -33,8 +37,17 @@ public class ProjectileController : MonoBehaviour
 
         if (transform.position == thunderBirdpos)
         {
-            Destroy(gameObject);
+            StartCoroutine(Continue());
         }
     }
+
+    IEnumerator Continue() 
+    {
+        continueing = true;
+        yield return new WaitForSeconds(2f);
+        Destroy(gameObject);
+    }
+
+
 
 }
