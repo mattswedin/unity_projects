@@ -23,32 +23,40 @@ public class PlayerController : MonoBehaviour
     float yMovement;
     bool introFlight = false;
     bool cantMove = false;
+    [SerializeField] bool invincible = false;
 
     [Header("Lasers")]
     [SerializeField] GameObject lasers;
+    [SerializeField] Transform laserSpawnPointR;
+    [SerializeField] Transform laserSpawnPointL;
     [SerializeField] int laserBasePower = 1;
     [SerializeField] int laserPowerUpPower = 1;
     [SerializeField] string laserLevelName;
+    [SerializeField] bool isShooting;
+    [SerializeField] bool isBetweenShots;
     bool needToSwitchLasers = true;
+    Coroutine shooting;
     Transform laserLevel;
 
     GameStats gameStats;
     Enemy enemy;
     EnemyProjectile enemyProjectile;
+    BossController bossController;
 
     void Awake() 
     {   
         gameStats = FindObjectOfType<GameStats>();
+
     }
 
     void Start() 
     {
-        laserLevelName = lasers.transform.GetChild(gameStats.GetLaserLevel()).name;
+        // laserLevelName = lasers.transform.GetChild(gameStats.GetLaserLevel()).name;
     }
 
     void Update()
     {
-        if (needToSwitchLasers && !cantMove) SwitchLasers(gameStats.GetLaserLevel());
+        // if (needToSwitchLasers && !cantMove) SwitchLasers(gameStats.GetLaserLevel());
 
         if (!cantMove)
         {
@@ -62,7 +70,25 @@ public class PlayerController : MonoBehaviour
                 FlyRotation();
             }
             Shoot();
+            if (isShooting && !isBetweenShots)
+            {
+                StartCoroutine(ShootLaser());
+            }
+            else
+            {
+                StopCoroutine(ShootLaser());
+            }
+            
         }
+    }
+
+    IEnumerator ShootLaser() 
+    {
+        Instantiate(lasers, laserSpawnPointR.position, transform.rotation);
+        Instantiate(lasers, laserSpawnPointL.position, transform.rotation);
+        isBetweenShots = true;
+        yield return new WaitForSeconds(.05f);
+        isBetweenShots = false;
     }
 
     void Shoot() 
@@ -79,20 +105,21 @@ public class PlayerController : MonoBehaviour
 
     void ActivateLasers(bool state) 
     {
-        laserLevel = lasers.transform.GetChild(gameStats.GetLaserLevel());
+        isShooting = state;
+        // laserLevel = lasers.transform.GetChild(gameStats.GetLaserLevel());
 
-        if (laserLevelName != laserLevel.name)
-        {
-            needToSwitchLasers = true;
-            laserLevelName = laserLevel.name;
-        } 
+        // if (laserLevelName != laserLevel.name)
+        // {
+        //     needToSwitchLasers = true;
+        //     laserLevelName = laserLevel.name;
+        // } 
 
-        for(int i = 0; i < laserLevel.childCount; i++)
-        {
-            GameObject laser = laserLevel.GetChild(i).gameObject;
-            var emissionModule = laser.GetComponent<ParticleSystem>().emission;
-            emissionModule.enabled = state;
-        }
+        // for(int i = 0; i < laserLevel.childCount; i++)
+        // {
+        //     GameObject laser = laserLevel.GetChild(i).gameObject;
+        //     var emissionModule = laser.GetComponent<ParticleSystem>().emission;
+        //     emissionModule.enabled = state;
+        // }
     }
 
     void FlyIntoView()
@@ -136,35 +163,44 @@ public class PlayerController : MonoBehaviour
 
     void OnParticleCollision(GameObject other) 
     {
-        Debug.Log("Hurt");
-        if (other.tag == "Enemy")
+        if (other.tag == "Enemy" && !invincible)
         {
             enemyProjectile = other.gameObject.GetComponentInParent<EnemyProjectile>();
             gameStats.LoseHealth(enemyProjectile.GetAttackPower());
         }  
     }
 
+    IEnumerator Invincibility()
+    {
+        yield return new WaitForSeconds(1);
+        invincible = false;
+    }
+
     private void OnTriggerEnter(Collider other) {
-        Debug.Log("IN");
-        if (other.transform.tag == "Enemy")
+    
+        if (other.transform.tag == "Enemy" && !invincible)
         {
+            invincible = true;
+            StartCoroutine(Invincibility());
             enemy = other.gameObject.GetComponentInParent<Enemy>();
-            Debug.Log(enemy.name);
-            gameStats.LoseHealth(enemy.GetAttackPower());
+            enemyProjectile = other.gameObject.GetComponent<EnemyProjectile>();
+            if (enemy != null) gameStats.LoseHealth(enemy.GetAttackPower());
+            if (enemyProjectile != null) gameStats.LoseHealth(enemyProjectile.GetAttackPower());
+            
         }
 
     }
 
     void SwitchLasers(int laserLevel)
     {
-        for(int i = 0; i < lasers.transform.childCount; i++)
-        {
-            lasers.transform.GetChild(i).gameObject.SetActive(false);
-        }
+        // for(int i = 0; i < lasers.transform.childCount; i++)
+        // {
+        //     lasers.transform.GetChild(i).gameObject.SetActive(false);
+        // }
 
-        lasers.transform.GetChild(laserLevel).gameObject.SetActive(true);
+        // lasers.transform.GetChild(laserLevel).gameObject.SetActive(true);
 
-        needToSwitchLasers = false;
+        // needToSwitchLasers = false;
         
     }
 

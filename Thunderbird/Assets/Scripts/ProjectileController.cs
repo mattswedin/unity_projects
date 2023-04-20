@@ -14,20 +14,28 @@ public class ProjectileController : MonoBehaviour
     {
         thunderBirdObj = GameObject.Find("ThunderBirdRig");
         thunderBirdpos = thunderBirdObj.transform.GetChild(1).gameObject.transform.position;
-        // thunderBirdpos.z += -15;
+        thunderBirdpos.y += 4f;
 
     }
 
 
     void Update()
     {
-        Shoot();
-        if (continueing) ShootStraight();
+        
+        if (continueing) 
+        {
+            ShootStraight();
+        }
+        else
+        {
+            Shoot();
+        }
+
     }
 
     void ShootStraight()
     {
-        transform.Translate(Vector3.down * 5, Space.Self);
+        transform.Translate(Vector3.down * 7, Space.Self);
     }
 
     void Shoot() 

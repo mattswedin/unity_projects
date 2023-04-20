@@ -42,6 +42,7 @@
      <Compile Include="Assets/Scripts/SceneWarp.cs" />
      <Compile Include="Assets/Scripts/Fade.cs" />
      <Compile Include="Assets/Scripts/EnvironmentManager.cs" />
+     <Compile Include="Assets/Scripts/LaserEyesController.cs" />
      <Compile Include="Assets/Scripts/GameStats.cs" />
      <Compile Include="Assets/Scripts/AnimationEventReceiver.cs" />
      <Compile Include="Assets/Scripts/BossController.cs" />

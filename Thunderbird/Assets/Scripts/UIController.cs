@@ -8,6 +8,7 @@ public class UIController : MonoBehaviour
 {
     [SerializeField] TextMeshProUGUI birdsCuredScore;
     [SerializeField] Slider healthSlider;
+    [SerializeField] Slider bossHealthSlider;
     [SerializeField] Image black;
     [SerializeField] float fadeSpeed = 1;
     GameStats gameStats;
@@ -56,5 +57,10 @@ public class UIController : MonoBehaviour
         {
             black.CrossFadeAlpha(0, fadeSpeed, false);
         }
+    }
+
+    public void BossHealth(float damage)
+    {
+        bossHealthSlider.value -= damage;
     }
 }

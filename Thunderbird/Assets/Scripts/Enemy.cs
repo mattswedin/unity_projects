@@ -43,10 +43,14 @@ public class Enemy : MonoBehaviour
     [SerializeField] float bossFallSpeed = 3f;
     [SerializeField] Vector3 bossEndPos;
     [SerializeField] bool canShoot = false;
+    [SerializeField] float bossRotationSpeed = 3f;
+    Quaternion endRotation;
     int bossPhases = 3;
+
     Animator animator;
     GameStats gameStats;
     BossController bossController;
+    UIController uIController;
     
     
 
@@ -57,14 +61,19 @@ public class Enemy : MonoBehaviour
         {
             pd =  GetComponent<PlayableDirector>();
             animator = GetComponentInChildren<Animator>();
-            bossController = FindObjectOfType<BossController>();
             meshRenderers = hitZone.GetComponents<MeshRenderer>();
+            uIController = FindObjectOfType<UIController>();
         }
         else
         {
             meshRenderers = gameObject.GetComponentsInChildren<MeshRenderer>();
         }
         
+    }
+
+    void Start() 
+    {
+        if (isBoss) bossController = FindObjectOfType<BossController>();   
     }
 
     void Update() 
@@ -116,6 +125,27 @@ public class Enemy : MonoBehaviour
             }
         }
     }
+    void OnCollisionEnter(Collision other) 
+    {
+        for (int i = 0; i < meshRenderers.Length; i++)
+        {
+            MeshRenderer mesh = meshRenderers[i];
+            og.Add(mesh.material);
+            mesh.material = hitColor[hitColorIndex];
+        }
+        if (!ogMaterialsObtained) ogMaterialsObtained = true;
+        if (isBoss) uIController.BossHealth(gameStats.GetLaserPower());
+        health -= gameStats.GetLaserPower();
+        if (hitColorIndex == 0)
+        {
+            hitColorIndex = 1;
+        }
+        else
+        {
+            hitColorIndex = 0;
+        }
+        if (health < 1) Death();
+    }
 
     void OnParticleCollision(GameObject other) 
     {
@@ -126,6 +156,7 @@ public class Enemy : MonoBehaviour
             mesh.material = hitColor[hitColorIndex];
         }
         if (!ogMaterialsObtained) ogMaterialsObtained = true;
+        if (isBoss) uIController.BossHealth(gameStats.GetLaserPower());
         health -= gameStats.GetLaserPower();
         if (hitColorIndex == 0)
         {
@@ -159,7 +190,9 @@ public class Enemy : MonoBehaviour
                 GameObject normie = Instantiate(normalVersion, transform.position, transform.rotation);
                 normie.GetComponent<Rigidbody>().AddForce(Vector3.up, ForceMode.Impulse);
             } 
+            
             died = true;
+
             if (isBoss) StartCoroutine(BossPhaseIsOver());
             if (!isBoss) gameStats.SetBirdsCured();
             
@@ -195,17 +228,25 @@ public class Enemy : MonoBehaviour
 
     IEnumerator BossPhaseIsOver()
     {
+        CanBossShoot(false);
         pd.playableGraph.GetRootPlayable(0).SetSpeed<Playable>(bossSlowMo);
+        animator.speed -= 1f;
         yield return new WaitForSeconds(bossStunTime);
-        pd.playableGraph.Stop();
+
+        bossEndPos = transform.position;
+        bossEndPos.y -= 500;
         bossDefeated = true;
+        pd.playableGraph.Stop();
+        
     }
 
     void BossExit() 
     {
-        transform.position = Vector3.MoveTowards(transform.position, bossEndPos, bossFallSpeed * Time.deltaTime);
+        
+        transform.Translate(Vector3.down * bossFallSpeed, Space.World);
+        transform.Rotate(Vector3.right * bossRotationSpeed, Space.World);
 
-        if (transform.position == bossEndPos)
+        if (transform.position.y < bossEndPos.y)
         {
             StartCoroutine(bossController.EndBossPhaseOne());
         }
@@ -214,7 +255,7 @@ public class Enemy : MonoBehaviour
     public void BossShoot()
     {
         
-        if (canShoot)
+        if (canShoot && health > 0)
         {
             Instantiate(bossProjectile, bossProjectileLocation.position, bossProjectileLocation.rotation);
         }
@@ -225,6 +266,6 @@ public class Enemy : MonoBehaviour
     {
         canShoot = state;
     }
-
+    
 
 }
