@@ -248,7 +248,7 @@ public class Enemy : MonoBehaviour
 
         if (transform.position.y < bossEndPos.y)
         {
-            StartCoroutine(bossController.EndBossPhaseOne());
+            StartCoroutine(bossController.EndBossPhase());
         }
     }
 

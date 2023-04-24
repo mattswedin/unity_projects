@@ -12,8 +12,8 @@ public class BossController : MonoBehaviour
     [SerializeField] bool canShoot = true;
 
     [Header("Boss Objects")]
-    [SerializeField] GameObject bossPhaseOne;
-    [SerializeField] GameObject bossPhaseTwo;
+    [SerializeField] GameObject[] bossPhases;
+    [SerializeField] int bossIndex;
 
     
 
@@ -27,17 +27,17 @@ public class BossController : MonoBehaviour
     IEnumerator BossBegins() 
     {
         yield return new WaitForSeconds(startDelay);
-        bossPhaseOne.SetActive(true);
-        currentBossPhase = bossPhaseOne;
-
+        currentBossPhase = bossPhases[bossIndex];
+        currentBossPhase.SetActive(true);
     }
 
-    public IEnumerator EndBossPhaseOne() 
+    public IEnumerator EndBossPhase() 
     {
         yield return new WaitForSeconds(startDelay);
-        bossPhaseTwo.SetActive(true);
-        currentBossPhase = bossPhaseTwo;
-        Destroy(bossPhaseOne);
+        Destroy(bossPhases[bossIndex]);
+        bossIndex++;
+        currentBossPhase = bossPhases[bossIndex];
+        currentBossPhase.SetActive(true);
     }
 
     public void CanBossShoot(bool state) 

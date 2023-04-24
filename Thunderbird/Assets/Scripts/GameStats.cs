@@ -8,7 +8,7 @@ public class GameStats : MonoBehaviour
     [SerializeField] float playerHealth = 100;
     [SerializeField] int currentBirdsCuredScore = 0;
     [SerializeField] double birdsCuredUntilPowerUp = 5;
-    [SerializeField] int laserBasePower = 1;
+    [SerializeField] float laserBasePower = 1;
     [SerializeField] int laserPowerUpPower = 1;
     [SerializeField] int laserLevel = 0;
 
@@ -41,7 +41,7 @@ public class GameStats : MonoBehaviour
         laserPowerUpPower += 1;
     }
 
-    public int GetLaserPower()
+    public float GetLaserPower()
     {
         return laserBasePower * laserPowerUpPower;
     }
