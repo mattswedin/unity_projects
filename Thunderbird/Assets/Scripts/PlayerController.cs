@@ -211,4 +211,9 @@ public class PlayerController : MonoBehaviour
         if (state) ActivateLasers(false);
     }
 
+    public Vector3 GetCurrentPos() 
+    {
+        return transform.position;
+    }
+
 }

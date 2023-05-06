@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class BossController : MonoBehaviour
 {
+    [SerializeField] bool begin = true;
+    
     [Header("Boss Stats")]
     [SerializeField] int health = 1000;
 
@@ -15,13 +17,12 @@ public class BossController : MonoBehaviour
     [SerializeField] GameObject[] bossPhases;
     [SerializeField] int bossIndex;
 
-    
-
     GameObject currentBossPhase;
 
     void Start() 
     {
-        StartCoroutine(BossBegins());
+        if (begin) StartCoroutine(BossBegins());
+        
     }
 
     IEnumerator BossBegins() 
@@ -36,8 +37,16 @@ public class BossController : MonoBehaviour
         yield return new WaitForSeconds(startDelay);
         Destroy(bossPhases[bossIndex]);
         bossIndex++;
-        currentBossPhase = bossPhases[bossIndex];
-        currentBossPhase.SetActive(true);
+
+        if (bossIndex < bossPhases.Length)
+        {
+            currentBossPhase = bossPhases[bossIndex];
+            currentBossPhase.SetActive(true);
+        }
+        else
+        {
+            Debug.Log("Boss Complete");
+        }
     }
 
     public void CanBossShoot(bool state) 
