@@ -20,7 +20,7 @@ public class DarkLightningShooter : MonoBehaviour
         playerController = FindObjectOfType<PlayerController>();
     }
 
-    void Start()
+    void OnEnable()
     {
         StartCoroutine(ShootLighting());
     }
@@ -31,13 +31,12 @@ public class DarkLightningShooter : MonoBehaviour
         {   
             
             playerPos = playerController.GetCurrentPos();
-            prelightningInstance = Instantiate(preLightning, playerPos, transform.rotation);
+            Instantiate(preLightning, playerPos, transform.rotation);
             yield return new WaitForSeconds(preLightingTime);
 
             playerPos.y += 50;
             lightningInstance = Instantiate(lightning, playerPos, transform.rotation);
             yield return new WaitForSeconds(timeBetweenLightning);
-            Destroy(prelightningInstance);
         }
         
     }

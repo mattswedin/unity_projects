@@ -32,6 +32,8 @@ public class Enemy : MonoBehaviour
     [Header("Boss")]
     [SerializeField] PlayableDirector pd;
     [SerializeField] bool isBoss;
+    [SerializeField] bool isMiniBoss;
+    [SerializeField] bool isHand;
     [SerializeField] bool bossDefeated = false;
     [SerializeField] GameObject hitZone;
     [SerializeField] GameObject bossProjectile;
@@ -48,9 +50,11 @@ public class Enemy : MonoBehaviour
     int bossPhases = 3;
 
     Animator animator;
+    Animator animatorInstance;
     GameStats gameStats;
     BossController bossController;
     UIController uIController;
+    Enemy mainEnemy;
     
     
 
@@ -63,6 +67,12 @@ public class Enemy : MonoBehaviour
             animator = GetComponentInChildren<Animator>();
             meshRenderers = hitZone.GetComponents<MeshRenderer>();
             uIController = FindObjectOfType<UIController>();
+        }
+        else if (isMiniBoss)
+        {
+            mainEnemy = transform.parent.parent.GetChild(0).GetComponent<Enemy>();
+            animatorInstance = transform.parent.parent.GetChild(0).GetComponent<Animator>();
+            meshRenderers = hitZone.GetComponents<MeshRenderer>();
         }
         else
         {
@@ -193,8 +203,24 @@ public class Enemy : MonoBehaviour
             
             died = true;
 
-            if (isBoss) StartCoroutine(BossPhaseIsOver());
-            if (!isBoss) gameStats.SetBirdsCured();
+            if (isBoss) 
+            {
+                StartCoroutine(BossPhaseIsOver());
+            }
+            else if (isMiniBoss)
+            {
+                if (isHand) 
+                {
+                   animatorInstance.SetBool("handDestroyed", true);
+                   mainEnemy.CanBossShoot(true);
+                   Destroy(gameObject);
+                }
+
+            }
+            else 
+            {
+                gameStats.SetBirdsCured();
+            }
             
         }
         
@@ -202,7 +228,7 @@ public class Enemy : MonoBehaviour
         {
             Destroy(hitZone);
         }
-        else
+        else if (!isHand)
         {
             Destroy(gameObject);
         }

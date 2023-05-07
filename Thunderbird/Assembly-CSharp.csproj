@@ -36,6 +36,7 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
+     <Compile Include="Assets/Scripts/PreLightningController.cs" />
      <Compile Include="Assets/Scripts/EnemyProjectile.cs" />
      <Compile Include="Assets/Scripts/TimelineController.cs" />
      <Compile Include="Assets/Scripts/UIController.cs" />
@@ -54,7 +55,7 @@
      <Compile Include="Assets/Scripts/ProjectileController.cs" />
      <Compile Include="Assets/Scripts/Enemy.cs" />
      <Compile Include="Assets/Scripts/RingShooterController.cs" />
-     <Compile Include="Assets/Scripts/PreLightningController.cs" />
+     <Compile Include="Assets/handDestroyed.cs" />
      <None Include="Assets/TerrainSampleAssets/ThirdPartyNotices.txt" />
      <None Include="Assets/TextMesh Pro/Shaders/TMPro.cginc" />
      <None Include="Assets/TextMesh Pro/Shaders/TMP_SDF-Mobile Overlay.shader" />
