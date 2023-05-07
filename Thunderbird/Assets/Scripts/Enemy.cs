@@ -85,7 +85,7 @@ public class Enemy : MonoBehaviour
 
     void Start() 
     {
-        if (isBoss) bossController = FindObjectOfType<BossController>();   
+        if (isBoss || isHand) bossController = FindObjectOfType<BossController>();   
     }
 
     void Update() 
@@ -215,7 +215,7 @@ public class Enemy : MonoBehaviour
                 {
                    animatorInstance.SetBool("handDestroyed", true);
                    mainEnemy.CanBossShoot(true);
-                   mainEnemy.HandDefeated();
+                   bossController.HandDefeated();
                    Destroy(gameObject);
                 }
 
@@ -285,11 +285,11 @@ public class Enemy : MonoBehaviour
     {
         if (canShoot && health > 0)
         {
-            if (handsDefeated == 0)
+            if (bossController.GetHandsDefeated() == 0)
             {
                 Instantiate(bossProjectile, bossProjectileLocation.position, bossProjectileLocation.rotation);
             }
-            else if (handsDefeated == 1)
+            else if (bossController.GetHandsDefeated() == 1)
             {
                 int rando = UnityEngine.Random.Range(0, oddsOfShooting + 1);
                 if (rando == oddsOfShooting) Instantiate(bossProjectile, bossProjectileLocation.position, bossProjectileLocation.rotation);
@@ -309,10 +309,7 @@ public class Enemy : MonoBehaviour
         canShoot = state;
     }
 
-    public void HandDefeated()
-    {
-        handsDefeated += 1;
-    }
+
     
 
 }

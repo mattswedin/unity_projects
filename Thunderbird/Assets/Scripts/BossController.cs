@@ -17,6 +17,9 @@ public class BossController : MonoBehaviour
     [SerializeField] GameObject[] bossPhases;
     [SerializeField] int bossIndex;
 
+    [Header("Boss Phase 3 Only")]
+    [SerializeField] int handsDefeated = 0;
+
     GameObject currentBossPhase;
     PlayerController playerController;
 
@@ -39,8 +42,11 @@ public class BossController : MonoBehaviour
         yield return new WaitForSeconds(startDelay);
         Destroy(bossPhases[bossIndex]);
         bossIndex++;
+        if (bossIndex == bossPhases.Length - 1) 
+        {
 
-        if (bossIndex < bossPhases.Length)
+        }
+        else if (bossIndex < bossPhases.Length)
         {
             currentBossPhase = bossPhases[bossIndex];
             currentBossPhase.SetActive(true);
@@ -54,6 +60,18 @@ public class BossController : MonoBehaviour
     public void CanBossShoot(bool state) 
     {
         currentBossPhase.GetComponent<Enemy>().CanBossShoot(state);
+    }
+
+    //Boss Final Phase Only
+
+    public void HandDefeated()
+    {
+        handsDefeated += 1;
+    }
+
+    public int GetHandsDefeated()
+    {
+        return handsDefeated;
     }
 
 

@@ -85,7 +85,7 @@ public class PlayerController : MonoBehaviour
         
         if (missionComplete)
         {
-            transform.Translate(Vector3.forward * 100f * Time.deltaTime);
+            transform.position = Vector3.MoveTowards(transform.position, new Vector3(), moveSpeed * Time.deltaTime);
         }
     }
 

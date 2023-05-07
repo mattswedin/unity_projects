@@ -13,7 +13,6 @@ public class DialogueController : MonoBehaviour
     [SerializeField] int dialogueIndex;
     [SerializeField] float timeBetweenChars = .1f;
     [SerializeField] float defaultTimeBetweenChars = .1f;
-    [SerializeField] GameObject nextScene;
 
     PlayerController playerController;
 
@@ -61,8 +60,6 @@ public class DialogueController : MonoBehaviour
         }
         else
         {
-           
-            nextScene.SetActive(true);
             text.text = "";
             dialogueObj.SetActive(false);
         }

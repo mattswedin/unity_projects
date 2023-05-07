@@ -13,7 +13,7 @@ public class LaserEyesController : MonoBehaviour
   
     void Update()
     {
-        transform.Translate(Vector3.forward * speed, Space.Self);
+        transform.Translate(Vector3.forward * speed * Time.deltaTime, Space.Self);
     }
 
     IEnumerator DeathDelay() 

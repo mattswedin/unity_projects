@@ -14,9 +14,11 @@ public class DarkLightningShooter : MonoBehaviour
     Vector3 playerPos;
 
     PlayerController playerController;
+    BossController bossController;
 
     void Awake() 
     {
+        bossController = FindObjectOfType<BossController>();
         playerController = FindObjectOfType<PlayerController>();
     }
 
@@ -29,6 +31,7 @@ public class DarkLightningShooter : MonoBehaviour
     {
         for (int i = 0; i < lightningCount; i++)
         {   
+            if (bossController.GetHandsDefeated() == 2) yield break; 
             
             playerPos = playerController.GetCurrentPos();
             Instantiate(preLightning, playerPos, transform.rotation);
@@ -37,6 +40,7 @@ public class DarkLightningShooter : MonoBehaviour
             playerPos.y += 50;
             lightningInstance = Instantiate(lightning, playerPos, transform.rotation);
             yield return new WaitForSeconds(timeBetweenLightning);
+
         }
         
     }
