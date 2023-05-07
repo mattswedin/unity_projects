@@ -25,6 +25,7 @@ public class GameStats : MonoBehaviour
     public void LoseHealth(float damage)
     {
         playerHealth -= damage;
+        if (playerHealth <= 0) Death();
     }
 
     public float GetHealth()
@@ -74,6 +75,11 @@ public class GameStats : MonoBehaviour
     public int GetLaserLevel()
     {
         return laserLevel;
+    }
+
+    void Death() 
+    {
+        Debug.Log("YOU DIED");
     }
 
 }

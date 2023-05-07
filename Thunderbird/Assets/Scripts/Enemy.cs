@@ -34,6 +34,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] bool isBoss;
     [SerializeField] bool isMiniBoss;
     [SerializeField] bool isHand;
+    [SerializeField] int handsDefeated = 0;
     [SerializeField] bool bossDefeated = false;
     [SerializeField] GameObject hitZone;
     [SerializeField] GameObject bossProjectile;
@@ -45,6 +46,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] float bossFallSpeed = 3f;
     [SerializeField] Vector3 bossEndPos;
     [SerializeField] bool canShoot = false;
+    [SerializeField] int oddsOfShooting = 6;
     [SerializeField] float bossRotationSpeed = 3f;
     Quaternion endRotation;
     int bossPhases = 3;
@@ -70,7 +72,7 @@ public class Enemy : MonoBehaviour
         }
         else if (isMiniBoss)
         {
-            mainEnemy = transform.parent.parent.GetChild(0).GetComponent<Enemy>();
+            mainEnemy = transform.parent.parent.GetComponent<Enemy>();
             animatorInstance = transform.parent.parent.GetChild(0).GetComponent<Animator>();
             meshRenderers = hitZone.GetComponents<MeshRenderer>();
         }
@@ -213,6 +215,7 @@ public class Enemy : MonoBehaviour
                 {
                    animatorInstance.SetBool("handDestroyed", true);
                    mainEnemy.CanBossShoot(true);
+                   mainEnemy.HandDefeated();
                    Destroy(gameObject);
                 }
 
@@ -280,10 +283,23 @@ public class Enemy : MonoBehaviour
 
     public void BossShoot()
     {
-        
         if (canShoot && health > 0)
         {
-            Instantiate(bossProjectile, bossProjectileLocation.position, bossProjectileLocation.rotation);
+            if (handsDefeated == 0)
+            {
+                Instantiate(bossProjectile, bossProjectileLocation.position, bossProjectileLocation.rotation);
+            }
+            else if (handsDefeated == 1)
+            {
+                int rando = UnityEngine.Random.Range(0, oddsOfShooting + 1);
+                if (rando == oddsOfShooting) Instantiate(bossProjectile, bossProjectileLocation.position, bossProjectileLocation.rotation);
+            }
+            else
+            {
+                int rando = UnityEngine.Random.Range(0, oddsOfShooting);
+                if (rando % 2 != 0) Instantiate(bossProjectile, bossProjectileLocation.position, bossProjectileLocation.rotation);     
+            }
+            
         }
         
     }
@@ -291,6 +307,11 @@ public class Enemy : MonoBehaviour
     public void CanBossShoot(bool state)
     {
         canShoot = state;
+    }
+
+    public void HandDefeated()
+    {
+        handsDefeated += 1;
     }
     
 

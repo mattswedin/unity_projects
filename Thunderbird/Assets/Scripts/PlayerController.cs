@@ -42,6 +42,8 @@ public class PlayerController : MonoBehaviour
     Enemy enemy;
     EnemyProjectile enemyProjectile;
     BossController bossController;
+    [Header("End of Boss")]
+    [SerializeField] bool missionComplete;
 
     void Awake() 
     {   
@@ -79,6 +81,11 @@ public class PlayerController : MonoBehaviour
                 StopCoroutine(ShootLaser());
             }
             
+        }
+        
+        if (missionComplete)
+        {
+            transform.Translate(Vector3.forward * 100f * Time.deltaTime);
         }
     }
 
@@ -214,6 +221,12 @@ public class PlayerController : MonoBehaviour
     public Vector3 GetCurrentPos() 
     {
         return transform.position;
+    }
+
+    public void MissionComplete() 
+    {
+        missionComplete = true;
+        
     }
 
 }

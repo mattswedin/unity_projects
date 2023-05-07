@@ -18,10 +18,12 @@ public class BossController : MonoBehaviour
     [SerializeField] int bossIndex;
 
     GameObject currentBossPhase;
+    PlayerController playerController;
 
     void Start() 
     {
         if (begin) StartCoroutine(BossBegins());
+        playerController = FindObjectOfType<PlayerController>();
         
     }
 
@@ -45,7 +47,7 @@ public class BossController : MonoBehaviour
         }
         else
         {
-            Debug.Log("Boss Complete");
+            playerController.MissionComplete();
         }
     }
 
