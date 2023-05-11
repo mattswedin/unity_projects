@@ -8,9 +8,9 @@ public class GameStats : MonoBehaviour
     [SerializeField] float playerHealth = 100;
     [SerializeField] int currentBirdsCuredScore = 0;
     [SerializeField] double birdsCuredUntilPowerUp = 5;
-    [SerializeField] float laserBasePower = 1;
-    [SerializeField] int laserPowerUpPower = 1;
-    [SerializeField] int laserLevel = 0;
+    [SerializeField] float laserBasePower = 0.1f;
+    [SerializeField] bool maxPower = false;
+    [SerializeField] float laserPowerUpPower = 0;
 
     [Header("Current Level Stats")]
     [SerializeField] string levelName = "Violet Island";
@@ -38,13 +38,12 @@ public class GameStats : MonoBehaviour
 
     public void PowerUp()
     {
-        laserLevel += 1;
-        laserPowerUpPower += 1;
+        laserPowerUpPower += .1f;
     }
 
     public float GetLaserPower()
     {
-        return laserBasePower * laserPowerUpPower;
+        return laserBasePower + laserPowerUpPower;
     }
 
     //Score
@@ -52,11 +51,17 @@ public class GameStats : MonoBehaviour
     public void SetBirdsCured()
     {
         currentBirdsCuredScore += 1;
-        if (currentBirdsCuredScore >= birdsCuredUntilPowerUp)
+        if (currentBirdsCuredScore >= birdsCuredUntilPowerUp && !maxPower)
         {
             PowerUp();
-
-            birdsCuredUntilPowerUp = System.Math.Ceiling(birdsCuredUntilPowerUp * 2.5f);
+            if (birdsCuredUntilPowerUp == 15)
+            {
+                maxPower = true;
+            } 
+            else
+            {
+                birdsCuredUntilPowerUp += 5;
+            }
         }
     }
 
@@ -72,9 +77,9 @@ public class GameStats : MonoBehaviour
         }
     }
 
-    public int GetLaserLevel()
+    public void SpiralEyesDamage(float amount) 
     {
-        return laserLevel;
+        damageDoneSpiralEyes += amount;
     }
 
     void Death() 

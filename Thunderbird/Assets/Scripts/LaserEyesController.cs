@@ -6,6 +6,8 @@ public class LaserEyesController : MonoBehaviour
 {
     [SerializeField] float speed = 3f;
 
+    AudioSource audioSource;
+
     void Start() 
     {
         StartCoroutine(DeathDelay());

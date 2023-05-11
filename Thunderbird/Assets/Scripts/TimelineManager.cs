@@ -8,7 +8,6 @@ public class TimelineManager : MonoBehaviour
     [SerializeField] GameObject currentTimeline;
     [SerializeField] GameObject[] timelines;
     [SerializeField] int timelineIndex;
-    
 
     void Start()
     {

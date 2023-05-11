@@ -10,11 +10,5 @@ public class EnvironmentManager : MonoBehaviour
         Debug.Log(obj.name);
         Destroy(obj);
     }
-
-    private void OnParticleTrigger() 
-    {
-        
-    }
-
-    
+  
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using UnityEngine.Playables;
 
 public class DialogueController : MonoBehaviour
 {
@@ -11,13 +12,14 @@ public class DialogueController : MonoBehaviour
     [SerializeField] string[] dialogue;
     [SerializeField] bool isSpeaking;
     [SerializeField] int dialogueIndex;
-    [SerializeField] float timeBetweenChars = .1f;
-    [SerializeField] float defaultTimeBetweenChars = .1f;
+    [SerializeField] float timeBetweenSents = 1f;
 
+    TimelineManager timelineManager;
     PlayerController playerController;
 
     void Awake() 
     {
+        timelineManager = FindObjectOfType<TimelineManager>();
         playerController = FindObjectOfType<PlayerController>();
     }
 
@@ -25,7 +27,7 @@ public class DialogueController : MonoBehaviour
     {
         dialogueObj.SetActive(true);
         playerController.SetCantMove(true);
-        StartCoroutine(PlayDialogue());
+       PlayDialogue();
     }
 
     void Update() 
@@ -34,37 +36,37 @@ public class DialogueController : MonoBehaviour
         {
             if (!isSpeaking)
             {
-                dialogueIndex++;
-                StartCoroutine(PlayDialogue());
+               dialogueIndex++;
+               StartCoroutine(PlayDialogue());
             }
         }
     }
 
     IEnumerator PlayDialogue() 
     {
-        
         text.text = "";
 
         if (dialogueIndex < dialogue.Length)
         {
             isSpeaking = true;
 
-            for (int i = 0; i < dialogue[dialogueIndex].Length; i++)
-            {
-                char letter = dialogue[dialogueIndex][i];
-                text.text += letter;
-                if (letter != ' ') yield return new WaitForSeconds(timeBetweenChars);
-            }
+                text.text = dialogue[dialogueIndex];
 
             isSpeaking = false;
+
+            yield return new WaitForSeconds(timeBetweenSents);
         }
         else
         {
-            text.text = "";
-            dialogueObj.SetActive(false);
+            timelineManager.EndCurrentTimeline();
+            ClearText();
         }
+    }
 
-       
+    public void ClearText() 
+    {
+        text.text = "";
+        dialogueObj.SetActive(false);
     }
 
    

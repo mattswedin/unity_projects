@@ -57,6 +57,7 @@
      <Compile Include="Assets/Scripts/DarkLightningShooter.cs" />
      <Compile Include="Assets/Scripts/TimedDestroy.cs" />
      <Compile Include="Assets/Scripts/ProjectileController.cs" />
+     <Compile Include="Assets/Scripts/Billboarder.cs" />
      <Compile Include="Assets/Scripts/Enemy.cs" />
      <Compile Include="Assets/Scripts/RingShooterController.cs" />
      <None Include="Assets/TextMesh Pro/Shaders/TMPro.cginc" />

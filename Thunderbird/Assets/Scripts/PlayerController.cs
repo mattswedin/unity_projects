@@ -29,11 +29,18 @@ public class PlayerController : MonoBehaviour
     [SerializeField] GameObject lasers;
     [SerializeField] Transform laserSpawnPointR;
     [SerializeField] Transform laserSpawnPointL;
-    [SerializeField] int laserBasePower = 1;
-    [SerializeField] int laserPowerUpPower = 1;
-    [SerializeField] string laserLevelName;
     [SerializeField] bool isShooting;
     [SerializeField] bool isBetweenShots;
+    [SerializeField] bool shotsHaveBeenFired;
+    [SerializeField] float timeBetweenShots = .5f;
+
+    [Header("SFX")]
+    [SerializeField] AudioClip laserSFX;
+    [SerializeField] AudioClip lightningBirdLaserSFX;
+
+    [Header("End of Boss")]
+    [SerializeField] bool missionComplete;
+
     bool needToSwitchLasers = true;
     Coroutine shooting;
     Transform laserLevel;
@@ -42,12 +49,14 @@ public class PlayerController : MonoBehaviour
     Enemy enemy;
     EnemyProjectile enemyProjectile;
     BossController bossController;
-    [Header("End of Boss")]
-    [SerializeField] bool missionComplete;
+    AudioSource audioSource;
+
+
 
     void Awake() 
     {   
         gameStats = FindObjectOfType<GameStats>();
+        audioSource = GetComponent<AudioSource>();
 
     }
 
@@ -71,14 +80,13 @@ public class PlayerController : MonoBehaviour
                 Fly();
                 FlyRotation();
             }
+
             Shoot();
+
             if (isShooting && !isBetweenShots)
             {
-                StartCoroutine(ShootLaser());
-            }
-            else
-            {
-                StopCoroutine(ShootLaser());
+                if (!shotsHaveBeenFired) StartCoroutine(ShootLaser());
+                shotsHaveBeenFired = true;
             }
             
         }
@@ -91,42 +99,33 @@ public class PlayerController : MonoBehaviour
 
     IEnumerator ShootLaser() 
     {
-        Instantiate(lasers, laserSpawnPointR.position, transform.rotation);
-        Instantiate(lasers, laserSpawnPointL.position, transform.rotation);
+        // ShootLaserSFX();
+        Instantiate(lasers, laserSpawnPointR.position, laserSpawnPointR.rotation);
+        Instantiate(lasers, laserSpawnPointL.position, laserSpawnPointL.rotation);
         isBetweenShots = true;
-        yield return new WaitForSeconds(.05f);
+        yield return new WaitForSeconds(timeBetweenShots);
         isBetweenShots = false;
+        shotsHaveBeenFired = false;
     }
+
+    // void ShootLaserSFX() 
+    // {
+    //     int randoPitch = UnityEngine.Random.Range(100,120);
+    //     audioSource.pitch = randoPitch * .01f;
+    //     audioSource.PlayOneShot(laserSFX);
+    // }
 
     void Shoot() 
     {
         if (Input.GetButton("Fire1"))
         {
-            ActivateLasers(true);
+            // audioSource.PlayOneShot(lightningBirdLaserSFX);
+            isShooting = true;
         }
         else
         {
-            ActivateLasers(false);
+            isShooting = false;
         }
-    }
-
-    void ActivateLasers(bool state) 
-    {
-        isShooting = state;
-        // laserLevel = lasers.transform.GetChild(gameStats.GetLaserLevel());
-
-        // if (laserLevelName != laserLevel.name)
-        // {
-        //     needToSwitchLasers = true;
-        //     laserLevelName = laserLevel.name;
-        // } 
-
-        // for(int i = 0; i < laserLevel.childCount; i++)
-        // {
-        //     GameObject laser = laserLevel.GetChild(i).gameObject;
-        //     var emissionModule = laser.GetComponent<ParticleSystem>().emission;
-        //     emissionModule.enabled = state;
-        // }
     }
 
     void FlyIntoView()
@@ -198,24 +197,11 @@ public class PlayerController : MonoBehaviour
 
     }
 
-    void SwitchLasers(int laserLevel)
-    {
-        // for(int i = 0; i < lasers.transform.childCount; i++)
-        // {
-        //     lasers.transform.GetChild(i).gameObject.SetActive(false);
-        // }
-
-        // lasers.transform.GetChild(laserLevel).gameObject.SetActive(true);
-
-        // needToSwitchLasers = false;
-        
-    }
-
     public void SetCantMove(bool state) 
     {
         cantMove = state;
         transform.localPosition = startingPos;
-        if (state) ActivateLasers(false);
+        if (state) isShooting = false;
     }
 
     public Vector3 GetCurrentPos() 

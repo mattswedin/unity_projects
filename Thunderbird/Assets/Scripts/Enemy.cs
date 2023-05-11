@@ -48,6 +48,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] bool canShoot = false;
     [SerializeField] int oddsOfShooting = 6;
     [SerializeField] float bossRotationSpeed = 3f;
+    [SerializeField] bool isRoamingSpiralEyes;
     Quaternion endRotation;
     int bossPhases = 3;
 
@@ -57,6 +58,7 @@ public class Enemy : MonoBehaviour
     BossController bossController;
     UIController uIController;
     Enemy mainEnemy;
+    float incomingDamage;
     
     
 
@@ -90,7 +92,6 @@ public class Enemy : MonoBehaviour
 
     void Update() 
     {
-       if (ogMaterialsObtained) BringOGColorsBack();
        if (isFlyingBetweenPoints) PositionMovement();
        if (isRotatingBetweenPoints) RotationMovement();
        if (bossDefeated) BossExit();
@@ -139,15 +140,22 @@ public class Enemy : MonoBehaviour
     }
     void OnCollisionEnter(Collision other) 
     {
+        Debug.Log(gameObject.name);
+        
         for (int i = 0; i < meshRenderers.Length; i++)
         {
             MeshRenderer mesh = meshRenderers[i];
-            og.Add(mesh.material);
+            if (!ogMaterialsObtained) og.Add(mesh.material);
             mesh.material = hitColor[hitColorIndex];
         }
         if (!ogMaterialsObtained) ogMaterialsObtained = true;
-        if (isBoss) uIController.BossHealth(gameStats.GetLaserPower());
-        health -= gameStats.GetLaserPower();
+
+        incomingDamage = gameStats.GetLaserPower();
+        if (isBoss) uIController.BossHealth(incomingDamage);
+        if (isRoamingSpiralEyes) gameStats.SpiralEyesDamage(incomingDamage);
+        health -= incomingDamage;
+        
+
         if (hitColorIndex == 0)
         {
             hitColorIndex = 1;
@@ -156,30 +164,38 @@ public class Enemy : MonoBehaviour
         {
             hitColorIndex = 0;
         }
+
         if (health < 1) Death();
+        //TEST
+        if (ogMaterialsObtained) StartCoroutine(BringOGColorsBack());
     }
 
-    void OnParticleCollision(GameObject other) 
-    {
-        for (int i = 0; i < meshRenderers.Length; i++)
-        {
-            MeshRenderer mesh = meshRenderers[i];
-            og.Add(mesh.material);
-            mesh.material = hitColor[hitColorIndex];
-        }
-        if (!ogMaterialsObtained) ogMaterialsObtained = true;
-        if (isBoss) uIController.BossHealth(gameStats.GetLaserPower());
-        health -= gameStats.GetLaserPower();
-        if (hitColorIndex == 0)
-        {
-            hitColorIndex = 1;
-        }
-        else
-        {
-            hitColorIndex = 0;
-        }
-        if (health < 1) Death(); 
-    }
+    // void OnParticleCollision(GameObject other) 
+    // {
+    //     for (int i = 0; i < meshRenderers.Length; i++)
+    //     {
+    //         MeshRenderer mesh = meshRenderers[i];
+    //         if (!ogMaterialsObtained) og.Add(mesh.material);
+    //         mesh.material = hitColor[hitColorIndex];
+    //     }
+
+    //     if (!ogMaterialsObtained) ogMaterialsObtained = true;
+
+    //     if (isBoss) uIController.BossHealth(gameStats.GetLaserPower());
+
+    //     health -= gameStats.GetLaserPower();
+
+    //     if (hitColorIndex == 0)
+    //     {
+    //         hitColorIndex = 1;
+    //     }
+    //     else
+    //     {
+    //         hitColorIndex = 0;
+    //     }
+
+    //     if (health < 1) Death(); 
+    // }
 
     void Death()
     {
@@ -238,8 +254,10 @@ public class Enemy : MonoBehaviour
         
     }
 
-    void BringOGColorsBack()
+    IEnumerator BringOGColorsBack()
     {
+        yield return new WaitForEndOfFrame();
+
         if (!died) 
         {
             for (int i = 0; i < meshRenderers.Length; i++)
